@@ -1,0 +1,22 @@
+<div class="container-fluid">
+
+	<form ng-submit="debug()">
+		<p class="alert alert-info">Enter multiple emails and usernames to lookup up many users at once. </p>
+		<div class="row">
+		<div class="col-md-6">
+			<textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="csvData"></textarea>
+			<br>
+			<button type="submit" class="btn btn-primary" ng-disabled="loading">Debug</button>
+		</div>
+		<div class="col-md-6">
+<label>Example:</label>
+<pre>test@protonmail.ch
+jason
+andy
+user@protonmail.ch
+edsnow
+</pre>
+		</div>
+		</div>
+	</form>
+</div>

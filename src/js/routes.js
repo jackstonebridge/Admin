@@ -26,6 +26,10 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
             .state('blast', {
                 url: '/blast',
                 templateUrl: 'templates/blast.html'
-            }); 
+            })
+            .state('debug', {
+                url: '/debug',
+                templateUrl: 'templates/debug.html'
+            });
     }
 ]);

@@ -60,6 +60,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
         var AT = $cookieStore.get('AT');
         var UID = $cookieStore.get('UID');
         var RF = $cookieStore.get('RF');
+        $scope.showLogin = false;
         if ((AT !== undefined) && (UID !== undefined)) {
             $http.defaults.headers.common['Authorization'] = 'Bearer '+AT;
             $http.defaults.headers.common['x-pm-uid'] = UID;
@@ -84,6 +85,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
                     }
                 );
             }
+        }
+        else {
+            $scope.showLogin = true;
         }
     };
 
@@ -155,6 +159,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
                     $cookieStore.remove('AT');
                     $cookieStore.remove('UID');
                     $cookieStore.remove('RF');
+                    $scope.showLogin = true;
                     $state.go('index');
                 }
             }, 
@@ -192,6 +197,40 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
                 // called asynchronously if an error occurs
             }
         );
+    };
+
+    // CSV Debug Parsing
+    $scope.debug = function() {
+        $scope.debugJSON = Papa.parse(this.csvData);
+        $rootScope.loading = true;
+        
+        console.log($scope.debugJSON);
+        console.log($scope.debugJSON.data);
+
+        for (var i = 0; i < $scope.debugJSON.data.length; i++) {
+            var query = $scope.debugJSON.data[i][0];
+            console.log(query);
+        }
+
+        $rootScope.loading = false;
+        // $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(this.lookupString))
+        // .then(
+        //     function(response) {
+        //         $rootScope.loading = false;
+        //         var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+        //         if (error) {
+        //             $rootScope.$emit('addAlert', error);
+        //         }                
+        //         else {
+        //             $scope.lookupResponse = response.data;
+        //         }
+        //     }, 
+        //     function(response) {
+        //         $rootScope.loading = false;
+        //         // called asynchronously if an error occurs
+        //     }
+        // );
+
     };
 
     $scope.init();
