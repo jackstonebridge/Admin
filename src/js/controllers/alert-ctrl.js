@@ -4,22 +4,24 @@
 
 angular
     .module('RDash')
-    .controller('AlertsCtrl', ['$scope', AlertsCtrl]);
+    .controller('AlertsCtrl', ['$scope', '$rootScope', AlertsCtrl]);
 
-function AlertsCtrl($scope) {
-    $scope.alerts = [{
-        type: 'success',
-        msg: 'Thanks for visiting! Feel free to create pull requests to improve the dashboard!'
-    }, {
-        type: 'danger',
-        msg: 'Found a bug? Create an issue with as many details as you can.'
-    }];
+function AlertsCtrl($scope, $rootScope) {
+    $scope.alerts = [];
 
-    $scope.addAlert = function() {
+    $scope.addAlert = function(message) {
         $scope.alerts.push({
-            msg: 'Another alert!'
+            msg: message
         });
     };
+
+    $rootScope.$on('addAlert', function(event, data) {
+        $scope.addAlert(data);
+    });
+
+    $rootScope.$on('closeAlert', function(event, data) {
+        $scope.closeAlert(data);
+    });
 
     $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);

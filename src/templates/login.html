@@ -1,0 +1,26 @@
+<div class="container-fluid">
+
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+
+			<p class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
+			    <alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+			</p>
+
+			<form id="loginForm" ng-submit="login()" ng-hide="isLoggedIn()">
+				<div class="form-group">
+					<label>Username</label>
+					<input autofocus ng-model="username" type="text" class="form-control" id="username" placeholder="Username">
+				</div>
+				<div class="form-group">
+					<label>Login Password</label>
+					<input ng-model="password" type="password" class="form-control" id="loginPassword" placeholder="Login Password">
+				</div>
+				<div class="form-group text-right">
+					<button type="submit" class="btn btn-primary" ng-disabled="loading">Login</button>
+				</div> 
+			</form>
+		</div>
+	</div>
+
+</div>
