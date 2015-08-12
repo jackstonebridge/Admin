@@ -59,12 +59,22 @@
 					</div>
 					<div class="list-group-item disabled"></div>
 					<div class="list-group-item">
-						<code class="pull-right">{{ user.LastLoginTime | date:'medium' }}</code>
+						<code class="pull-right" ng-if="user.LastLoginTime!=0">
+						{{ user.LastLoginTime*1000 | date:'medium' }}
+						</code>
 						<strong>Last Login Time:</strong>
 					</div>                    
 					<div class="list-group-item">
-						<code class="pull-right">{{ user.LastActivityTime | date:'medium' }}</code>
+						<code class="pull-right" ng-if="user.LastActivityTime!=0">
+						{{ user.LastActivityTime*1000 | date:'medium' }}
+						</code>
 						<strong>Last Activity Time:</strong>
+					</div>
+					<div class="list-group-item">
+						<code class="pull-right" ng-if="user.CreateTime!=0">
+						{{ user.CreateTime*1000 | date:'medium' }}
+						</code>
+						<strong>Create Time:</strong>
 					</div>
 					<div class="list-group-item">
 						<code class="pull-right">{{ user.UsedSpace | bytes }}</code>
@@ -72,21 +82,19 @@
 					</div>
 					<div class="list-group-item">
 						<div class="btn-group pull-right">
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==0}">0</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==1}">1</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==2}">2</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==3}">3</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==4}">4</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==0}">Disabled</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==1}">Incomplete</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==2}">Active</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==3}">Admin</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==4}">Super</div>
 						</div>
 						<strong>User Status:</strong>
 					</div>                    
 					<div class="list-group-item">
 						<div class="btn-group pull-right">
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==0}">0</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==1}">1</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==2}">2</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==3}">3</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==4}">4</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==1}">500 MB</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==2}">1 GB</div>
+							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==3}">10 GB</div>
 						</div>
 						<strong>User Level:</strong>
 					</div>
@@ -102,8 +110,8 @@
 		<div class="col-md-6">
 			<div ng-if="lookupResponse.Invites.length">
 				<div class="list-group" ng-repeat="user in lookupResponse.Invites">
-					<div class="list-group-item list-group-item-info">
-						<strong>Active Users</strong>
+					<div class="list-group-item list-group-item-warning">
+						<strong>Waiting List</strong>
 					</div>                   
 					<div class="list-group-item">
 						<code class="pull-right">{{ user.ID }}</code>
@@ -130,16 +138,26 @@
 					<div class="list-group-item disabled"></div>
 					<div class="list-group-item">
 						<a href class="btn btn-primary">
-							<span class="fa fa-send"></span> Resend Invite
+							<span ng-show="user.Sent==0"><span class="fa fa-send"></span> Send Invite</span>
+							<span ng-show="user.Sent==1"><span class="fa fa-send"></span> Resend Invite</span>
 						</a>
 					</div>
 					<div class="list-group-item">
-						<code class="pull-right">25</code>
-						<strong>Has Comment (Status):</strong>
+						<code class="pull-right" ng-if="user.CreateTime!=0">
+						{{ user.CreateTime*1000 | date:'medium' }}
+						</code>
+						<strong>Create Time:</strong>
 					</div>
 					<div class="list-group-item">
-						<code class="pull-right">??</code>
+						<code class="pull-right" ng-if="user.SendTime!=0">
+						{{ user.SendTime*1000 | date:'medium' }}
+						</code>
+						<strong>Send Time:</strong>
+					</div>
+					<div class="list-group-item">
 						<strong>Comment:</strong>
+						<br>
+						<pre>{{ user.Comment }}</pre>
 					</div>
 					<div class="list-group-item disabled"></div>
 					<div class="list-group-item">
@@ -155,7 +173,7 @@
 	<hr>
 	<pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'20rem'}">{{ lookupResponse }}</pre>
 	<p ng-show="lookupResponse.Users.length || lookupResponse.Invites.length">
-		<a href ng-click="advanced = !advanced">Show / Hide raw response</a>
+		<a class="btn btn-link" href ng-click="advanced = !advanced">Show / Hide raw response</a>
 	</p>
 
 </div>
