@@ -56,6 +56,37 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
 
     });
 
+    $scope.init = function() {
+        var AT = $cookieStore.get('AT');
+        var UID = $cookieStore.get('UID');
+        var RF = $cookieStore.get('RF');
+        if ((AT !== undefined) && (UID !== undefined)) {
+            $http.defaults.headers.common['Authorization'] = 'Bearer '+AT;
+            $http.defaults.headers.common['x-pm-uid'] = UID;
+            if ($state.current.name==='') {
+                var data = {
+                    "ResponseType": "token",
+                    "ClientID": "demoapp",
+                    "GrantType": "refresh_token",
+                    "RefreshToken": RF,
+                    "RedirectURI": "http://protonmail.ch",
+                    "State": "random_string"
+                };
+                $http.post('https://admin-api.protontech.ch/auth/refresh', data)
+                .then(
+                    function(response) {
+                        $scope.user = response.data;
+                        $http.defaults.headers.common['Authorization'] = 'Bearer '+response.data.AccessToken;
+                        $http.defaults.headers.common['x-pm-uid'] = response.data.Uid;
+                        $cookieStore.put('AT', response.data.AccessToken);
+                        $cookieStore.put('UID', response.data.Uid);
+                        $state.go('dashboard');
+                    }
+                );
+            }
+        }
+    };
+
     $scope.toggleSidebar = function() {
         $scope.toggle = !$scope.toggle;
         $cookieStore.put('toggle', $scope.toggle);
@@ -95,6 +126,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
                     $scope.user = response.data;
                     $http.defaults.headers.common['Authorization'] = 'Bearer '+response.data.AccessToken;
                     $http.defaults.headers.common['x-pm-uid'] = response.data.Uid;
+                    $cookieStore.put('AT', response.data.AccessToken);
+                    $cookieStore.put('UID', response.data.Uid);
+                    $cookieStore.put('RF', response.data.RefreshToken);
                     $state.go('dashboard');
                 }
             }, 
@@ -118,6 +152,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
                     $scope.user = {};
                     $http.defaults.headers.common['Authorization'] = undefined;
                     $http.defaults.headers.common['x-pm-uid'] = undefined;
+                    $cookieStore.remove('AT');
+                    $cookieStore.remove('UID');
+                    $cookieStore.remove('RF');
                     $state.go('index');
                 }
             }, 
@@ -156,4 +193,6 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state) {
             }
         );
     };
+
+    $scope.init();
 }
