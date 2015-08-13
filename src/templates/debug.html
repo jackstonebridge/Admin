@@ -2,6 +2,7 @@
 
 	<form ng-submit="debug()">
 		<p class="alert alert-info">Enter multiple emails and usernames to lookup up many users at once. </p>
+		<p class="alert alert-warning">This doesnt work yet - Jason. </p>
 		<div class="row">
 		<div class="col-md-6">
 			<textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="csvData"></textarea>
@@ -9,6 +10,7 @@
 			<button type="submit" class="btn btn-primary" ng-disabled="loading">Debug</button>
 		</div>
 		<div class="col-md-6">
+
 <label>Example:</label>
 <pre>test@protonmail.ch
 jason
@@ -16,7 +18,19 @@ andy
 user@protonmail.ch
 edsnow
 </pre>
+
 		</div>
 		</div>
 	</form>
+
+	<ng-include src="'templates/_info.html'"></ng-include>
+
+	<hr>
+
+	<pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'20rem'}">{{ debugData }}</pre>
+
+	<p ng-show="debugData">
+		<a class="btn btn-link" href ng-click="advanced = !advanced">Show / Hide raw response</a>
+	</p>
+
 </div>

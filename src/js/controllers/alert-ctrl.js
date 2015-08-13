@@ -10,9 +10,9 @@ function AlertsCtrl($scope, $rootScope) {
     $scope.alerts = [];
 
     $scope.addAlert = function(message) {
-        $scope.alerts.push({
+        $scope.alerts = [{
             msg: message
-        });
+        }];
     };
 
     $rootScope.$on('addAlert', function(event, data) {

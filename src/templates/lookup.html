@@ -3,7 +3,7 @@
 	<div class="row">
 		<form class="form-inline col-md-8 col-md-offset-2" ng-submit="lookup()">
 			<div class="form-group text-center" ng-style="{'width':'100%'}">
-				<input type="text" class="form-control input-lg" ng-model="lookupString" autofocus placeholder="Username or Email">
+				<input id="lookupField" type="text" class="form-control input-lg" ng-model="lookupString" placeholder="Username or Email">
 				<button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading">User Lookup</button>
 			</div>
 		</form>
@@ -11,167 +11,12 @@
 
 	<br>
 
-	<div class="row">
-		<div class="col-md-6">
-			<div ng-if="lookupResponse.Users.length">
-				<div class="list-group" ng-repeat="user in lookupResponse.Users">
-					<div class="list-group-item list-group-item-info">
-						<strong>Active Users</strong>
-					</div>                   
-					<div class="list-group-item">
-						<code class="pull-right">{{ user.ID }}</code>
-						<strong>UserID:</strong>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right">{{ user.Name }}</code>
-						<strong>Username:</strong>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right">{{ user.NotificationEmail }}</code>
-						<strong>Notification Email:</strong>
-					</div>
-					<div class="list-group-item form-inline">
-						<strong>Notification Email:</strong>
-						<div class="input-group pull-right">
-							<input class="form-control" value="{{ user.NotificationEmail }}">
-							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button">Update</button>
-							</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="list-group-item disabled"></div>
-					<div class="list-group-item">
-						<div class="input-group">
-							<input type="text" class="form-control mono" id="resetLoginPW">
-							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button">
-									<span class="fa fa-retweet"></span> Reset Login PW
-								</button>
-							</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="list-group-item">
-						<a href class="btn btn-warning">
-							<span class="fa fa-power-off"></span> Logout User
-						</a>
-					</div>
-					<div class="list-group-item disabled"></div>
-					<div class="list-group-item">
-						<code class="pull-right" ng-if="user.LastLoginTime!=0">
-						{{ user.LastLoginTime*1000 | date:'medium' }}
-						</code>
-						<strong>Last Login Time:</strong>
-					</div>                    
-					<div class="list-group-item">
-						<code class="pull-right" ng-if="user.LastActivityTime!=0">
-						{{ user.LastActivityTime*1000 | date:'medium' }}
-						</code>
-						<strong>Last Activity Time:</strong>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right" ng-if="user.CreateTime!=0">
-						{{ user.CreateTime*1000 | date:'medium' }}
-						</code>
-						<strong>Create Time:</strong>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right">{{ user.UsedSpace | bytes }}</code>
-						<strong>Used Space:</strong>
-					</div>
-					<div class="list-group-item">
-						<div class="btn-group pull-right">
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==0}">Disabled</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==1}">Incomplete</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==2}">Active</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==3}">Admin</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Status==4}">Super</div>
-						</div>
-						<strong>User Status:</strong>
-					</div>                    
-					<div class="list-group-item">
-						<div class="btn-group pull-right">
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==1}">500 MB</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==2}">1 GB</div>
-							<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': user.Level==3}">10 GB</div>
-						</div>
-						<strong>User Level:</strong>
-					</div>
-					<div class="list-group-item disabled"></div>
-					<div class="list-group-item">
-						<a href class="btn btn-danger">
-							<span class="fa fa-trash-o"></span> Delete from Active Users
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div ng-if="lookupResponse.Invites.length">
-				<div class="list-group" ng-repeat="user in lookupResponse.Invites">
-					<div class="list-group-item list-group-item-warning">
-						<strong>Waiting List</strong>
-					</div>                   
-					<div class="list-group-item">
-						<code class="pull-right">{{ user.ID }}</code>
-						<strong>UserID:</strong>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right">{{ user.Name }}</code>
-						<strong>Username:</strong>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right">{{ user.NotificationEmail }}</code>
-						<strong>Notification Email:</strong>
-					</div>
-					<div class="list-group-item form-inline">
-						<strong>Notification Email:</strong>
-						<div class="input-group pull-right">
-							<input class="form-control" value="{{ user.NotificationEmail }}">
-							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button">Update</button>
-							</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="list-group-item disabled"></div>
-					<div class="list-group-item">
-						<a href class="btn btn-primary">
-							<span ng-show="user.Sent==0"><span class="fa fa-send"></span> Send Invite</span>
-							<span ng-show="user.Sent==1"><span class="fa fa-send"></span> Resend Invite</span>
-						</a>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right" ng-if="user.CreateTime!=0">
-						{{ user.CreateTime*1000 | date:'medium' }}
-						</code>
-						<strong>Create Time:</strong>
-					</div>
-					<div class="list-group-item">
-						<code class="pull-right" ng-if="user.SendTime!=0">
-						{{ user.SendTime*1000 | date:'medium' }}
-						</code>
-						<strong>Send Time:</strong>
-					</div>
-					<div class="list-group-item">
-						<strong>Comment:</strong>
-						<br>
-						<pre>{{ user.Comment }}</pre>
-					</div>
-					<div class="list-group-item disabled"></div>
-					<div class="list-group-item">
-						<a href class="btn btn-danger">
-							<span class="fa fa-trash-o"></span> Delete from Waiting List
-						</a>
-					</div>                    
-				</div>
-			</div>
-		</div>
-	</div>
+	<ng-include src="'templates/_info.html'"></ng-include>
 
 	<hr>
+
 	<pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'20rem'}">{{ lookupResponse }}</pre>
+
 	<p ng-show="lookupResponse.Users.length || lookupResponse.Invites.length">
 		<a class="btn btn-link" href ng-click="advanced = !advanced">Show / Hide raw response</a>
 	</p>

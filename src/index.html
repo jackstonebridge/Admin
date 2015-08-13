@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>ProtonMail Admin Dashboard</title>
+	<title>Admin Dashboard</title>
   <!-- STYLES -->
   <!-- build:css lib/css/main.min.css -->
   <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
@@ -49,8 +49,8 @@
         </li>
       </ul>
       <div class="sidebar-footer">
-        <div class="col-xs-4" ng-if="isLoggedIn()">
-          <a href ng-click="logout()">Logout</a>
+        <div ng-if="isLoggedIn()">
+          <a href ng-click="logout()">Logout of <kbd>{{ user.Name }}</kbd></a>
         </div>
       </div>
     </div>
@@ -58,6 +58,10 @@
 
     <div id="content-wrapper">
       <div class="page-content">
+
+        <p class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
+          <alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+        </p>
 
         <!-- Main Content -->
         <div ui-view></div>
