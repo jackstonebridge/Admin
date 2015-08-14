@@ -1,90 +1,31 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-init="monitor()">
 
-  <div class="account">
-    <kbd class="pull-right mono">119.22/100 MB</kbd>
-    <h2>notify</h2>
-    <table class="table table-bordered">
-      <tbody>
+  <h1 class="alert alert-info"><kbd>{{ TotalUnread }}</kbd> unread emails 
+  <span ng-show="TotalUnread < 100">...Niceee!</span>
+  <span ng-show="TotalUnread > 500">...fuck</span>
+  </h1>
+
+  <div class="account" ng-repeat="acc in monitorAccounts.data.Accounts">
+    <a><h2 ng-click="acc.IsEncrypted = !acc.IsEncrypted" id="{{ acc.Name }}">{{ acc.Name }} <kbd class="mono pull-right">{{ acc.Total }}</kbd></h2></a>
+    <table class="table table-bordered" ng-show="acc.IsEncrypted">
+      <thead>
         <tr class="active">
           <th>Sender</th>
           <th>Title</th>
           <th>Time</th>
         </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span>JBridges &lt;bridges@protonmail.ch&gt;</span></td>
-          <td class="title">Re: Protonmail Account for jbridges</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span> Jason Cox &lt;Jason.Cox@lee.net&gt;</span></td>
-          <td class="title">Out of Office: You have 1 new message(s) in your ProtonMail account m***********@protonmail.ch.</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span>"Karl Moore" &lt;karl@inspire3.com&gt;</span></td>
-          <td class="title">ProtonMail, CONFIRMATION REQUIRED.</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="account">
-    <kbd class="pull-right mono">119.22/100 MB</kbd>
-    <h2>notify</h2>
-    <table class="table table-bordered">
+      </thead>
       <tbody>
-        <tr class="active">
-          <th>Sender</th>
-          <th>Title</th>
-          <th>Time</th>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span>JBridges &lt;bridges@protonmail.ch&gt;</span></td>
-          <td class="title">Re: Protonmail Account for jbridges</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span> Jason Cox &lt;Jason.Cox@lee.net&gt;</span></td>
-          <td class="title">Out of Office: You have 1 new message(s) in your ProtonMail account m***********@protonmail.ch.</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span>"Karl Moore" &lt;karl@inspire3.com&gt;</span></td>
-          <td class="title">ProtonMail, CONFIRMATION REQUIRED.</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
+        <tr ng-repeat="msg in acc.Messages">
+          <td style="width: 10rem">
+            <span class="sender">
+              <strong>{{ msg.SenderName }}</strong> &lt;{{ msg.SenderAddress }}&gt;
+            </span>
+          </td>
+          <td><strong>{{ msg.Subject }}</strong></td>
+          <td style="width: 140px">{{ msg.Time*1000 | date }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-
-  <div class="account">
-    <kbd class="pull-right mono">119.22/100 MB</kbd>
-    <h2>notify</h2>
-    <table class="table table-bordered">
-      <tbody>
-        <tr class="active">
-          <th>Sender</th>
-          <th>Title</th>
-          <th>Time</th>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span>JBridges &lt;bridges@protonmail.ch&gt;</span></td>
-          <td class="title">Re: Protonmail Account for jbridges</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span> Jason Cox &lt;Jason.Cox@lee.net&gt;</span></td>
-          <td class="title">Out of Office: You have 1 new message(s) in your ProtonMail account m***********@protonmail.ch.</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-        <tr>
-          <td class="sender"><i class="fa fa-lock"></i> <span>"Karl Moore" &lt;karl@inspire3.com&gt;</span></td>
-          <td class="title">ProtonMail, CONFIRMATION REQUIRED.</td>
-          <td class="time mono">Aug 03 2015 21:49:58</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
 </div>

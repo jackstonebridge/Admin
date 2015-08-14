@@ -84,6 +84,11 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                         $cookieStore.put('AT', response.data.AccessToken);
                         $cookieStore.put('UID', response.data.Uid);
                         $state.go('dashboard');
+                    },
+                    function(response) {
+                        if (error) {
+                            $rootScope.$emit('addAlert', response);
+                        }
                     }
                 );
             }
@@ -145,6 +150,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }, 
             function(response) {
                 $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
                 // called asynchronously if an error occurs
             }
         );
@@ -173,6 +181,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }, 
             function(response) {
                 $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
                 // called asynchronously if an error occurs
             }
         );
@@ -188,6 +199,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             return;
         }
         $rootScope.loading = true;
+        $scope.lookupResponse = '';
         $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(this.lookupString))
         .then(
             function(response) {
@@ -202,6 +214,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }, 
             function(response) {
                 $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
                 // called asynchronously if an error occurs
             }
         );
@@ -231,6 +246,44 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }, 
             function(response) {
                 $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );        
+    };
+
+    $scope.getTotalUnread = function() {
+        var total = 0;
+        angular.forEach($scope.monitorAccounts.data.Accounts, function(value, key) {
+            total += value.Total;
+        });
+        return total;
+    }
+
+    $scope.monitor = function() {
+
+        // $http.get('/monitor.json')
+        $rootScope.loading = true;
+        $http.get('https://admin-api.protontech.ch/admin/monitor')
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }                
+                else {
+                    $scope.monitorAccounts = response;
+                    $scope.TotalUnread = $scope.getTotalUnread();
+                }
+            }, 
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
                 // called asynchronously if an error occurs
             }
         );        
@@ -256,6 +309,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }, 
             function(response) {
                 $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
                 // called asynchronously if an error occurs
             }
         );        
@@ -277,6 +333,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }, 
             function(response) {
                 $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
                 // called asynchronously if an error occurs
             }
         );        
@@ -299,6 +358,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }, 
             function(response) {
                 $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
                 // called asynchronously if an error occurs
             }
         );        
@@ -322,6 +384,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 }, 
                 function(response) {
                     $rootScope.loading = false;
+                    if (error) {
+                        $rootScope.$emit('addAlert', response);
+                    }
                     // called asynchronously if an error occurs
                 }
             );  
@@ -341,6 +406,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 }, 
                 function(response) {
                     $rootScope.loading = false;
+                    if (error) {
+                        $rootScope.$emit('addAlert', response);
+                    }
                     // called asynchronously if an error occurs
                 }
             );  
@@ -360,6 +428,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 }, 
                 function(response) {
                     $rootScope.loading = false;
+                    if (error) {
+                        $rootScope.$emit('addAlert', response);
+                    }
                     // called asynchronously if an error occurs
                 }
             );  
@@ -392,24 +463,6 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 $rootScope.loading = false;
             }
         )
-
-        // $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(this.lookupString))
-        // .then(
-        //     function(response) {
-        //         $rootScope.loading = false;
-        //         var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-        //         if (error) {
-        //             $rootScope.$emit('addAlert', error);
-        //         }                
-        //         else {
-        //             $scope.lookupResponse = response.data;
-        //         }
-        //     }, 
-        //     function(response) {
-        //         $rootScope.loading = false;
-        //         // called asynchronously if an error occurs
-        //     }
-        // );
 
     };
 

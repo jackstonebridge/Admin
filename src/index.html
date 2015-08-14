@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="RDash">
+<html lang="en" ng-app="RDash" ng-class="{ 'limit': loading }">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,8 +21,10 @@
   <!-- endbuild -->
   <!-- Custom Scripts -->
   <script type="text/javascript" src="js/dashboard.min.js"></script>
+
+  <ng-include src="'templates/_loaderStyle.html'"></ng-include>
 </head>
-<body ng-controller="MasterCtrl">
+<body ng-controller="MasterCtrl" ng-class="{ 'limit': loading }">
   <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
     <!-- Sidebar -->
@@ -70,5 +72,7 @@
     </div><!-- End Content Wrapper -->
   </div><!-- End Page Wrapper -->
 
+
+  <ng-include src="'templates/_loaderCode.html'" ng-show="loading"></ng-include>
 </body>
 </html>
