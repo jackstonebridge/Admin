@@ -25,6 +25,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     $scope.user = {};
     $scope.advanced = false;
     $rootScope.loading = false;
+    $scope.forceMonitorFlag = false;
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
         if (!$scope.isLoggedIn() && toState.name!=='index') {
@@ -262,10 +263,19 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
         return total;
     }
 
+    $scope.forceMonitor = function() {
+        $scope.forceMonitorFlag = true;
+        $scope.monitor();
+    };
+
     $scope.monitor = function() {
+
+        if ($scope.monitorAccounts && !$scope.forceMonitorFlag) return;
 
         // $http.get('/monitor.json')
         $rootScope.loading = true;
+        $scope.monitorAccounts = '';
+        $scope.TotalUnread = '';
         $http.get('https://admin-api.protontech.ch/admin/monitor')
         .then(
             function(response) {
@@ -278,12 +288,14 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                     $scope.monitorAccounts = response;
                     $scope.TotalUnread = $scope.getTotalUnread();
                 }
+                $scope.forceMonitorFlag = false;
             }, 
             function(response) {
                 $rootScope.loading = false;
                 if (error) {
                     $rootScope.$emit('addAlert', response);
                 }
+                $scope.forceMonitorFlag = false;
                 // called asynchronously if an error occurs
             }
         );        

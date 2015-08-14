@@ -38,16 +38,16 @@
         </li>
         <li ng-if="isLoggedIn()" class="sidebar-title"><span>NAVIGATION</span></li>
         <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a href="/#/dashboard">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+          <a ng-disabled="loading" href="/#/dashboard">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
         </li>
         <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a href="/#/monitor">Monitor <span class="menu-icon fa fa-eye"></span></a>
+          <a ng-disabled="loading" href="/#/monitor">Monitor <span class="menu-icon fa fa-eye"></span></a>
         </li>
         <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a href="/#/blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
+          <a ng-disabled="loading" href="/#/blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
         </li>
         <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a href="/#/debug">Debug <span class="menu-icon fa fa-list"></span></a>
+          <a ng-disabled="loading" href="/#/debug">Debug <span class="menu-icon fa fa-list"></span></a>
         </li>
       </ul>
       <div class="sidebar-footer">

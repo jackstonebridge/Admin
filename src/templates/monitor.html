@@ -1,6 +1,9 @@
 <div class="container-fluid" ng-init="monitor()">
 
-  <h1 class="alert alert-info"><kbd>{{ TotalUnread }}</kbd> unread emails 
+  <h1 class="alert alert-info">
+
+  <a ng-click="forceMonitor()" ng-disabled="loading" class="pull-right btn btn-default"><span class="fa fa-refresh"></span></a>
+  <kbd>{{ TotalUnread }}</kbd> unread emails 
   <span ng-show="TotalUnread < 100">...Niceee!</span>
   <span ng-show="TotalUnread > 500">...fuck</span>
   </h1>
