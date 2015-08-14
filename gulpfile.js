@@ -16,6 +16,7 @@ var paths = {
     images: 'src/img/**/*.*',
     templates: 'src/templates/**/*.html',
     index: 'src/index.html',
+    json: 'src/monitor.json',
     bower_fonts: 'src/components/**/*.{ttf,woff,eof,svg}',
 };
 
@@ -52,6 +53,11 @@ gulp.task('build-custom', ['custom-images', 'custom-js', 'custom-less', 'custom-
 gulp.task('custom-images', function() {
     return gulp.src(paths.images)
         .pipe(gulp.dest('dist/img'));
+});
+
+gulp.task('json', function() {
+    return gulp.src(paths.json)
+        .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('custom-js', function() {
@@ -104,5 +110,5 @@ gulp.task('livereload', function() {
 /**
  * Gulp tasks
  */
-gulp.task('build', ['usemin', 'build-assets', 'build-custom']);
+gulp.task('build', ['usemin', 'build-assets', 'build-custom', 'json']);
 gulp.task('default', ['build', 'webserver', 'livereload', 'watch']);
