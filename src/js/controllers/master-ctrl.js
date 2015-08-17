@@ -13,7 +13,24 @@ angular
             number = Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
     }
-});
+})
+.directive('ngConfirmClick', [
+  function(){
+    return {
+      priority: -1,
+      restrict: 'A',
+      link: function(scope, element, attrs){
+        element.bind('click', function(e){
+          var message = attrs.ngConfirmClick;
+          if(message && !confirm(message)){
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        });
+      }
+    }
+  }
+]);
 
 function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
 
@@ -26,9 +43,13 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     $scope.advanced = false;
     $rootScope.loading = false;
     $scope.forceMonitorFlag = false;
+    $scope.blastMode = false;
 
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        if (!$scope.isLoggedIn() && toState.name!=='index') {
+    var AT = $cookieStore.get('AT');
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        
+        if (!$scope.isLoggedIn() && toState.name!=='index' && (AT===undefined)) {
             event.preventDefault(); 
             $state.go('index');
             return;
@@ -84,7 +105,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                         $http.defaults.headers.common['x-pm-uid'] = response.data.Uid;
                         $cookieStore.put('AT', response.data.AccessToken);
                         $cookieStore.put('UID', response.data.Uid);
-                        $state.go('dashboard');
+                        if ($state.current.name=='index') {
+                            $state.go('dashboard');
+                        }
                     },
                     function(response) {
                         if (error) {
@@ -160,6 +183,9 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     };
 
     $scope.logout = function() {
+
+        $rootScope.loading = true;
+
         $http.delete('https://admin-api.protontech.ch/auth')
         .then(
             function(response) {
@@ -191,6 +217,10 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
         
     };
 
+    $scope.initInfo = function() {
+        $scope.lookupResponse = [];
+    };
+
     $scope.lookup = function() {
         if (this.lookupString === undefined) {
             return;
@@ -200,7 +230,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             return;
         }
         $rootScope.loading = true;
-        $scope.lookupResponse = '';
+        $scope.lookupResponse = [];
         $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(this.lookupString))
         .then(
             function(response) {
@@ -210,7 +240,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                     $rootScope.$emit('addAlert', error);
                 }                
                 else {
-                    $scope.lookupResponse = response.data;
+                    $scope.lookupResponse.push(response.data);
                 }
             }, 
             function(response) {
@@ -232,6 +262,8 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
         var data =  {
             "NotificationEmail": this.accountNotfEmail
         };
+
+        $rootScope.loading = true;
 
         $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/noticeemail', data)
         .then(
@@ -307,6 +339,8 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             "Password": this.newLoginPass
         };
 
+        $rootScope.loading = true;
+
         $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/password', data)
         .then(
             function(response) {
@@ -330,6 +364,8 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     };
 
     $scope.logoutUser = function() {
+
+        $rootScope.loading = true;
 
         $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/logout')
         .then(
@@ -355,6 +391,8 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
 
     $scope.deleteUserAU = function() {
 
+        $rootScope.loading = true;
+
         $http.delete('https://admin-api.protontech.ch/admin/user/'+this.accountID)
         .then(
             function(response) {
@@ -378,9 +416,82 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
         );        
     };
 
+    $scope.blast= function() {
+
+        var papaBlastList = Papa.parse(this.blastList);
+        var List = [];
+
+        for(var i = 0; i < papaBlastList.data.length; i++) {
+            var email = papaBlastList.data[i][0];
+            List.push(email);
+        }
+
+        var data =  {
+            "Subject"   : this.blastSubject,
+            "Body"      : this.blastMessage,
+            "Except"    : this.blastMode,
+            "Usernames" : List,
+        };
+
+        $scope.blastData = data;
+
+        $rootScope.loading = true;
+
+        $http.post('https://admin-api.protontech.ch/admin/blast', data)
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }                
+                else {
+                    $rootScope.$emit('addAlert', 'Message Blast Sent.');
+                }
+            }, 
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.deleteUserWL = function() {
+
+        $rootScope.loading = true;
+
+        $http.delete('https://admin-api.protontech.ch/admin/invite/'+this.accountID)
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }                
+                else {
+                    $rootScope.$emit('addAlert', 'Deleted from Waiting List.');
+                    $scope.lookupResponse.Invites = undefined;
+                }
+            }, 
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );        
+    };
+
     $scope.changeStatus = function(action, account) {
 
         // action: 0,2,3
+
+        $rootScope.loading = true;
+
         if (action==0) {
             $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/disable')
             .then(
@@ -450,7 +561,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
       
     };
 
-    // CSV Debug Parsing
+    // CSV MultiLookup Parsing
     $scope.debug = function() {
 
         var promises = [];
@@ -462,7 +573,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             var promise = $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(query))
             .then( 
                 function(response) {
-                    return response;
+                    return response.data;
                 }
             );
             promises.push(promise);
@@ -471,7 +582,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
         $q.all(promises)
         .then( 
             function(response) {
-                $scope.debugData = response;
+                $scope.lookupResponse = response;
                 $rootScope.loading = false;
             }
         )

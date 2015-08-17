@@ -2,34 +2,32 @@
 
 	<form ng-submit="debug()">
 		<p class="alert alert-info">Enter multiple emails and usernames to lookup up many users at once. </p>
-		<p class="alert alert-warning">This doesnt work yet - Jason. </p>
 		<div class="row">
 		<div class="col-md-6">
 			<textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="csvData"></textarea>
 			<br>
-			<button type="submit" class="btn btn-primary" ng-disabled="loading">Debug</button>
+			<button type="submit" class="btn btn-primary" ng-disabled="loading">MultiLookup</button>
 		</div>
 		<div class="col-md-6">
 
 <label>Example:</label>
-<pre>test@protonmail.ch
+<pre>dcl@protonmail.ch
 jason
 andy
-user@protonmail.ch
-edsnow
+contact@protonmail.com
 </pre>
 
 		</div>
 		</div>
 	</form>
 
-	<ng-include src="'templates/_info.html'"></ng-include>
+	<ng-include src="'templates/_info.html'" ng-init="initInfo()"></ng-include>
 
 	<hr>
 
-	<pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'20rem'}">{{ debugData }}</pre>
+	<pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'20rem'}">{{ lookupResponse }}</pre>
 
-	<p ng-show="debugData">
+	<p ng-show="lookupResponse">
 		<a class="btn btn-link" href ng-click="advanced = !advanced">Show / Hide raw response</a>
 	</p>
 

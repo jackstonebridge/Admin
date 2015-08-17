@@ -29,7 +29,7 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
             })
             .state('debug', {
                 url: '/debug',
-                templateUrl: 'templates/debug.html'
+                templateUrl: 'templates/multi.html'
             });
     }
 ]);

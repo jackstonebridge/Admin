@@ -44,103 +44,107 @@ span.sender {
 
 .loader {
   position: absolute;
-  bottom: 5%;
   right: 5%;
-  width: 0;
-  height: 0;
-  font-size: 100rem; 
+  bottom: 5%;
+  -webkit-animation: rotator .5s linear infinite;
+          animation: rotator .5s linear infinite;
 }
 
-.hexagon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-}
-.hexagon .part {
-  position: absolute;
-  width: .5em;
-  height: 0.011em;
-  animation: part 8s linear infinite;
-}
-.hexagon .part::before, .hexagon .part::after {
-  content: '';
-  position: absolute;
-  display: block;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background: currentColor;
-  border-radius: 0.011em 0 0 0.011em;
-  transform-origin: right center;
-  animation: inner 8s linear infinite;
-  animation-play-state: running !important;
-}
-.hexagon .part::before {
-  transform: translateX(-0.00275em) rotate(60deg) translateX(0.00275em);
-}
-.hexagon .part::after {
-  transform: translateX(-0.00275em) rotate(-60deg) translateX(0.00275em);
-}
-.hexagon .part:nth-child(1) {
-  transform: translate(-50%, -50%) rotate(60deg);
-}
-.hexagon .part:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(120deg);
-}
-.hexagon .part:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(180deg);
-}
-.hexagon .part:nth-child(4) {
-  transform: translate(-50%, -50%) rotate(240deg);
-}
-.hexagon .part:nth-child(5) {
-  transform: translate(-50%, -50%) rotate(300deg);
-}
-.hexagon .part:nth-child(6) {
-  transform: translate(-50%, -50%) rotate(360deg);
-}
-.hexagon:nth-child(1) .part, .hexagon:nth-child(1) .part::before, .hexagon:nth-child(1) .part::after {
-  animation-delay: 0s;
-}
-.hexagon:nth-child(2) .part, .hexagon:nth-child(2) .part::before, .hexagon:nth-child(2) .part::after {
-  animation-delay: -1.33333s;
-}
-.hexagon:nth-child(3) .part, .hexagon:nth-child(3) .part::before, .hexagon:nth-child(3) .part::after {
-  animation-delay: -2.66667s;
-}
-.hexagon:nth-child(4) .part, .hexagon:nth-child(4) .part::before, .hexagon:nth-child(4) .part::after {
-  animation-delay: -4s;
-}
-.hexagon:nth-child(5) .part, .hexagon:nth-child(5) .part::before, .hexagon:nth-child(5) .part::after {
-  animation-delay: -5.33333s;
-}
-.hexagon:nth-child(6) .part, .hexagon:nth-child(6) .part::before, .hexagon:nth-child(6) .part::after {
-  animation-delay: -6.66667s;
-}
-.hexagon:nth-child(7) .part, .hexagon:nth-child(7) .part::before, .hexagon:nth-child(7) .part::after {
-  animation-delay: -8s;
-}
-.hexagon:nth-child(2n) {
-  transform: rotate(30deg);
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
 }
 
-@keyframes part {
-  from {
-    width: 0;
+@keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
-  to {
-    width: 1em;
-  }
-}
-@keyframes inner {
-  from {
-    width: 50%;
-  }
-  to {
-    width: 0%;
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
   }
 }
+.path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+      -ms-transform-origin: center;
+          transform-origin: center;
+  -webkit-animation: dash 1s ease-in-out infinite, colors 4s ease-in-out infinite;
+          animation: dash 1s ease-in-out infinite, colors 4s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
 </style>

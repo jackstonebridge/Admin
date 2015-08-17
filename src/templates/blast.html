@@ -1,27 +1,47 @@
 <div class="container-fluid">
 
-    <p class="alert alert-warning">This doesnt work yet - Jason. </p>
+  <form id="blastForm" name="blastForm" ng-submit="blast()">
 
-  <form id="blastForm">
+
+    <div class="alert" ng-class="{ 'alert-info': !blastMode, 'alert-warning': blastMode }">
+      <p>Blast Mode:</p>
+      <p>
+        <label><input type="radio" name="blastMode" ng-value="false" ng-model="blastMode"> Normal Mode</label>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+        <label><input type="radio" name="blastMode" ng-value="true" ng-model="blastMode"> Except Mode</label>
+      </p>
+    </div>
     <div class="form-group">
       <label>Subject</label>
-      <input type="text" class="form-control" placeholder="Subject">
+      <input type="text" class="form-control" placeholder="Subject" ng-model="blastSubject">
+    </div>
+    <div class="form-group">    
+      <label>Body:</label>
+      <textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="blastMessage"></textarea>         
     </div>
     <div class="form-group">
-      <label>Body:</label>
-      <textarea class="form-control"></textarea>
-    </div>
-    <div class="well">
-      <div class="form-group">
-        <label for="exampleInputFile">File input</label>
-        <input type="file" id="exampleInputFile">
-        <p class="help-block">(csv file - only one row, UserName separated by comma)</p>
-      </div>
+      <div class="row">
+        <div class="col-md-6">            
+          <label>Email List:</label>
+          <textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="blastList"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label>Example:</label>
+
+<pre>jason@protonmail.ch
+andy@protonmail.com
+dcl@protonmail.ch
+</pre>
+
+        </div>    
+      </div>    
     </div>
     <p>
       <button type="submit" class="btn btn-primary">Blast to List</button>
-      <button type="button" class="btn btn-danger pull-right" ng-click="open('lg')">Blast to All</button>
+      <button type="button" disabled class="btn btn-danger pull-right" ng-click="open('lg')">Blast to All [disabled for now]</button>
     </p>
+
+    <pre>{{ blastData }}</pre>  
   </form>
 
 </div>
