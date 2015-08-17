@@ -106,7 +106,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                         $cookieStore.put('AT', response.data.AccessToken);
                         $cookieStore.put('UID', response.data.Uid);
                         if ($state.current.name=='index') {
-                            $state.go('dashboard');
+                            $state.go('lookup');
                         }
                     },
                     function(response) {
@@ -169,7 +169,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                     $cookieStore.put('UID', response.data.Uid);
                     $cookieStore.put('RF', response.data.RefreshToken);
                     $cookieStore.put('UN', username);
-                    $state.go('dashboard');
+                    $state.go('lookup');
                 }
             }, 
             function(response) {
@@ -215,6 +215,10 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             }
         );
         
+    };
+
+    $scope.adminList = function() {
+        $scope.Admins = ['123', 'asd', '534'];
     };
 
     $scope.initInfo = function() {

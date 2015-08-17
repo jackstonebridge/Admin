@@ -15,8 +15,8 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
                 url: '/',
                 templateUrl: 'templates/login.html'
             })
-            .state('dashboard', {
-                url: '/dashboard',
+            .state('lookup', {
+                url: '/lookup',
                 templateUrl: 'templates/lookup.html'
             })
             .state('monitor', {
@@ -27,9 +27,13 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
                 url: '/blast',
                 templateUrl: 'templates/blast.html'
             })
-            .state('debug', {
-                url: '/debug',
+            .state('multi-lookup', {
+                url: '/multi-lookup',
                 templateUrl: 'templates/multi.html'
+            })
+            .state('admin-list', {
+                url: '/admin-list',
+                templateUrl: 'templates/admins.html'
             });
     }
 ]);
