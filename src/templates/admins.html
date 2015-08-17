@@ -1,22 +1,26 @@
-<div class="container-fluid" ng-init="adminList()">
+<div class="container-fluid">
+
+	<p ng-show="!Admins">
+	<a href class="btn btn-default" ng-click="adminList()" ng-disabled="loading">
+	Get Admin List
+	</a><br>
+	</p>
 
 	<table class="table table-bordered">
 		<thead>
 			<tr class="active">
-				<th>UserID</th>
 				<th>Username</th>
-				<th>Status</th>
 				<th>Level</th>
-				<th>Last Active</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="admin in Admins">
-				<td>543</td>
-				<td>Jason</td>
-				<td>Active</td>
-				<td>Super</td>
-				<td>Thu Aug 3, 2015</td>
+			<tr ng-repeat="admin in Supers">
+				<th>{{ admin }}</th>
+				<th>Super</th>
+			</tr>
+			<tr ng-repeat="super in Admins">
+				<td>{{ super }}</td>
+				<td>Admin</td>
 			</tr>
 		</tbody>
 	</table>

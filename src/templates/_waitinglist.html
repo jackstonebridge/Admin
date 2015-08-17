@@ -26,12 +26,12 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="list-group-item disabled"></div>
-		<div class="list-group-item">
-			<a href class="btn btn-primary">
+		<form class="list-group-item" ng-submit="sendInvite()">
+			<button type="submit" href class="btn btn-primary">
 				<span ng-show="account.Sent==0"><span class="fa fa-send"></span> Send Invite</span>
 				<span ng-show="account.Sent==1"><span class="fa fa-send"></span> Resend Invite</span>
-			</a>
-		</div>
+			</button>
+		</form>
 		<div class="list-group-item">
 			<code class="pull-right" ng-if="account.CreateTime!=0">
 			{{ account.CreateTime*1000 | date:'medium' }}

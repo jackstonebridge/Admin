@@ -218,7 +218,28 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     };
 
     $scope.adminList = function() {
-        $scope.Admins = ['123', 'asd', '534'];
+        $rootScope.loading = true;
+        $http.get('https://admin-api.protontech.ch/admin/admins')
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }                
+                else {
+                    $scope.Admins = response.data.Admins;
+                    $scope.Supers = response.data.Supers;
+                }
+            }, 
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
     };
 
     $scope.initInfo = function() {
@@ -289,6 +310,32 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 // called asynchronously if an error occurs
             }
         );        
+    };
+
+    $scope.sendInvite = function() {
+
+        $rootScope.loading = true;
+
+        $http.post('https://admin-api.protontech.ch/admin/invite/'+this.accountID+'/send')
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }                
+                else {
+                    $rootScope.$emit('addAlert', 'Invite Sent.');
+                }
+            }, 
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        ); 
     };
 
     $scope.getTotalUnread = function() {
