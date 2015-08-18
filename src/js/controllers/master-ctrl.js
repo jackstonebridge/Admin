@@ -312,6 +312,36 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
         );
     };
 
+    $scope.changeInviteEmail = function() {
+
+        var data =  {
+            "Email": this.Email
+        };
+
+        $rootScope.loading = true;
+
+        $http.put('https://admin-api.protontech.ch/admin/invite/'+this.accountID+'/email', data)
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Invite Email Updated.');
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+    
     $scope.sendInvite = function() {
 
         $rootScope.loading = true;
