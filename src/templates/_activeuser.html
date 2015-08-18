@@ -109,14 +109,15 @@
 			</form>
 			<strong>User Status:</strong>
 		</div>                    
-		<div class="list-group-item">
+		<form class="list-group-item">
+			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">		
 			<div class="btn-group pull-right">
-				<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==1}">500 MB</div>
-				<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==2}">1 GB</div>
-				<div disabled class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==3}">10 GB</div>
+				<button ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==1}">500 MB</button>
+				<button ng-click="changeLevel(2)" class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==2}">1 GB</button>
+				<button ng-click="changeLevel(3)" class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==3}">10 GB</button>
 			</div>
 			<strong>User Level:</strong>
-		</div>
+		</form>
 		<div class="list-group-item disabled"></div>
 		<form class="list-group-item" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU()">
 			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">

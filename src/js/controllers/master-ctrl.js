@@ -534,7 +534,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 }
                 // called asynchronously if an error occurs
             }
-        );        
+        );
     };
 
     $scope.changeStatus = function(action, account) {
@@ -610,6 +610,36 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
             );  
         }
       
+    };
+
+    $scope.changeLevel = function(level) {
+        $rootScope.loading = true;
+
+        var data = {
+            "Level": level
+        }
+
+        $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/level', data)
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }                
+                else {
+                    $rootScope.$emit('addAlert', 'Level changed.');
+                    $scope.lookupResponse.Invites = undefined;
+                }
+            }, 
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
     };
 
     // CSV MultiLookup Parsing
