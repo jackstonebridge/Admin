@@ -4,7 +4,7 @@
 
 angular
 .module('RDash')
-.controller('MasterCtrl', ['$scope', '$cookieStore', '$http', '$rootScope', '$state', '$q', MasterCtrl])
+.controller('MasterCtrl', ['$scope', '$http', '$rootScope', '$state', '$q', MasterCtrl])
 .filter("bytes", function () {
     return function(bytes, precision) {
         if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
@@ -32,7 +32,7 @@ angular
   }
 ]);
 
-function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
+function MasterCtrl($scope, $http, $rootScope, $state, $q) {
 
     $http.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
     $http.defaults.headers.common['x-pm-appversion'] = 'Web_2.0.5';
@@ -45,11 +45,13 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     $scope.forceMonitorFlag = false;
     $scope.blastMode = false;
 
-    var AT = $cookieStore.get('AT');
+    var AT = sessionStorage.getItem('AT');
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-        if (!$scope.isLoggedIn() && toState.name!=='index' && (AT===undefined)) {
+        // console.log(!$scope.isLoggedIn(), (toState.name!=='index'), AT);
+
+        if (!$scope.isLoggedIn() && toState.name!=='index' && !AT) {
             event.preventDefault();
             $state.go('index');
             return;
@@ -67,8 +69,8 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
 
     $scope.$watch($scope.getWidth, function(newValue, oldValue) {
         if (newValue >= mobileView) {
-            if (angular.isDefined($cookieStore.get('toggle'))) {
-                $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
+            if (angular.isDefined(sessionStorage.getItem('toggle'))) {
+                $scope.toggle = ! sessionStorage.getItem('toggle') ? false : true;
             } else {
                 $scope.toggle = true;
             }
@@ -79,12 +81,13 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     });
 
     $scope.init = function() {
-        var AT = $cookieStore.get('AT');
-        var UID = $cookieStore.get('UID');
-        var RF = $cookieStore.get('RF');
-        var UN = $cookieStore.get('UN');
+        var AT = sessionStorage.getItem('AT');
+        var UID = sessionStorage.getItem('UID');
+        var RF = sessionStorage.getItem('RF');
+        var UN = sessionStorage.getItem('UN');
         $scope.showLogin = false;
-        if ((AT !== undefined) && (UID !== undefined)) {
+        if (AT && UID) {
+            console.log(AT, UID, RF, UN);
             $http.defaults.headers.common['Authorization'] = 'Bearer '+AT;
             $http.defaults.headers.common['x-pm-uid'] = UID;
             if ($state.current.name==='') {
@@ -103,8 +106,8 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                         $scope.user.Name = UN;
                         $http.defaults.headers.common['Authorization'] = 'Bearer '+response.data.AccessToken;
                         $http.defaults.headers.common['x-pm-uid'] = response.data.Uid;
-                        $cookieStore.put('AT', response.data.AccessToken);
-                        $cookieStore.put('UID', response.data.Uid);
+                        sessionStorage.setItem('AT', response.data.AccessToken);
+                        sessionStorage.setItem('UID', response.data.Uid);
                         if ($state.current.name=='index') {
                             $state.go('lookup');
                         }
@@ -124,7 +127,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
 
     $scope.toggleSidebar = function() {
         $scope.toggle = !$scope.toggle;
-        $cookieStore.put('toggle', $scope.toggle);
+        sessionStorage.setItem('toggle', $scope.toggle);
     };
 
     window.onresize = function() {
@@ -133,7 +136,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
 
     $scope.isLoggedIn = function() {
         return ($scope.user.UserStatus !== undefined);
-    }
+    };
 
     $scope.login = function() {
 
@@ -165,10 +168,10 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                     $scope.user.Name = username;
                     $http.defaults.headers.common['Authorization'] = 'Bearer '+response.data.AccessToken;
                     $http.defaults.headers.common['x-pm-uid'] = response.data.Uid;
-                    $cookieStore.put('AT', response.data.AccessToken);
-                    $cookieStore.put('UID', response.data.Uid);
-                    $cookieStore.put('RF', response.data.RefreshToken);
-                    $cookieStore.put('UN', username);
+                    sessionStorage.setItem('AT', response.data.AccessToken);
+                    sessionStorage.setItem('UID', response.data.Uid);
+                    sessionStorage.setItem('RF', response.data.RefreshToken);
+                    sessionStorage.setItem('UN', username);
                     $state.go('lookup');
                 }
             },
@@ -195,15 +198,6 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                     $rootScope.$emit('addAlert', error);
                 }
                 else {
-                    $scope.user = {};
-                    $http.defaults.headers.common['Authorization'] = undefined;
-                    $http.defaults.headers.common['x-pm-uid'] = undefined;
-                    $cookieStore.remove('AT');
-                    $cookieStore.remove('UID');
-                    $cookieStore.remove('RF');
-                    $scope.showLogin = true;
-                    $state.go('index');
-                    window.location.reload();
                 }
             },
             function(response) {
@@ -214,6 +208,13 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 // called asynchronously if an error occurs
             }
         );
+        $scope.user = {};
+        $http.defaults.headers.common['Authorization'] = undefined;
+        $http.defaults.headers.common['x-pm-uid'] = undefined;
+        sessionStorage.clear();
+        $scope.showLogin = true;
+        $state.go('index');
+        window.location.reload();        
 
     };
 
@@ -247,7 +248,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
     };
 
     $scope.lookup = function() {
-        if (this.lookupString === undefined) {
+        if (this.lookupString == 'undefined') {
             return;
         }
         var lookupString = this.lookupString.trim();
@@ -484,7 +485,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Deleted from Active Users.');
-                    $scope.lookupResponse.Users = undefined;
+                    $scope.lookupResponse.Users = 'undefined';
                 }
             },
             function(response) {
@@ -564,7 +565,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Deleted from Waiting List.');
-                    $scope.lookupResponse.Invites = undefined;
+                    $scope.lookupResponse.Invites = 'undefined';
                 }
             },
             function(response) {
@@ -670,7 +671,7 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Level changed.');
-                    $scope.lookupResponse.Invites = undefined;
+                    $scope.lookupResponse.Invites = 'undefined';
                 }
             },
             function(response) {
