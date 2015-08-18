@@ -71,11 +71,11 @@
 		<div class="list-group-item">
 			<form class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
 				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
-				<button ng-click="changeStatus(0)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs" 
 				ng-class="{'btn-primary': account.Status==0}">
 					Disabled
 				</button>
-				<button ng-click="changeStatus(2)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs" 
 				ng-class="{'btn-primary': account.Status==2}">
 					Enabled
 				</button>
@@ -90,15 +90,15 @@
 			</form>
 			<form class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
 				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
-				<button ng-click="changeStatus(0)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
 					ng-class="{'btn-primary': account.Status==0}">
 					Disabled
 				</button>
-				<button ng-click="changeStatus(2)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
 					ng-class="{'btn-primary': account.Status==2}">
 					Enabled
 				</button>
-				<button ng-click="changeStatus(3)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(3, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
 					ng-class="{'btn-primary': account.Status==3}">
 					Admin
 				</button>
