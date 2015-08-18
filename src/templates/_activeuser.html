@@ -2,7 +2,7 @@
 	<div class="list-group" ng-repeat="account in response.Users">
 		<div class="list-group-item list-group-item-info">
 			<strong>Active Users</strong>
-		</div>                   
+		</div>
 		<div class="list-group-item">
 			<code class="pull-right">{{ account.ID }}</code>
 			<input type="hidden" ng-init="accountID=account.ID">
@@ -51,7 +51,7 @@
 			{{ account.LastLoginTime*1000 | date:'medium' }}
 			</code>
 			<strong>Last Login Time:</strong>
-		</div>                    
+		</div>
 		<div class="list-group-item">
 			<code class="pull-right" ng-if="account.LastActivityTime!=0">
 			{{ account.LastActivityTime*1000 | date:'medium' }}
@@ -70,47 +70,47 @@
 		</div>
 		<div class="list-group-item">
 			<form class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
-				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
-				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs" 
-				ng-class="{'btn-primary': account.Status==0}">
+				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID" />
+				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs"
+				ng-class="{'btn-primary': account.Status===0}">
 					Disabled
 				</button>
-				<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs" 
-				ng-class="{'btn-primary': account.Status==2}">
+				<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs"
+				ng-class="{'btn-primary': account.Status===2}">
 					Enabled
 				</button>
-				<button type="button" disabled class="btn btn-default btn-xs" 
-				ng-class="{'btn-primary': account.Status==3}">
+				<button type="button" disabled class="btn btn-default btn-xs"
+				ng-class="{'btn-primary': account.Status===3}">
 					Admin
 				</button>
-				<button type="button" disabled class="btn btn-default btn-xs" 
-				ng-class="{'btn-primary': account.Status==4}">
+				<button type="button" disabled class="btn btn-default btn-xs"
+				ng-class="{'btn-primary': account.Status===4}">
 					Super
 				</button>
 			</form>
 			<form class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
 				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
-				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs"
 					ng-class="{'btn-primary': account.Status==0}">
 					Disabled
 				</button>
-				<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs"
 					ng-class="{'btn-primary': account.Status==2}">
 					Enabled
 				</button>
-				<button ng-click="changeStatus(3, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs" 
+				<button ng-click="changeStatus(3, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs"
 					ng-class="{'btn-primary': account.Status==3}">
 					Admin
 				</button>
-				<button type="button" disabled class="btn btn-default btn-xs" 
+				<button type="button" disabled class="btn btn-default btn-xs"
 					ng-class="{'btn-primary': account.Status==4}">
 					Super
 				</button>
 			</form>
 			<strong>User Status:</strong>
-		</div>                    
+		</div>
 		<form class="list-group-item">
-			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">		
+			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
 			<div class="btn-group pull-right">
 				<button ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==1}">500 MB</button>
 				<button ng-click="changeLevel(2)" class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==2}">1 GB</button>
