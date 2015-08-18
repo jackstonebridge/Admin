@@ -527,7 +527,17 @@ function MasterCtrl($scope, $cookieStore, $http, $rootScope, $state, $q) {
                     $rootScope.$emit('addAlert', error);
                 }
                 else {
-                    $rootScope.$emit('addAlert', 'Message Blast Sent.');
+                    if (response.data.Responses.length==0) {
+                        $rootScope.$emit('addAlert', 'Message Blast Sent. No errors!');    
+                    }
+                    else {
+                        var message = '';
+                        response.data.Responses.forEach( function(rsp) {
+                            message += '<p>'+rsp.Error+': <code>'+rsp.ErrorDescription+'</code></p>';
+                        });
+                        $rootScope.$emit('addAlert', message);
+                    }
+                    
                 }
             },
             function(response) {

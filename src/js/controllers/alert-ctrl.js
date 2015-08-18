@@ -4,14 +4,14 @@
 
 angular
     .module('RDash')
-    .controller('AlertsCtrl', ['$scope', '$rootScope', AlertsCtrl]);
+    .controller('AlertsCtrl', ['$scope', '$rootScope', '$sce', AlertsCtrl]);
 
-function AlertsCtrl($scope, $rootScope) {
+function AlertsCtrl($scope, $rootScope, $sce) {
     $scope.alerts = [];
 
     $scope.addAlert = function(message) {
         $scope.alerts = [{
-            msg: message
+            msg: $sce.trustAsHtml(message)
         }];
     };
 
