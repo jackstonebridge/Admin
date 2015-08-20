@@ -93,7 +93,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
             if ($state.current.name==='') {
                 var data = {
                     "ResponseType": "token",
-                    "ClientID": "demoapp",
+                    "ClientID": "c916d8e8712f96c719acab4ec54e7844",
                     "GrantType": "refresh_token",
                     "RefreshToken": RF,
                     "RedirectURI": "http://protonmail.ch",
