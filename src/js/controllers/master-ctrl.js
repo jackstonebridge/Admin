@@ -93,7 +93,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
             if ($state.current.name==='') {
                 var data = {
                     "ResponseType": "token",
-                    "ClientID": "c916d8e8712f96c719acab4ec54e7844",
+                    "ClientID": "B0SS",
                     "GrantType": "refresh_token",
                     "RefreshToken": RF,
                     "RedirectURI": "http://protonmail.ch",
@@ -146,8 +146,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
             "ResponseType": "token",
             "Username": this.username, // this referecnes the form object thats sent for ng-submit
             "Password": this.password,
-            "ClientID": "demoapp",
-            "ClientSecret": "demopass",
+            "ClientID": "B0SS",
+            "ClientSecret": "c916d8e8712f96c719acab4ec54e7844",
             "GrantType": "password",
             "RedirectURI": "http://protonmail.ch",
             "State": "random_string"
