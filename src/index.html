@@ -65,7 +65,12 @@
       <div class="page-content">
 
         <p class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
-          <alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" ng-bind-html="alert.msg"></alert>
+          <alert 
+          data-ng-repeat="alert in alerts" 
+          type="{{alert.type}}" 
+          close="closeAlert($index)" 
+          ng-click="closeAlert($index)"
+          ng-bind-html="alert.msg"></alert>
         </p>
 
         <!-- Main Content -->
