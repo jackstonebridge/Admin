@@ -4,7 +4,7 @@
 
 angular
 .module('RDash')
-.controller('MasterCtrl', ['$scope', '$http', '$rootScope', '$state', '$q', MasterCtrl])
+.controller('MasterCtrl', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', MasterCtrl])
 .filter("bytes", function () {
     return function(bytes, precision) {
         if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
@@ -30,9 +30,19 @@ angular
       }
     }
   }
-]);
+])
+.factory('myHttpInterceptor', function() {
+    return {
+        response: function(response) {
+            return response;
+        }
+    }
+})
+.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push('myHttpInterceptor');
+}]);
 
-function MasterCtrl($scope, $http, $rootScope, $state, $q) {
+function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout) {
 
     $http.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
     $http.defaults.headers.common['x-pm-appversion'] = 'Web_2.0.5';
@@ -87,7 +97,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
         var UN = sessionStorage.getItem('UN');
         $scope.showLogin = false;
         if (AT && UID) {
-            console.log(AT, UID, RF, UN);
+            // console.log(AT, UID, RF, UN);
             $http.defaults.headers.common['Authorization'] = 'Bearer '+AT;
             $http.defaults.headers.common['x-pm-uid'] = UID;
             if ($state.current.name==='') {
@@ -123,6 +133,21 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
         else {
             $scope.showLogin = true;
         }
+        if ($state.params.query!==undefined) {
+            $scope.lookup($state.params.query);
+        }
+
+        var query = '';
+        query = $location.$$path.replace("/lookup/", '');
+
+        console.log(query);
+
+        if (query!=='' && query!=='/') {
+            $timeout( function() {
+                $scope.lookup(query);
+            }, 1000);
+        }
+
     };
 
     $scope.toggleSidebar = function() {
@@ -247,14 +272,22 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
         $scope.lookupResponse = [];
     };
 
-    $scope.lookup = function() {
-        if (this.lookupString == 'undefined') {
-            return;
+    $scope.lookup = function(query) {
+        if (this.lookupString === undefined) {
+            if (query === undefined) {
+                return;
+            }
+            else {
+                lookupString = query;
+            }
         }
-        var lookupString = this.lookupString.trim();
-        if (lookupString==='') {
-            return;
+        else {
+            lookupString = this.lookupString.trim();
         }
+
+        window.location.hash = '#/lookup/'+lookupString;
+
+        $scope.lookupString = lookupString;
         $rootScope.loading = true;
         $scope.lookupResponse = [];
         $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(this.lookupString))
@@ -485,7 +518,6 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Deleted from Active Users.');
-                    $scope.lookupResponse.Users = 'undefined';
                 }
             },
             function(response) {
@@ -713,4 +745,5 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q) {
     };
 
     $scope.init();
+   
 }
