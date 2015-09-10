@@ -398,7 +398,9 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     $rootScope.$emit('addAlert', error);
                 }
                 else {
-                    $rootScope.$emit('addAlert', 'Invite Sent.');
+                    $rootScope.$emit('addAlert', 'Invite Sent for '+$scope.lookupString);
+                    $scope.lookupResponse = [];
+                    $scope.lookupString = '';
                 }
             },
             function(response) {
