@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
 	<div class="row">
-		<form class="form-inline col-md-8 col-md-offset-2" ng-submit="lookup()">
+		<form method="POST" class="form-inline col-md-8 col-md-offset-2" ng-submit="lookup()">
 			<div class="form-group text-center" ng-style="{'width':'100%'}">
 				<input id="lookupField" type="text" class="form-control input-lg" ng-model="lookupString" placeholder="Username or Email">
 				<button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading">User Lookup</button>

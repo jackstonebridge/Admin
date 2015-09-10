@@ -18,7 +18,7 @@
 		</div>
 		<div class="list-group-item form-inline" ng-show="{{ user.Scope=='admin super' }}">
 			<strong>Notification Email:</strong>
-			<form class="input-group pull-right" ng-submit="changeNotificationEmail()">
+			<form method="POST" class="input-group pull-right" ng-submit="changeNotificationEmail()">
 				<input class="form-control" ng-init="accountNotfEmail =  account.NotificationEmail"  ng-model="accountNotfEmail">
 				<span class="input-group-btn">
 					<button class="btn btn-primary" type="submit">Update</button>
@@ -28,7 +28,7 @@
 		</div>
 		<div class="list-group-item disabled"></div>
 		<div class="list-group-item">
-			<form class="input-group" ng-submit="updateLoginPassword()">
+			<form method="POST" class="input-group" ng-submit="updateLoginPassword()">
 				<input type="text" class="form-control mono" id="resetLoginPW" ng-init="newLoginPass = randPass()" ng-model="newLoginPass">
 				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
 				<span class="input-group-btn">
@@ -39,7 +39,7 @@
 			</form>
 			<div class="clearfix"></div>
 		</div>
-		<form class="list-group-item" ng-submit="logoutUser()">
+		<form method="POST" class="list-group-item" ng-submit="logoutUser()">
 			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
 			<button type="submit" href class="btn btn-warning">
 				<span class="fa fa-power-off"></span> Logout User
@@ -70,7 +70,7 @@
 			<strong>Used Space:</strong>
 		</div>
 		<div class="list-group-item">
-			<form class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
+			<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
 				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID" />
 				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 3 || account.Status == 4 }}" class="btn btn-default btn-xs"
 				ng-class="{'btn-primary': account.Status===0}">
@@ -89,7 +89,7 @@
 					Super
 				</button>
 			</form>
-			<form class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
+			<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
 				<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
 				<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ account.Status == 4 }}" class="btn btn-default btn-xs"
 					ng-class="{'btn-primary': account.Status==0}">
@@ -110,7 +110,7 @@
 			</form>
 			<strong>User Status:</strong>
 		</div>
-		<form class="list-group-item">
+		<form method="POST" class="list-group-item">
 			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
 			<div class="btn-group pull-right">
 				<button ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': account.Level==1}">500 MB</button>
@@ -120,7 +120,7 @@
 			<strong>User Level:</strong>
 		</form>
 		<div class="list-group-item disabled"></div>
-		<form class="list-group-item" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU()">
+		<form method="POST" class="list-group-item" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU()">
 			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
 			<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
 				<span class="fa fa-trash-o"></span> Delete from Active Users

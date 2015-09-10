@@ -13,7 +13,7 @@
 		</div>
 		<div class="list-group-item form-inline">
 			<strong>Notification Email:</strong>
-			<form class="input-group pull-right" ng-submit="changeInviteEmail()">
+			<form method="POST" class="input-group pull-right" ng-submit="changeInviteEmail()">
 				<input class="form-control" ng-init="Email =  account.NotificationEmail"  ng-model="Email">
 				<span class="input-group-btn">
 					<button class="btn btn-primary" type="submit">Update</button>
@@ -22,7 +22,7 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="list-group-item disabled"></div>
-		<form class="list-group-item" ng-submit="sendInvite()">
+		<form method="POST" class="list-group-item" ng-submit="sendInvite()">
 			<button type="submit" href class="btn btn-primary">
 				<span ng-show="account.Sent==0"><span class="fa fa-send"></span> Send Invite</span>
 				<span ng-show="account.Sent==1"><span class="fa fa-send"></span> Resend Invite</span>
@@ -46,7 +46,7 @@
 			<pre ng-show="{{ account.Comment!='' }}">{{ account.Comment }}</pre>
 		</div>
 		<div class="list-group-item disabled"></div>
-		<form class="list-group-item" ng-submit="deleteUserWL()">
+		<form method="POST" class="list-group-item" ng-submit="deleteUserWL()">
 			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
 			<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
 				<span class="fa fa-trash-o"></span> Delete from Waiting List
