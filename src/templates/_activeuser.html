@@ -65,7 +65,8 @@
 			<strong>Create Time:</strong>
 		</div>
 		<div class="list-group-item">
-			<code class="pull-right">{{ account.UsedSpace | bytes }}</code>
+			<code class="pull-right" ng-if="account.UsedSpace==0">{{ account.UsedSpace }}</code>
+			<code class="pull-right" ng-if="account.UsedSpace!=0">{{ account.UsedSpace | bytes }}</code>
 			<strong>Used Space:</strong>
 		</div>
 		<div class="list-group-item">
