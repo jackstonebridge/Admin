@@ -22,6 +22,15 @@
   <!-- Custom Scripts -->
   <script type="text/javascript" src="js/dashboard.min.js"></script>
 
+  <style type="text/css">
+  .alerts-container {
+    position: fixed;
+    right: 1rem;
+    right: 1rem;
+    z-index: 999;
+    opacity: .9;
+  }
+  </style>
   <ng-include src="'templates/_loaderStyle.html'"></ng-include>
 </head>
 <body ng-controller="MasterCtrl" ng-class="{ 'limit': loading }">

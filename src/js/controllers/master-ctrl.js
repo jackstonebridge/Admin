@@ -299,6 +299,15 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     $rootScope.$emit('addAlert', error);
                 }
                 else {
+                    // if empty we say "No info found."
+                    if (
+                        response.data.Invites &&
+                        response.data.Users &&
+                        response.data.Invites.length == 0 &&
+                        response.data.Users.length == 0
+                    ) {
+                        $rootScope.$emit('addAlert', 'No information found');
+                    }
                     $scope.lookupResponse.push(response.data);
                 }
             },
