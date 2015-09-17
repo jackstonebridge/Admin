@@ -38,8 +38,22 @@
     float: left;
     width: 49%;
   }
-  .col:nth-child(1) {
+  .col.right {
     float: right;
+  }
+  body .list-group-item.disabled {
+    padding: 1px;
+  }
+  section .row.results {
+    margin-bottom: 4rem;
+  }
+  .row.results h1 {
+    background: #30426a;
+    display: block;
+    padding-left: 40px;
+    margin-left:-20px;
+    color: #fff;
+    line-height: 2em;
   }
   </style>
   <ng-include src="'templates/_loaderStyle.html'"></ng-include>
