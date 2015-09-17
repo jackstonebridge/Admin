@@ -314,9 +314,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
-                    $rootScope.$emit('addAlert', response);
-                }
+                $rootScope.$emit('addAlert', response);
                 // called asynchronously if an error occurs
             }
         );
