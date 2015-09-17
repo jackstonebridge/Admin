@@ -44,6 +44,9 @@ angular
 
 function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout) {
 
+    // var apiUrl = 'https://admin-api.protontech.ch';
+    var apiUrl = 'https://test-api.protonmail.ch';
+
     $http.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
     $http.defaults.headers.common['x-pm-appversion'] = 'Web_2.0.5';
     $http.defaults.headers.common['x-pm-apiversion'] = '1';
@@ -109,7 +112,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     "RedirectURI": "http://protonmail.ch",
                     "State": "random_string"
                 };
-                $http.post('https://admin-api.protontech.ch/auth/refresh', data)
+                $http.post(apiUrl+'/auth/refresh', data)
                 .then(
                     function(response) {
                         $scope.user = response.data;
@@ -180,7 +183,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $rootScope.$emit('closeAlert', 0);
 
         $rootScope.loading = true;
-        $http.post('https://admin-api.protontech.ch/auth', data)
+        $http.post(apiUrl+'/auth', data)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -214,7 +217,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.delete('https://admin-api.protontech.ch/auth')
+        $http.delete(apiUrl+'/auth')
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -245,7 +248,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     $scope.adminList = function() {
         $rootScope.loading = true;
-        $http.get('https://admin-api.protontech.ch/admin/admins')
+        $http.get(apiUrl+'/admin/admins')
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -290,7 +293,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.lookupString = lookupString;
         $rootScope.loading = true;
         $scope.lookupResponse = [];
-        $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(this.lookupString))
+        $http.get(apiUrl+'/admin/lookup/'+escape(this.lookupString))
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -301,10 +304,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 else {
                     // if empty we say "No info found."
                     if (
-                        response.data.Invites &&
-                        response.data.Users &&
-                        response.data.Invites.length == 0 &&
-                        response.data.Users.length == 0
+                        response.data.Results &&
+                        response.data.Results.length == 0                    
                     ) {
                         $rootScope.$emit('addAlert', 'No information found');
                     }
@@ -333,7 +334,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/noticeemail', data)
+        $http.put(apiUrl+'/admin/user/'+this.accountID+'/noticeemail', data)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -363,7 +364,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.put('https://admin-api.protontech.ch/admin/invite/'+this.accountID+'/email', data)
+        $http.put(apiUrl+'/admin/invite/'+this.accountID+'/email', data)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -389,7 +390,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.post('https://admin-api.protontech.ch/admin/invite/'+this.accountID+'/send')
+        $http.post(apiUrl+'/admin/invite/'+this.accountID+'/send')
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -434,7 +435,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $rootScope.loading = true;
         $scope.monitorAccounts = '';
         $scope.TotalUnread = '';
-        $http.get('https://admin-api.protontech.ch/admin/monitor')
+        $http.get(apiUrl+'/admin/monitor')
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -467,7 +468,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/password', data)
+        $http.put(apiUrl+'/admin/user/'+this.accountID+'/password', data)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -493,7 +494,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/logout')
+        $http.put(apiUrl+'/admin/user/'+this.accountID+'/logout')
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -519,7 +520,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.delete('https://admin-api.protontech.ch/admin/user/'+this.accountID)
+        $http.delete(apiUrl+'/admin/user/'+this.accountID)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -562,7 +563,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.post('https://admin-api.protontech.ch/admin/blast', data)
+        $http.post(apiUrl+'/admin/blast', data)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -598,7 +599,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.delete('https://admin-api.protontech.ch/admin/invite/'+this.accountID)
+        $http.delete(apiUrl+'/admin/invite/'+this.accountID)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -608,7 +609,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Deleted from Waiting List.');
-                    $scope.lookupResponse.Invites = 'undefined';
+                    $scope.lookupResponse.Results = 'undefined';
                 }
             },
             function(response) {
@@ -629,7 +630,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         account.Status = action;
         
         if (action==0) {
-            $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/disable')
+            $http.put(apiUrl+'/admin/user/'+this.accountID+'/disable')
             .then(
                 function(response) {
                     $rootScope.loading = false;
@@ -651,7 +652,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             );
         }
         else if (action==2) {
-            $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/enable')
+            $http.put(apiUrl+'/admin/user/'+this.accountID+'/enable')
             .then(
                 function(response) {
                     $rootScope.loading = false;
@@ -673,7 +674,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             );
         }
         else if (action==3) {
-            $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/admin')
+            $http.put(apiUrl+'/admin/user/'+this.accountID+'/admin')
             .then(
                 function(response) {
                     $rootScope.loading = false;
@@ -704,7 +705,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             "Level": level
         }
 
-        $http.put('https://admin-api.protontech.ch/admin/user/'+this.accountID+'/level', data)
+        $http.put(apiUrl+'/admin/user/'+this.accountID+'/level', data)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -714,7 +715,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Level changed.');
-                    $scope.lookupResponse.Invites = 'undefined';
+                    $scope.lookupResponse.Results = 'undefined';
                 }
             },
             function(response) {
@@ -736,7 +737,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         for(var i = 0; i < $scope.debugJSON.data.length; i++) {
             var query = $scope.debugJSON.data[i][0];
-            var promise = $http.get('https://admin-api.protontech.ch/admin/lookup/'+escape(query))
+            var promise = $http.get(apiUrl+'/admin/lookup/'+escape(query))
             .then(
                 function(response) {
                     return response.data;
