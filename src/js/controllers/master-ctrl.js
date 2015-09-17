@@ -44,8 +44,8 @@ angular
 
 function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout) {
 
-    // var apiUrl = 'https://admin-api.protontech.ch';
-    var apiUrl = 'https://test-api.protonmail.ch';
+    var apiUrl = 'https://admin-api.protontech.ch';
+    // var apiUrl = 'https://test-api.protonmail.ch';
 
     $http.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
     $http.defaults.headers.common['x-pm-appversion'] = 'Web_2.0.5';
