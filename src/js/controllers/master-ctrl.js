@@ -620,12 +620,9 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.changeStatus = function(action, account) {
-
-        // action: 0,2,3
+    $scope.changeStatus = function(action) {
 
         $rootScope.loading = true;
-        account.Status = action;
         
         if (action==0) {
             $http.put(apiUrl+'/admin/user/'+this.accountID+'/disable')
