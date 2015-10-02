@@ -635,6 +635,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     }
                     else {
                         $rootScope.$emit('addAlert', 'User Disabled.');
+                        window.location.reload();
                     }
                 },
                 function(response) {
@@ -657,6 +658,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     }
                     else {
                         $rootScope.$emit('addAlert', 'User Enabled.');
+                        window.location.reload();
                     }
                 },
                 function(response) {
@@ -679,6 +681,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     }
                     else {
                         $rootScope.$emit('addAlert', 'User is now ADMIN.');
+                        window.location.reload();
                     }
                 },
                 function(response) {
