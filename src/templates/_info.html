@@ -69,11 +69,7 @@
 				<input type="hidden" ng-init="accountID=result.User.ID">
 				<strong>UserID:</strong>
 			</div>
-			<div class="list-group-item" ng-show="{{ user.Scope=='admin' }}">
-				<code class="pull-right">{{ result.User.NotificationEmail }}</code>
-				<strong>Notification Email:</strong>
-			</div>
-			<div class="list-group-item form-inline" ng-show="{{ user.Scope=='admin super' }}">
+			<div class="list-group-item form-inline">
 				<strong>Notification Email:</strong>
 				<form method="POST" class="input-group pull-right" ng-submit="changeNotificationEmail()">
 					<input class="form-control" ng-init="accountNotfEmail =  result.User.NotificationEmail"  ng-model="accountNotfEmail">
