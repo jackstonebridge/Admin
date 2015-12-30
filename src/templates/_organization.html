@@ -1,0 +1,121 @@
+<section ng-repeat="response in lookupResponse">
+
+<div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
+
+	<!-- User lookup results -->
+	<h1 ng-if="result.DisplayName">{{ result.DisplayName }}</h1>
+
+	<div class="col">
+		<div ng-if="result.DisplayName" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Organization</strong>
+			</div>
+			<div class="list-group-item">
+				<code class="pull-right">{{ result.OrganizationID }}</code>
+				<strong>OrganizationID:</strong>
+			</div>
+			<div class="list-group-item">
+				<strong>Used domains:</strong>
+				<!-- Careful, pull-right means these are shown in reverse order on the page -->
+				<code class="pull-right">{{ result.MaxDomains }}</code>
+				<strong class="pull-right">&nbsp;of&nbsp;</strong>
+				<code class="pull-right">{{ result.UsedDomains }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Used addresses:</strong>
+				<!-- Careful, pull-right means these are shown in reverse order on the page -->
+				<code class="pull-right">{{ result.MaxAddresses }}</code>
+				<strong class="pull-right">&nbsp;of&nbsp;</strong>
+				<code class="pull-right">{{ result.UsedAddresses }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Used space:</strong>
+				<!-- Careful, pull-right means these are shown in reverse order on the page -->
+				<code class="pull-right">{{ result.MaxSpace }}</code>
+				<strong class="pull-right">&nbsp;of&nbsp;</strong>
+				<code class="pull-right">{{ result.UsedSpace }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Assigned space:</strong>
+				<!-- Careful, pull-right means these are shown in reverse order on the page -->
+				<code class="pull-right">{{ result.MaxSpace }}</code>
+				<strong class="pull-right">&nbsp;of&nbsp;</strong>
+				<code class="pull-right">{{ result.AssignedSpace }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Two-factor authentication:</strong>
+				<code class="pull-right">{{ result.Use2FA }}</code>
+			</div>
+
+			<div class="list-group-item">
+				<code class="pull-right" ng-if="result.NextPaymentTime !== 0">
+				{{ result.NextPaymentTime*1000 | date:'medium' }}
+				</code>
+				<strong>Next payment time:</strong>
+			</div>
+
+			<div class="list-group-item disabled"></div>
+			<form method="POST" class="list-group-item text-center" ng-submit="deleteOrganization()">
+				<input type="hidden" ng-init="OrganizationID=result.OrganizationID" ng-model="OrganizationID">
+				<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANNOT BE UNDONE.">
+					<span class="fa fa-trash-o">&nbsp;Delete organization</span>
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<div class="col right">
+
+		<div ng-if="result.Members" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Members</strong>
+			</div>
+			<div ng-repeat="x in result.Members">
+				<div class="list-group-item">
+					<strong>MemberID:</strong>
+					<code class="pull-right">{{ x.MemberID }}</code>
+				</div>
+				<div class="list-group-item">
+					<strong>Role:</strong>
+					<code class="pull-right">{{ x.Role }}</code>
+				</div>
+				<div class="list-group-item">
+					<strong>Private:</strong>
+					<code class="pull-right">{{ x.Private }}</code>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="result.Domains" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Domains</strong>
+			</div>
+
+			<div ng-repeat="x in result.Domains">
+				<div class="list-group-item">
+					<strong>DomainID:</strong>
+					<code class="pull-right">{{ x.DomainID }}</code>
+				</div>
+				<div class="list-group-item">
+					<strong>Domain name:</strong>
+					<code class="pull-right">{{ x.DomainName }}</code>
+				</div>
+				<div class="list-group-item">
+					<strong>State:</strong>
+					<code class="pull-right">{{ x.State }}</code>
+				</div>
+				<div class="list-group-item disabled"></div>
+				<div class="list-group-item text-center">
+					<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('domain', this.x.DomainID)">
+						<span>Lookup domain</span>
+					</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+</section>

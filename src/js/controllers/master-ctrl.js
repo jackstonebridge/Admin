@@ -1,21 +1,24 @@
 /**
  * Master Controller
  */
+var DEBUG = true;
 
 angular
 .module('RDash')
 .controller('MasterCtrl', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', MasterCtrl])
 .filter("bytes", function () {
+    "use strict";
     return function(bytes, precision) {
-        if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
-        if (typeof precision === 'undefined') precision = 1;
+        if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) { return '-'; }
+        if (typeof precision === 'undefined') { precision = 1; }
         var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
             number = Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
-    }
+    };
 })
 .directive('ngConfirmClick', [
   function(){
+    "use strict";
     return {
       priority: -1,
       restrict: 'A',
@@ -28,27 +31,42 @@ angular
           }
         });
       }
-    }
+    };
   }
 ])
 .factory('myHttpInterceptor', function() {
+    "use strict";
     return {
         response: function(response) {
             return response;
         }
-    }
+    };
 })
 .config(['$httpProvider', function ($httpProvider) {
+    "use strict";
     $httpProvider.interceptors.push('myHttpInterceptor');
 }]);
 
-function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout) {
+function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout)
+{
+    "use strict";
 
     var apiUrl = 'https://admin-api.protontech.ch';
     // var apiUrl = 'https://test-api.protonmail.ch';
+    var appVersion   = 'Web_2.0.5';
+    var clientId     = 'B0SS';
+    var clientSecret = 'c916d8e8712f96c719acab4ec54e7844';
+
+    if ( DEBUG )
+    {
+        apiUrl       = "https://protonmail.local.dev/api";
+        // appVersion   = "Other";
+        // clientId     = "demoapp";
+        // clientSecret = "demopass";
+    }
 
     $http.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
-    $http.defaults.headers.common['x-pm-appversion'] = 'Web_2.0.5';
+    $http.defaults.headers.common['x-pm-appversion'] = appVersion;
     $http.defaults.headers.common['x-pm-apiversion'] = '1';
     $http.defaults.headers.common['Accept'] = 'application/vnd.protonmail.v1+json';
 
@@ -57,6 +75,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     $rootScope.loading = false;
     $scope.forceMonitorFlag = false;
     $scope.blastMode = false;
+
+    $scope.template = false;
 
     var AT = sessionStorage.getItem('AT');
 
@@ -106,7 +126,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             if ($state.current.name==='') {
                 var data = {
                     "ResponseType": "token",
-                    "ClientID": "B0SS",
+                    "ClientID": clientId,
                     "GrantType": "refresh_token",
                     "RefreshToken": RF,
                     "RedirectURI": "http://protonmail.ch",
@@ -121,7 +141,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         $http.defaults.headers.common['x-pm-uid'] = response.data.Uid;
                         sessionStorage.setItem('AT', response.data.AccessToken);
                         sessionStorage.setItem('UID', response.data.Uid);
-                        if ($state.current.name=='index') {
+                        if ($state.current.name === 'index') {
                             $state.go('lookup');
                         }
                     },
@@ -140,17 +160,31 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             $scope.lookup($state.params.query);
         }
 
-        var query = '';
-        query = $location.$$path.replace("/lookup/", '');
+        // Determine lookup query and template
+        var hash = $location.$$path.replace('/lookup/', '');
 
-        console.log(query);
+        var template = hash.split('=')[0];
+        var query    = hash.split('=')[1];
 
-        if (query!=='' && query!=='/') {
-            $timeout( function() {
-                $scope.lookup(query);
-            }, 1000);
+        if ( DEBUG )
+        {
+            console.debug("Reading hash: "     + hash);
+            console.debug("Reading template: " + template);
+            console.debug("Reading query: "    + query);
         }
 
+        if ( query    !== undefined && query    !== '' && query    !== '/' &&
+             template !== undefined && template !== '' && template !== '/' )
+        {
+            $timeout(
+                function()
+                {
+                    $scope.lookupString = query;
+                    $scope.lookup(template, query);
+                },
+                1000
+            );
+        }
     };
 
     $scope.toggleSidebar = function() {
@@ -174,8 +208,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             "ResponseType": "token",
             "Username": this.username, // this referecnes the form object thats sent for ng-submit
             "Password": this.password,
-            "ClientID": "B0SS",
-            "ClientSecret": "c916d8e8712f96c719acab4ec54e7844",
+            "ClientID": clientId,
+            "ClientSecret": clientSecret,
             "GrantType": "password",
             "RedirectURI": "http://protonmail.ch",
             "State": "random_string"
@@ -225,8 +259,6 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 if (error) {
                     $rootScope.$emit('addAlert', error);
                 }
-                else {
-                }
             },
             function(response) {
                 $rootScope.loading = false;
@@ -242,7 +274,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         sessionStorage.clear();
         $scope.showLogin = true;
         $state.go('index');
-        window.location.reload();        
+        window.location.reload();
 
     };
 
@@ -275,27 +307,58 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.lookupResponse = [];
     };
 
-    $scope.lookup = function(query) {
-        if (this.lookupString === undefined) {
-            if (query === undefined) {
-                return;
-            }
-            else {
-                lookupString = query;
-            }
+    $scope.setLookupTemplate = function(path)
+    {
+        if (path === "user"         ||
+            path === "domain"       ||
+            path === "organization"    )
+        {
+            $scope.template = "templates/_" + path + ".html";
         }
-        else {
+    };
+
+    $scope.lookup = function(template, query)
+    {
+        var lookupString, lookupTemplate;
+
+        if (template === undefined) { return; }
+        else
+        {
+            lookupTemplate = template;
+            this.setLookupTemplate(template);
+        }
+
+        if (query === undefined)
+        {
+            if (this.lookupString === undefined) { return; }
             lookupString = this.lookupString.trim();
+            // Set the scope lookupString to the current search
+            $scope.lookupString = lookupString;
+        }
+        else
+        {
+            lookupString = query;
         }
 
-        window.location.hash = '#/lookup/'+lookupString;
+        // Debug
+        if ( DEBUG )
+        {
+            console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
+            console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
+            console.debug("MasterCtrl.lookup: this.lookupString   = " + this.lookupString);
+            console.debug("MasterCtrl.lookup: $scope.lookupString = " + $scope.lookupString);
+        }
 
-        $scope.lookupString = lookupString;
+        window.location.hash = '#/lookup/' + lookupTemplate + '=' + lookupString;
+
         $rootScope.loading = true;
         $scope.lookupResponse = [];
-        $http.get(apiUrl+'/admin/lookup/'+escape(this.lookupString))
+
+        // Call backend route
+        $http.get( apiUrl + '/admin/lookup/' + escape(lookupTemplate) + '/' + escape(lookupString) )
         .then(
-            function(response) {
+            function(response)
+            {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -305,14 +368,15 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     // if empty we say "No info found."
                     if (
                         response.data.Results &&
-                        response.data.Results.length == 0                    
+                        response.data.Results.length === 0
                     ) {
                         $rootScope.$emit('addAlert', 'No information found');
                     }
                     $scope.lookupResponse.push(response.data);
                 }
             },
-            function(response) {
+            function(response)
+            {
                 $rootScope.loading = false;
                 $rootScope.$emit('addAlert', response);
                 // called asynchronously if an error occurs
@@ -383,7 +447,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             }
         );
     };
-    
+
     $scope.sendInvite = function() {
 
         $rootScope.loading = true;
@@ -418,7 +482,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             total += value.Total;
         });
         return total;
-    }
+    };
 
     $scope.forceMonitor = function() {
         $scope.forceMonitorFlag = true;
@@ -427,7 +491,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     $scope.monitor = function() {
 
-        if ($scope.monitorAccounts && !$scope.forceMonitorFlag) return;
+        if ($scope.monitorAccounts && !$scope.forceMonitorFlag) { return; }
 
         // $http.get('/monitor.json')
         $rootScope.loading = true;
@@ -570,8 +634,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     $rootScope.$emit('addAlert', error);
                 }
                 else {
-                    if (response.data.Responses.length==0) {
-                        $rootScope.$emit('addAlert', 'Message Blast Sent. No errors!');    
+                    if (response.data.Responses.length === 0) {
+                        $rootScope.$emit('addAlert', 'Message Blast Sent. No errors!');
                     }
                     else {
                         var message = '';
@@ -580,7 +644,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         });
                         $rootScope.$emit('addAlert', message);
                     }
-                    
+
                 }
             },
             function(response) {
@@ -623,8 +687,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     $scope.changeStatus = function(action) {
 
         $rootScope.loading = true;
-        
-        if (action==0) {
+
+        if (action === 0) {
             $http.put(apiUrl+'/admin/user/'+this.accountID+'/disable')
             .then(
                 function(response) {
@@ -647,7 +711,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
             );
         }
-        else if (action==2) {
+        else if (action === 2) {
             $http.put(apiUrl+'/admin/user/'+this.accountID+'/enable')
             .then(
                 function(response) {
@@ -670,7 +734,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
             );
         }
-        else if (action==3) {
+        else if (action === 3) {
             $http.put(apiUrl+'/admin/user/'+this.accountID+'/admin')
             .then(
                 function(response) {
@@ -701,7 +765,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         var data = {
             "Level": level
-        }
+        };
 
         $http.put(apiUrl+'/admin/user/'+this.accountID+'/level', data)
         .then(
@@ -727,15 +791,22 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     };
 
     // CSV MultiLookup Parsing
-    $scope.debug = function() {
-
+    $scope.multilookup = function(template)
+    {
         var promises = [];
+        this.setLookupTemplate(template);
         $scope.debugJSON = Papa.parse(this.csvData);
         $rootScope.loading = true;
 
-        for(var i = 0; i < $scope.debugJSON.data.length; i++) {
+        for(var i = 0; i < $scope.debugJSON.data.length; i++)
+        {
             var query = $scope.debugJSON.data[i][0];
-            var promise = $http.get(apiUrl+'/admin/lookup/'+escape(query))
+
+            var suffix = '';
+            suffix += '/' + escape(template);
+            suffix += '/' + escape(query);
+
+            var promise = $http.get( apiUrl + '/admin/lookup' + suffix )
             .then(
                 function(response) {
                     return response.data;
@@ -750,10 +821,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 $scope.lookupResponse = response;
                 $rootScope.loading = false;
             }
-        )
-
+        );
     };
 
     $scope.init();
-   
 }

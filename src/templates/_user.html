@@ -1,18 +1,19 @@
 <section ng-repeat="response in lookupResponse">
-<hr>
 
 <div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
 
+	<!-- User lookup results -->
 	<h1 ng-if="result.User.Name">{{ result.User.Name }}</h1>
-	<h1 ng-if="!result.User.Name">{{ result.Invite.Name }}</h1>
+	<h1 ng-if="!result.User.Name">{{ result.Invite.NotificationEmail }}</h1>
+	<h1 ng-if="!result.Invite.NotificationEmail">{{ result.Address.Email }}</h1>
 
-	<div ng-if="result.Invite" class="col">
-		<div class="list-group">
+	<div class="col">
+		<div ng-if="result.Invite" class="list-group">
 			<div class="list-group-item list-group-item-warning">
 				<strong>Waiting List</strong>
-			</div>                   
+			</div>
 			<div class="list-group-item">
-				<code class="pull-right">{{ result.Invite.ID }}</code>
+				<code class="pull-right">{{ result.Invite.UserID }}</code>
 				<strong>UserID:</strong>
 			</div>
 			<div class="list-group-item form-inline">
@@ -51,22 +52,52 @@
 			</div>
 			<div class="list-group-item disabled"></div>
 			<form method="POST" class="list-group-item" ng-submit="deleteUserWL()">
-				<input type="hidden" ng-init="accountID=result.Invite.ID" ng-model="accountID">
+				<input type="hidden" ng-init="accountID=result.Invite.UserID" ng-model="accountID">
 				<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
 					<span class="fa fa-trash-o"></span> Delete from Waiting List
 				</button>
-			</form>                    
+			</form>
 		</div>
+
+		<div ng-if="result.Addresses" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Addresses</strong>
+			</div>
+			<div ng-repeat="x in result.Addresses">
+				<div class="list-group-item">
+					<code class="pull-right">{{ x.AddressID }}</code>
+					<strong>AddressID:</strong>
+				</div>
+				<div class="list-group-item form-inline">
+					<strong>Email:</strong>
+					<form method="POST" class="input-group pull-right" ng-submit="changeUserAddress()">
+						<input class="form-control" ng-init="accountUserAddress = x.Email"  ng-model="accountUserAddress">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="submit">Update</button>
+						</span>
+					</form>
+					<div class="clearfix"></div>
+				</div>
+				<div class="list-group-item">
+					<strong>Send / Receive</strong>
+					<code class="pull-right">{{ x.Send }}</code>
+					<strong class="pull-right">&nbsp;/&nbsp;</strong>
+					<code class="pull-right">{{ x.Receive }}</code>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
-	<div ng-if="result.User" class="col right">
-		<div class="list-group">
+	<div class="col right">
+
+		<div ng-if="result.User" class="list-group">
 			<div class="list-group-item list-group-item-info">
 				<strong>Active Users</strong>
 			</div>
 			<div class="list-group-item">
-				<code class="pull-right">{{ result.User.ID }}</code>
-				<input type="hidden" ng-init="accountID=result.User.ID">
+				<code class="pull-right">{{ result.User.UserID }}</code>
+				<input type="hidden" ng-init="accountID=result.User.UserID">
 				<strong>UserID:</strong>
 			</div>
 			<div class="list-group-item form-inline">
@@ -83,7 +114,7 @@
 			<div class="list-group-item">
 				<form method="POST" class="input-group" ng-submit="updateLoginPassword()">
 					<input type="text" class="form-control mono" id="resetLoginPW" ng-init="newLoginPass = randPass()" ng-model="newLoginPass">
-					<input type="hidden" ng-init="accountID=result.User.ID" ng-model="accountID">
+					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
 					<span class="input-group-btn">
 						<button class="btn btn-primary" type="submit">
 							<span class="fa fa-retweet"></span> Reset Login PW
@@ -93,7 +124,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<form method="POST" class="list-group-item" ng-submit="logoutUser()">
-				<input type="hidden" ng-init="accountID=result.User.ID" ng-model="accountID">
+				<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
 				<button type="submit" href class="btn btn-warning">
 					<span class="fa fa-power-off"></span> Logout User
 				</button>
@@ -124,7 +155,7 @@
 			</div>
 			<div class="list-group-item">
 				<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
-					<input type="hidden" ng-init="accountID=result.User.ID" ng-model="accountID" />
+					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID" />
 					<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
 					ng-class="{'btn-primary': result.User.Status===0}">
 						Disabled
@@ -143,7 +174,7 @@
 					</button>
 				</form>
 				<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
-					<input type="hidden" ng-init="accountID=result.User.ID" ng-model="accountID">
+					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
 					<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
 						ng-class="{'btn-primary': result.User.Status==0}">
 						Disabled
@@ -164,7 +195,7 @@
 				<strong>User Status:</strong>
 			</div>
 			<form method="POST" class="list-group-item">
-				<input type="hidden" ng-init="accountID=result.User.ID" ng-model="accountID">
+				<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
 				<div class="btn-group pull-right">
 					<button ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==1}">500 MB</button>
 					<button ng-click="changeLevel(2)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==2}">1 GB</button>
@@ -174,14 +205,25 @@
 			</form>
 			<div class="list-group-item disabled"></div>
 			<form method="POST" class="list-group-item" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU()">
-				<input type="hidden" ng-init="accountID=result.User.ID" ng-model="accountID">
+				<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
 				<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
 					<span class="fa fa-trash-o"></span> Delete from Active Users
 				</button>
 			</form>
 		</div>
+
+		<div ng-if="result.Organization" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Organization</strong>
+			</div>
+			<div class="list-group-item">
+				<code class="pull-right">{{ result.Organization.OrganizationID }}</code>
+				<strong>OrganizationID:</strong>
+			</div>
+		</div>
+
 	</div>
 
 </div>
-<hr>
+
 </section>

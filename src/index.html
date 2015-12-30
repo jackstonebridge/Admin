@@ -87,7 +87,7 @@
           <a ng-disabled="loading" href="/#/admin-list">Admin List <span class="menu-icon fa fa-star"></span></a>
         </li>
       </ul>
-      <div class="sidebar-footer"> 
+      <div class="sidebar-footer">
         <div ng-if="isLoggedIn()">
           <a href ng-click="logout()">Log out <kbd>{{ user.Name }}</kbd></a>
         </div>
@@ -99,10 +99,10 @@
       <div class="page-content">
 
         <p class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
-          <alert 
-          data-ng-repeat="alert in alerts" 
-          type="{{alert.type}}" 
-          close="closeAlert($index)" 
+          <alert
+          data-ng-repeat="alert in alerts"
+          type="{{alert.type}}"
+          close="closeAlert($index)"
           ng-click="closeAlert($index)"
           ng-bind-html="alert.msg"></alert>
         </p>
