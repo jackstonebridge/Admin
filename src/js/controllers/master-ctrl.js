@@ -53,7 +53,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     var apiUrl = 'https://admin-api.protontech.ch';
     // var apiUrl = 'https://test-api.protonmail.ch';
-    var appVersion   = 'Web_2.0.5';
+    var appVersion   = 'Other';
     var clientId     = 'B0SS';
     var clientSecret = 'c916d8e8712f96c719acab4ec54e7844';
 
