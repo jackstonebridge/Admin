@@ -100,13 +100,13 @@
 			</div>
 
 			<div class="list-group-item disabled"></div>
-			<form method="POST" class="list-group-item text-center" ng-submit="deleteDomain()">
+<!-- 			<form method="POST" class="list-group-item text-center" ng-submit="deleteDomain()">
 				<input type="hidden" ng-init="DomainID=result.DomainID" ng-model="DomainID">
 				<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANNOT BE UNDONE.">
 					<span class="fa fa-trash-o">&nbsp;Delete domain</span>
 				</button>
 			</form>
-
+ -->
 		</div>
 
 		<div class="list-group">
@@ -137,14 +137,8 @@
 					<strong>AddressID:</strong>
 				</div>
 				<div class="list-group-item form-inline">
+					<code class="pull-right">{{ x.Email }}</code>
 					<strong>Email:</strong>
-					<form method="POST" class="input-group pull-right" ng-submit="changeUserAddress()">
-						<input class="form-control" ng-init="accountUserAddress = x.Email"  ng-model="accountUserAddress">
-						<span class="input-group-btn">
-							<button class="btn btn-primary" type="submit">Update</button>
-						</span>
-					</form>
-					<div class="clearfix"></div>
 				</div>
 				<div class="list-group-item">
 					<strong>Send / Receive:</strong>

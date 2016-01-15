@@ -4,8 +4,8 @@
 
 	<!-- User lookup results -->
 	<h1 ng-if="result.User.Name">{{ result.User.Name }}</h1>
-	<h1 ng-if="!result.User.Name">{{ result.Invite.NotificationEmail }}</h1>
-	<h1 ng-if="!result.Invite.NotificationEmail">{{ result.Address.Email }}</h1>
+	<h1 ng-if="!result.User.Name">{{ result.Invite.CleanUserName }}</h1>
+	<h1 ng-if="!result.Invite.CleanUserName">{{ result.Address.Email }}</h1>
 
 	<div class="col">
 		<div ng-if="result.Invite" class="list-group">
@@ -15,6 +15,10 @@
 			<div class="list-group-item">
 				<code class="pull-right">{{ result.Invite.UserID }}</code>
 				<strong>UserID:</strong>
+			</div>
+			<div class="list-group-item">
+				<code class="pull-right">{{ result.Invite.CleanUserName }}</code>
+				<strong>Clean user name:</strong>
 			</div>
 			<div class="list-group-item form-inline">
 				<strong>Notification Email:</strong>
@@ -69,14 +73,8 @@
 					<strong>AddressID:</strong>
 				</div>
 				<div class="list-group-item form-inline">
+					<code class="pull-right">{{ x.Email }}</code>
 					<strong>Email:</strong>
-					<form method="POST" class="input-group pull-right" ng-submit="changeUserAddress()">
-						<input class="form-control" ng-init="accountUserAddress = x.Email"  ng-model="accountUserAddress">
-						<span class="input-group-btn">
-							<button class="btn btn-primary" type="submit">Update</button>
-						</span>
-					</form>
-					<div class="clearfix"></div>
 				</div>
 				<div class="list-group-item">
 					<strong>Send / Receive</strong>
@@ -219,6 +217,12 @@
 			<div class="list-group-item">
 				<code class="pull-right">{{ result.Organization.OrganizationID }}</code>
 				<strong>OrganizationID:</strong>
+			</div>
+			<div class="list-group-item disabled"></div>
+			<div class="list-group-item text-center">
+				<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.Organization.OrganizationID)">
+					<span>Lookup organization</span>
+				</button>
 			</div>
 		</div>
 
