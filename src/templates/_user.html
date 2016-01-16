@@ -3,8 +3,8 @@
 <div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
 
 	<!-- User lookup results -->
-	<h1 ng-if="result.User.Name">{{ result.User.Name }}</h1>
-	<h1 ng-if="!result.User.Name">{{ result.Invite.CleanUserName }}</h1>
+	<h1 ng-if="result.User.UserName">{{ result.User.UserName }}</h1>
+	<h1 ng-if="!result.User.UserName">{{ result.Invite.CleanUserName }}</h1>
 	<h1 ng-if="!result.Invite.CleanUserName">{{ result.Address.Email }}</h1>
 
 	<div class="col">
@@ -77,10 +77,11 @@
 					<strong>Email:</strong>
 				</div>
 				<div class="list-group-item">
-					<strong>Send / Receive</strong>
-					<code class="pull-right">{{ x.Send }}</code>
-					<strong class="pull-right">&nbsp;/&nbsp;</strong>
-					<code class="pull-right">{{ x.Receive }}</code>
+					<strong>Send priority (Receive allowed)</strong>
+					<div class="pull-right">
+						<code>{{ x.Send }}</code>
+						(<code>{{ x.Receive }}</code>)
+					</div>
 				</div>
 			</div>
 		</div>

@@ -3,7 +3,10 @@
 	<div class="row">
 		<form method="POST" class="form-inline col-md-8 col-md-offset-2" ng-submit="lookup('user')">
 			<div class="form-group text-center" ng-style="{'width':'100%'}">
-				<input id="lookupField" type="text" class="form-control input-lg" ng-model="lookupString" placeholder="Search for ...">
+				<input id="lookupField" type="text" class="input-lg" ng-model="lookupString" placeholder="Search for ...">
+				<label>
+					<select ng-model="currentFuzzyOption" class="form-control" ng-options="value.label for value in fuzzyOptions"></select>
+				</label>
 			</div>
 			<div class="row text-center">
 				<br>

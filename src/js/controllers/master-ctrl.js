@@ -78,6 +78,14 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     $scope.template = false;
 
+    $scope.fuzzyOptions = [
+        { label: "Fuzzy match: OFF"  , value: 0 },
+        { label: "Fuzzy match: RIGHT", value: 1 },
+        { label: "Fuzzy match: LEFT" , value: 2 },
+        { label: "Fuzzy match: ALL"  , value: 3 }
+    ];
+    $scope.currentFuzzyOption = $scope.fuzzyOptions[0];
+
     var AT = sessionStorage.getItem('AT');
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -343,19 +351,20 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         // Debug
         if ( DEBUG )
         {
-            console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
-            console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
-            console.debug("MasterCtrl.lookup: this.lookupString   = " + this.lookupString);
-            console.debug("MasterCtrl.lookup: $scope.lookupString = " + $scope.lookupString);
+            // console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
+            // console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
+            // console.debug("MasterCtrl.lookup: this.lookupString   = " + this.lookupString);
+            // console.debug("MasterCtrl.lookup: $scope.lookupString = " + $scope.lookupString);
+            console.debug("MasterCtrl.lookup: $scope.currentFuzzyOption.value = " + this.currentFuzzyOption.value);
         }
 
-        window.location.hash = '#/lookup/' + lookupTemplate + '=' + lookupString;
+        window.location.hash = '#/lookup/' + lookupTemplate + '=' + lookupString + '?fuzzy=' + this.currentFuzzyOption.value;
 
         $rootScope.loading = true;
         $scope.lookupResponse = [];
 
         // Call backend route
-        $http.get( apiUrl + '/admin/lookup/' + escape(lookupTemplate) + '/' + escape(lookupString) )
+        $http.get( apiUrl + '/admin/lookup/' + escape(lookupTemplate) + '/' + escape(lookupString) + '?fuzzy=' + this.currentFuzzyOption.value )
         .then(
             function(response)
             {
