@@ -16,31 +16,35 @@
 			</div>
 			<div class="list-group-item">
 				<strong>Used domains:</strong>
-				<!-- Careful, pull-right means these are shown in reverse order on the page -->
-				<code class="pull-right">{{ result.MaxDomains }}</code>
-				<strong class="pull-right">&nbsp;of&nbsp;</strong>
-				<code class="pull-right">{{ result.UsedDomains }}</code>
+				<div class="pull-right">
+					<code>{{ result.UsedDomains }}</code>
+					<strong>&nbsp;of&nbsp;</strong>
+					<code>{{ result.MaxDomains }}</code>
+				</div>
 			</div>
 			<div class="list-group-item">
 				<strong>Used addresses:</strong>
-				<!-- Careful, pull-right means these are shown in reverse order on the page -->
-				<code class="pull-right">{{ result.MaxAddresses }}</code>
-				<strong class="pull-right">&nbsp;of&nbsp;</strong>
-				<code class="pull-right">{{ result.UsedAddresses }}</code>
+				<div class="pull-right">
+					<code>{{ result.UsedAddresses }}</code>
+					<strong>&nbsp;of&nbsp;</strong>
+					<code>{{ result.MaxAddresses }}</code>
+				</div>
 			</div>
 			<div class="list-group-item">
 				<strong>Used space:</strong>
-				<!-- Careful, pull-right means these are shown in reverse order on the page -->
-				<code class="pull-right">{{ result.MaxSpace }}</code>
-				<strong class="pull-right">&nbsp;of&nbsp;</strong>
-				<code class="pull-right">{{ result.UsedSpace }}</code>
+				<div class="pull-right">
+					<code>{{ result.UsedSpace }}</code>
+					<strong>&nbsp;of&nbsp;</strong>
+					<code>{{ result.MaxSpace }}</code>
+				</div>
 			</div>
 			<div class="list-group-item">
 				<strong>Assigned space:</strong>
-				<!-- Careful, pull-right means these are shown in reverse order on the page -->
-				<code class="pull-right">{{ result.MaxSpace }}</code>
-				<strong class="pull-right">&nbsp;of&nbsp;</strong>
-				<code class="pull-right">{{ result.AssignedSpace }}</code>
+				<div class="pull-right">
+					<code>{{ result.AssignedSpace }}</code>
+					<strong>&nbsp;of&nbsp;</strong>
+					<code>{{ result.MaxSpace }}</code>
+				</div>
 			</div>
 			<div class="list-group-item">
 				<strong>Two-factor authentication:</strong>
