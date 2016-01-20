@@ -1,7 +1,7 @@
 /**
  * Master Controller
  */
-var DEBUG = true;
+var DEBUG = false;
 
 angular
 .module('RDash')
@@ -351,10 +351,10 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         // Debug
         if ( DEBUG )
         {
-            // console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
-            // console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
-            // console.debug("MasterCtrl.lookup: this.lookupString   = " + this.lookupString);
-            // console.debug("MasterCtrl.lookup: $scope.lookupString = " + $scope.lookupString);
+            console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
+            console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
+            console.debug("MasterCtrl.lookup: this.lookupString   = " + this.lookupString);
+            console.debug("MasterCtrl.lookup: $scope.lookupString = " + $scope.lookupString);
             console.debug("MasterCtrl.lookup: $scope.currentFuzzyOption.value = " + this.currentFuzzyOption.value);
         }
 
@@ -414,7 +414,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     $rootScope.$emit('addAlert', error);
                 }
                 else {
-                    $rootScope.$emit('addAlert', 'Notf. Email Updated.');
+                    $rootScope.$emit('addAlert', 'Notification email updated.');
                 }
             },
             function(response) {
@@ -681,6 +681,120 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 else {
                     $rootScope.$emit('addAlert', 'Deleted from Waiting List.');
                     $scope.lookupResponse.Results = 'undefined';
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.unsubscribeOrganization = function()
+    {
+        $rootScope.loading = true;
+
+        $http.put(apiUrl+'/admin/organization/' + this.accountID + '/unsubscribe')
+        .then(
+            function(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Organization unsubscribed.');
+                    $scope.lookupResponse.Results = 'undefined';
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.deleteOrganization = function()
+    {
+        $rootScope.loading = true;
+
+        $http.delete(apiUrl+'/admin/organization/' + this.accountID)
+        .then(
+            function(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Organization deleted.');
+                    $scope.lookupResponse.Results = 'undefined';
+                    window.location.reload();
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.unsubscribeCustomer = function()
+    {
+        $rootScope.loading = true;
+
+        $http.put(apiUrl+'/admin/customer/' + this.accountID + '/unsubscribe')
+        .then(
+            function(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Customer unsubscribed.');
+                    $scope.lookupResponse.Results = 'undefined';
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.deleteCustomer = function()
+    {
+        $rootScope.loading = true;
+
+        $http.delete(apiUrl+'/admin/customer/' + this.accountID)
+        .then(
+            function(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Customer deleted.');
+                    $scope.lookupResponse.Results = 'undefined';
+                    window.location.reload();
                 }
             },
             function(response) {

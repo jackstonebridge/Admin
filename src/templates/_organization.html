@@ -58,34 +58,56 @@
 				<strong>Next payment time:</strong>
 			</div>
 
-			<div class="list-group-item disabled"></div>
-<!-- 			<form method="POST" class="list-group-item text-center" ng-submit="deleteOrganization()">
-				<input type="hidden" ng-init="OrganizationID=result.OrganizationID" ng-model="OrganizationID">
-				<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANNOT BE UNDONE.">
-					<span class="fa fa-trash-o">&nbsp;Delete organization</span>
-				</button>
-			</form>
- -->		</div>
+			<div class="list-group-item text-center">
+				<div class="list-group-item">
+					<form method="POST" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteOrganization()" style="display: inline-block">
+						<input type="hidden" ng-init="accountID = result.OrganizationID" ng-model="accountID">
+						<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+							<span class="fa fa-trash-o"></span> Delete organization
+						</button>
+					</form>
+					&nbsp;
+					<form method="POST" ng-show="{{ user.Scope=='admin super' || 'admin' }}" ng-submit="unsubscribeOrganization()" style="display: inline-block">
+						<input type="hidden" ng-init="accountID = result.OrganizationID" ng-model="accountID">
+						<button type="submit" class="btn btn-warning" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+							<span class="fa fa-retweet"></span> Unsubscribe organization
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="col right">
 
-		<div ng-if="result.Members" class="list-group">
+		<div ng-if="result.Members.length" class="list-group">
 			<div class="list-group-item list-group-item-warning">
 				<strong>Members</strong>
 			</div>
 			<div ng-repeat="x in result.Members">
 				<div class="list-group-item">
-					<strong>MemberID:</strong>
-					<code class="pull-right">{{ x.MemberID }}</code>
+					<strong>MemberID (UserID):</strong>
+					<div class="pull-right">
+						<code>{{ x.MemberID }}</code>
+						(<code>{{ x.UserID }}</code>)
+					</div>
 				</div>
 				<div class="list-group-item">
-					<strong>Role:</strong>
-					<code class="pull-right">{{ x.Role }}</code>
+					<strong>Role (Private):</strong>
+					<div class="pull-right">
+						<code>{{ x.Role }}</code>
+						(<code>{{ x.Private }}</code>)
+					</div>
 				</div>
 				<div class="list-group-item">
 					<strong>Private:</strong>
-					<code class="pull-right">{{ x.Private }}</code>
+				</div>
+				<div class="list-group-item text-center">
+					<div class="list-group-item text-center">
+						<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('user', this.x.UserID)">
+							<span>Lookup user</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -108,11 +130,12 @@
 					<strong>State:</strong>
 					<code class="pull-right">{{ x.State }}</code>
 				</div>
-				<div class="list-group-item disabled"></div>
 				<div class="list-group-item text-center">
-					<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('domain', this.x.DomainID)">
-						<span>Lookup domain</span>
-					</button>
+					<div class="list-group-item text-center">
+						<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('domain', this.x.DomainID)">
+							<span>Lookup domain</span>
+						</button>
+					</div>
 				</div>
 			</div>
 
