@@ -198,7 +198,7 @@
 				</form>
 				<strong>User Status:</strong>
 			</div>
-			<form method="POST" class="list-group-item">
+			<form method="POST" class="list-group-item" ng-show="{{ user.Scope === 'admin' }}">
 				<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
 				<div class="btn-group pull-right">
 					<button ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==1}">500 MB</button>
@@ -231,14 +231,14 @@
 			</div>
 			<div class="list-group-item text-center">
 				<div class="list-group-item">
-					<form method="POST" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteCustomer()" style="display: inline-block">
+					<form method="POST" ng-submit="deleteCustomer()" style="display: inline-block">
 						<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
 						<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
 							<span class="fa fa-trash-o"></span> Delete customer
 						</button>
 					</form>
 					&nbsp;
-					<form method="POST" ng-show="{{ user.Scope=='admin super' || 'admin' }}" ng-submit="unsubscribeCustomer()" style="display: inline-block">
+					<form method="POST" ng-submit="unsubscribeCustomer()" style="display: inline-block">
 						<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
 						<button type="submit" class="btn btn-warning" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
 							<span class="fa fa-retweet"></span> Unsubscribe customer
