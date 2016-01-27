@@ -160,8 +160,8 @@
 			<div class="list-group-item">
 				<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
 					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID" />
-					<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
-					ng-class="{'btn-primary': result.User.Status===0}">
+					<button ng-click="changeStatus(1, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
+					ng-class="{'btn-primary': result.User.Status===1}">
 						Disabled
 					</button>
 					<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
@@ -179,8 +179,8 @@
 				</form>
 				<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
 					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
-					<button ng-click="changeStatus(0, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
-						ng-class="{'btn-primary': result.User.Status==0}">
+					<button ng-click="changeStatus(1, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
+						ng-class="{'btn-primary': result.User.Status==1}">
 						Disabled
 					</button>
 					<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
