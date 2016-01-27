@@ -811,7 +811,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        if (action === 0) {
+        if (action === 1) {
             $http.put(apiUrl+'/admin/user/'+this.accountID+'/disable')
             .then(
                 function(response) {
