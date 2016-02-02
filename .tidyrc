@@ -1,0 +1,25 @@
+// tidy-html5 runtime configuration file
+// tidy documentation is here: http://tidy.sourceforge.net/#docs
+// tidy-html5 documentation here: http://www.html-tidy.org/quickref.html#drop-empty-elements
+
+indent: auto
+indent-spaces: 4
+wrap: 150
+markup: yes
+output-xml: no
+input-xml: no
+show-warnings: yes
+numeric-entities: yes
+quote-marks: yes
+quote-nbsp: yes
+quote-ampersand: no
+break-before-br: no
+uppercase-tags: no
+uppercase-attributes: no
+char-encoding: utf8
+new-inline-tags: cfif, cfelse, math, mroot,
+  mrow, mi, mn, mo, msqrt, mfrac, msubsup, munderover,
+  munder, mover, mmultiscripts, msup, msub, mtext,
+  mprescripts, mtable, mtr, mtd, mth
+new-blocklevel-tags: cfoutput, cfquery
+new-empty-tags: cfelse
