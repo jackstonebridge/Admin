@@ -88,7 +88,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     $scope.deleteUserOptions = [
         { label: "Soft delete"  , value: 0 },
-        { label: "Forced delete", value: 1 }
+        { label: "Forced delete", value: 1 },
+        { label: "Never existed", value: 2 }
     ];
     $scope.currentDeleteUserOption = $scope.deleteUserOptions[0];
 
