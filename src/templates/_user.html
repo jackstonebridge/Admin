@@ -216,11 +216,14 @@
 				<strong>User Level:</strong>
 			</form>
 			<div class="list-group-item text-center">
-				<form method="POST" class="list-group-item text-center" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU()">
+				<form method="POST" class="list-group-item text-center" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU(force_delete)">
 					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
-					<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+					<button type="submit" class="btn btn-danger" ng-confirm-click="Are you sure you want to delete the user?">
 						<span class="fa fa-trash-o"></span> Delete from Active Users
 					</button>
+					<label>
+						<select ng-model="currentDeleteUserOption" class="form-control" ng-options="value.label for value in deleteUserOptions"></select>
+					</label>
 				</form>
 			</div>
 		</div>

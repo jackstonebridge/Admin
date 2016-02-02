@@ -86,6 +86,12 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     ];
     $scope.currentFuzzyOption = $scope.fuzzyOptions[0];
 
+    $scope.deleteUserOptions = [
+        { label: "Soft delete"  , value: 0 },
+        { label: "Forced delete", value: 1 }
+    ];
+    $scope.currentDeleteUserOption = $scope.deleteUserOptions[0];
+
     var AT = sessionStorage.getItem('AT');
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -587,11 +593,12 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.deleteUserAU = function() {
-
+    $scope.deleteUserAU = function()
+    {
         $rootScope.loading = true;
+        var delete_url = apiUrl + '/admin/user/' + this.accountID + '?Force=' + this.currentDeleteUserOption.value;
 
-        $http.delete(apiUrl+'/admin/user/'+this.accountID)
+        $http.delete(delete_url)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -601,6 +608,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Deleted from Active Users.');
+                    window.location.reload();
                 }
             },
             function(response) {
@@ -900,7 +908,6 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Level changed.');
-                    $scope.lookupResponse.Results = 'undefined';
                 }
             },
             function(response) {
@@ -929,7 +936,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             suffix += '/' + escape(template);
             suffix += '/' + escape(query);
 
-            var promise = $http.get( apiUrl + '/admin/lookup' + suffix )
+            var promise = $http.get( apiUrl + '/admin/lookup' + suffix + '?fuzzy=0' )
             .then(
                 function(response) {
                     return response.data;
