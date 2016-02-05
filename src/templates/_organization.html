@@ -3,7 +3,7 @@
 <div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
 
 	<!-- User lookup results -->
-	<h1 ng-if="result.DisplayName">{{ result.DisplayName }}</h1>
+	<h1 ng-if="result.OrganizationID">{{ result.DisplayName }}</h1>
 
 	<div class="col">
 		<div ng-if="result.DisplayName" class="list-group">
