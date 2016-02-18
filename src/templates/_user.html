@@ -228,17 +228,13 @@
 			</div>
 		</div>
 
-		<div ng-if="result.User.ExternalProvider != 0 && result.User.ExternalCustomerID != null" class="list-group">
+		<div ng-if="result.User.StripeCustomerID != null" class="list-group">
 			<div class="list-group-item list-group-item-warning">
 				<strong>Payments</strong>
 			</div>
 			<div class="list-group-item">
-				<strong>ExternalProvider:</strong>
-				<code class="pull-right">{{ result.User.ExternalProvider }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>ExternalCustomerID:</strong>
-				<code class="pull-right">{{ result.User.ExternalCustomerID }}</code>
+				<strong>StripeCustomerID:</strong>
+				<code class="pull-right">{{ result.User.StripeCustomerID }}</code>
 			</div>
 			<div class="list-group-item text-center">
 				<div class="list-group-item">
@@ -246,13 +242,6 @@
 						<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
 						<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
 							<span class="fa fa-trash-o"></span> Delete customer
-						</button>
-					</form>
-					&nbsp;
-					<form method="POST" ng-submit="unsubscribeCustomer()" style="display: inline-block">
-						<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
-						<button type="submit" class="btn btn-warning" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
-							<span class="fa fa-retweet"></span> Unsubscribe customer
 						</button>
 					</form>
 				</div>
