@@ -234,26 +234,6 @@
 			</div>
 		</div>
 
-		<div ng-if="result.User.StripeCustomerID != null" class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Payments</strong>
-			</div>
-			<div class="list-group-item">
-				<strong>StripeCustomerID:</strong>
-				<code class="pull-right">{{ result.User.StripeCustomerID }}</code>
-			</div>
-			<div class="list-group-item text-center">
-				<div class="list-group-item">
-					<form method="POST" ng-submit="deleteCustomer()" style="display: inline-block">
-						<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
-						<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
-							<span class="fa fa-trash-o"></span> Delete customer
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
-
 		<div ng-if="result.Organization" class="list-group">
 			<div class="list-group-item list-group-item-warning">
 				<strong>Organization</strong>
@@ -267,6 +247,85 @@
 					<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.Organization.OrganizationID)">
 						<span>Lookup organization</span>
 					</button>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="result.User.StripeCustomerID != null" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Payments</strong>
+			</div>
+			<div class="list-group-item">
+				<strong>Credit:</strong>
+				<code class="pull-right">{{ result.User.Credit }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>StripeCustomerID:</strong>
+				<code class="pull-right">{{ result.User.StripeCustomerID }}</code>
+			</div>
+			<div class="list-group-item text-center">
+				<div class="list-group-item form-group text-center">
+					<div class="col-md-6">
+						<form method="POST" class="input-group" ng-submit="creditUser(UserID, Credit)">
+							<input type="text" class="form-control" ng-init="UserID = this.result.User.UserID; Credit = 0" ng-model="Credit" >
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="submit">Add credit</button>
+							</span>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<form method="POST" ng-submit="deleteCustomer()">
+							<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
+							<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+								<span class="fa fa-trash-o"></span> Delete customer
+							</button>
+						</form>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+
+		<div class="list-group-item list-group-item-warning">
+			<strong>Payment methods</strong>
+		</div>
+		<div ng-repeat="payment in result.PaymentMethods">
+			<div class="list-group-item list-group-item-success">
+				<strong>Payment method type:</strong>
+				<code class="pull-right">{{ payment.Type }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Details:</strong>
+				<div ng-if="payment.Type == 'card'" class="table-responsive">
+					<div class="list-group-item">
+						<strong>Card brand:</strong>
+						<code class="pull-right">{{ payment.Details.Brand }}</code>
+					</div>
+					<div class="list-group-item">
+						<strong>Last 4 digits:</strong>
+						<code class="pull-right">{{ payment.Details.Last4 }}</code>
+					</div>
+					<div class="list-group-item">
+						<strong>Name:</strong>
+						<code class="pull-right">{{ payment.Details.Name }}</code>
+					</div>
+					<div class="list-group-item">
+						<strong>Country:</strong>
+						<code class="pull-right">{{ payment.Details.Country }}</code>
+					</div>
+					<div class="list-group-item">
+						<strong>ZIP code:</strong>
+						<code class="pull-right">{{ payment.Details.ZIP }}</code>
+					</div>
+					<div class="list-group-item">
+						<strong>Expiration date (month):</strong>
+						<code class="pull-right">{{ payment.Details.ExpMonth }}</code>
+					</div>
+					<div class="list-group-item">
+						<strong>Expiration date (year):</strong>
+						<code class="pull-right">{{ payment.Details.ExpYear }}</code>
+					</div>
 				</div>
 			</div>
 		</div>
