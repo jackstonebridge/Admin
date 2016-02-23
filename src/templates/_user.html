@@ -69,6 +69,72 @@
 			</div>
 		</div>
 
+		<div ng-if="result.Subscription" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Subscription</strong>
+			</div>
+			<div class="list-group-item">
+				<strong>Billing cycle:</strong>
+				<code class="pull-right">{{ result.Subscription.Cycle }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Period start:</strong>
+				<code class="pull-right">{{ result.Subscription.PeriodStart*1000 | date:'medium' }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Period end:</strong>
+				<code class="pull-right">{{ result.Subscription.PeriodEnd*1000 | date:'medium' }}</code>
+			</div>
+			<div ng-if="result.Subscription.CouponCode != NULL" class="list-group-item">
+				<strong>Coupon code used:</strong>
+				<code class="pull-right">{{ result.Subscription.CouponCode }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Currency:</strong>
+				<code class="pull-right">{{ result.Subscription.Currency }}</code>
+			</div>
+			<div class="list-group-item">
+				<strong>Amount:</strong>
+				<code class="pull-right">{{ result.Subscription.Amount }}</code>
+			</div>
+			<div ng-repeat="plan in result.Subscription.Plans">
+				<div class="list-group-item list-group-item-success">
+					<strong>Plan:</strong>
+					<code class="pull-right">{{ plan.Title }}</code>
+				</div>
+				<div class="list-group-item">
+					<strong>Details:</strong>
+					<div class="table-responsive">
+						<div class="list-group-item">
+							<strong>Amount:</strong>
+							<code class="pull-right">{{ plan.Amount }}</code>
+						</div>
+						<div class="list-group-item">
+							<strong>Currency:</strong>
+							<code class="pull-right">{{ plan.Currency }}</code>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="result.Organization" class="list-group">
+			<div class="list-group-item list-group-item-warning">
+				<strong>Organization</strong>
+			</div>
+			<div class="list-group-item">
+				<code class="pull-right">{{ result.Organization.OrganizationID }}</code>
+				<strong>OrganizationID:</strong>
+			</div>
+			<div class="list-group-item text-center">
+				<div class="list-group-item text-center">
+					<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.Organization.OrganizationID)">
+						<span>Lookup organization</span>
+					</button>
+				</div>
+			</div>
+		</div>
+
 		<div ng-if="result.Addresses" class="list-group">
 			<div class="list-group-item list-group-item-warning">
 				<strong>Addresses</strong>
@@ -234,23 +300,6 @@
 						<select ng-model="currentDeleteUserOption" class="form-control" ng-options="value.label for value in deleteUserOptions"></select>
 					</label>
 				</form>
-			</div>
-		</div>
-
-		<div ng-if="result.Organization" class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Organization</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right">{{ result.Organization.OrganizationID }}</code>
-				<strong>OrganizationID:</strong>
-			</div>
-			<div class="list-group-item text-center">
-				<div class="list-group-item text-center">
-					<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.Organization.OrganizationID)">
-						<span>Lookup organization</span>
-					</button>
-				</div>
 			</div>
 		</div>
 
