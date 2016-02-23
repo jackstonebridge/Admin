@@ -1,13 +1,16 @@
+<!doctype html>
 <section ng-repeat="response in lookupResponse">
 
 <div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
 
-	<!-- User lookup results -->
-	<h1 ng-if="result.User.UserName">{{ result.User.UserName }}</h1>
-	<h1 ng-if="!result.User.UserName">{{ result.Invite.CleanUserName }}</h1>
-	<h1 ng-if="!result.Invite.CleanUserName">{{ result.Address.Email }}</h1>
+	<div class="col-md-12">
+		<!-- User lookup results -->
+		<h1 ng-if="result.User.UserName">{{ result.User.UserName }}</h1>
+		<h1 ng-if="!result.User.UserName">{{ result.Invite.CleanUserName }}</h1>
+		<h1 ng-if="!result.Invite.CleanUserName">{{ result.Address.Email }}</h1>
+	</div>
 
-	<div class="col">
+	<div class="col-md-6">
 		<div ng-if="result.Invite" class="list-group">
 			<div class="list-group-item list-group-item-warning">
 				<strong>Waiting List</strong>
@@ -23,7 +26,7 @@
 			<div class="list-group-item form-inline">
 				<strong>Notification Email:</strong>
 				<form method="POST" class="input-group pull-right" ng-submit="changeInviteEmail()">
-					<input class="form-control" ng-init="Email =  result.Invite.NotificationEmail"  ng-model="Email">
+					<input type="text" class="form-control" ng-init="Email = result.Invite.NotificationEmail"  ng-model="Email">
 					<span class="input-group-btn">
 						<button class="btn btn-primary" type="submit">Update</button>
 					</span>
@@ -97,7 +100,7 @@
 
 	</div>
 
-	<div class="col right">
+	<div class="col-md-6 right">
 
 		<div ng-if="result.User" class="list-group">
 			<div class="list-group-item list-group-item-info">
@@ -111,7 +114,7 @@
 			<div class="list-group-item form-inline">
 				<strong>Notification Email:</strong>
 				<form method="POST" class="input-group pull-right" ng-submit="changeNotificationEmail()">
-					<input class="form-control" ng-init="accountNotfEmail =  result.User.NotificationEmail"  ng-model="accountNotfEmail">
+					<input type="text" class="form-control" ng-init="accountNotfEmail =  result.User.NotificationEmail"  ng-model="accountNotfEmail">
 					<span class="input-group-btn">
 						<button class="btn btn-primary" type="submit">Update</button>
 					</span>
@@ -215,9 +218,9 @@
 			<form method="POST" class="list-group-item" ng-show="{{ user.Scope === 'admin' }}">
 				<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
 				<div class="btn-group pull-right">
-					<button ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==1}">500 MB</button>
-					<button ng-click="changeLevel(2)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==2}">1 GB</button>
-					<button ng-click="changeLevel(3)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==3}">10 GB</button>
+					<button type="submit" ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==1}">500 MB</button>
+					<button type="submit" ng-click="changeLevel(2)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==2}">1 GB</button>
+					<button type="submit" ng-click="changeLevel(3)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==3}">10 GB</button>
 				</div>
 				<strong>User Level:</strong>
 			</form>
