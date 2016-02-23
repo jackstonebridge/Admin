@@ -816,6 +816,39 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    $scope.creditUser = function(UserID, Credit)
+    {
+        $rootScope.loading = true;
+
+        var data = {
+            "Credit": Credit,
+            "Description": "Admin panel credit adjustment"
+        };
+
+        $http.put(apiUrl+'/admin/user/' + UserID + '/credit', data)
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Changed credit ' + Credit + ' of user ' + UserID + '.');
+                    $scope.lookupResponse.Results = 'undefined';
+                    window.location.reload();
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
     $scope.changeStatus = function(action) {
 
         $rootScope.loading = true;
