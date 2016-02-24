@@ -136,7 +136,7 @@
 		</div>
 
 		<div ng-if="result.Addresses" class="list-group">
-			<div class="list-group-item list-group-item-warning">
+			<div class="list-group-item list-group-item-info">
 				<strong>Addresses</strong>
 			</div>
 			<div ng-repeat="x in result.Addresses">
@@ -309,11 +309,11 @@
 			</div>
 			<div class="list-group-item">
 				<strong>Credit:</strong>
-				<code class="pull-right">{{ result.User.Credit }}</code>
+				<code class="pull-right">{{ result.User.Credit + ' ' + result.User.Currency }}</code>
 			</div>
 			<div class="list-group-item">
-				<strong>StripeCustomerID:</strong>
-				<code class="pull-right">{{ result.User.StripeCustomerID }}</code>
+				<strong>StripeCustomerID link:</strong>
+				<a href="https://dashboard.stripe.com/customers/{{ result.User.StripeCustomerID }}" class="pull-right">{{ result.User.StripeCustomerID }}</a>
 			</div>
 			<div class="list-group-item text-center">
 				<div class="list-group-item form-group text-center">
@@ -339,7 +339,7 @@
 			</div>
 		</div>
 
-		<div class="list-group-item list-group-item-warning">
+		<div ng-if="result.PaymentMethods !== NULL" class="list-group-item list-group-item-warning">
 			<strong>Payment methods</strong>
 		</div>
 		<div ng-repeat="payment in result.PaymentMethods">
