@@ -303,7 +303,7 @@
 			</div>
 		</div>
 
-		<div ng-if="result.User.StripeCustomerID != null" class="list-group">
+		<div class="list-group">
 			<div class="list-group-item list-group-item-warning">
 				<strong>Payments</strong>
 			</div>
@@ -311,7 +311,7 @@
 				<strong>Credit:</strong>
 				<code class="pull-right">{{ result.User.Credit + ' ' + result.User.Currency }}</code>
 			</div>
-			<div class="list-group-item">
+			<div ng-if="result.User.StripeCustomerID != null" class="list-group-item">
 				<strong>StripeCustomerID link:</strong>
 				<a href="https://dashboard.stripe.com/customers/{{ result.User.StripeCustomerID }}" class="pull-right">{{ result.User.StripeCustomerID }}</a>
 			</div>
@@ -325,7 +325,7 @@
 							</span>
 						</form>
 					</div>
-					<div class="col-md-6">
+					<div ng-if="result.User.StripeCustomerID != null" class="col-md-6">
 						<form method="POST" ng-submit="deleteCustomer()">
 							<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
 							<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
