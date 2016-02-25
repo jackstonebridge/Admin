@@ -1,0 +1,38 @@
+<div class="container-fluid">
+
+    <p class="text-center">
+        <a href class="btn btn-primary btn-lg" ng-click="listCoupons()" ng-disabled="loading">
+            Get available coupons
+        </a>
+    </p>
+
+    <div ng-if="Coupons">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="info">
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="coupon in Coupons">
+                    <th>{{ coupon.Code }}</th>
+                    <th>{{ coupon.Description }}</th>
+                    <th>
+                        <div class="col">
+    						<form method="POST" ng-submit="listCouponWhitelist">
+    							<button class="btn btn-primary" type="submit">Show whitelist</button>
+    						</form>
+    					</div>
+    					<div class="col">
+    						<form method="POST" ng-submit="listCouponWhitelist()">
+    							<button type="submit" class="btn btn-primary">Show history</button>
+    						</form>
+    					</div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>        
+    </div>
+</div>

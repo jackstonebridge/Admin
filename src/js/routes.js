@@ -19,6 +19,14 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
                 url: '/lookup/:query',
                 templateUrl: 'templates/lookup.html'
             })
+            .state('coupons', {
+                url: '/coupons',
+                templateUrl: 'templates/coupons.html'
+            })
+            .state('payments', {
+                url: '/payments',
+                templateUrl: 'templates/payments.html'
+            })
             .state('monitor', {
                 url: '/monitor',
                 templateUrl: 'templates/monitor.html'

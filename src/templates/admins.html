@@ -1,14 +1,14 @@
 <div class="container-fluid">
 
-	<p ng-show="!Admins">
-	<a href class="btn btn-default" ng-click="adminList()" ng-disabled="loading">
-	Get Admin List
-	</a><br>
+    <p class="text-center">
+	    <a href class="btn btn-primary btn-lg" ng-click="adminList()" ng-disabled="loading">
+	        Get list of admins
+	    </a><br>
 	</p>
 
-	<table class="table table-bordered">
+    <table class="table table-bordered table-striped">
 		<thead>
-			<tr class="active">
+			<tr class="info">
 				<th>Username</th>
 				<th>Level</th>
 			</tr>

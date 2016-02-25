@@ -849,6 +849,58 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    $scope.listCoupons = function(CouponCode)
+    {
+        $rootScope.loading = true;
+        var param = (CouponCode === undefined) ? '' : '/' + CouponCode;
+        $http.get(apiUrl + '/admin/coupons' + param)
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.Coupons = response.data.Coupons;
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.listSubscriptions = function(CreateTime)
+    {
+        $rootScope.loading = true;
+        var param = (CreateTime === undefined) ? new Date().getTime() : CreateTime;
+        $http.get(apiUrl + '/admin/payments/' + param)
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.Subscriptions = response.data;
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
     $scope.changeStatus = function(action) {
 
         $rootScope.loading = true;
