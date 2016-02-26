@@ -821,7 +821,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $rootScope.loading = true;
 
         var data = {
-            "Credit": Credit,
+            "Credit": Credit * 100,
             "Description": "Admin panel credit adjustment"
         };
 

@@ -309,7 +309,7 @@
 			</div>
 			<div class="list-group-item">
 				<strong>Credit:</strong>
-				<code class="pull-right">{{ result.User.Credit + ' ' + result.User.Currency }}</code>
+				<code class="pull-right">{{ result.User.Credit / 100 + ' ' + result.User.Currency }}</code>
 			</div>
 			<div ng-if="result.User.StripeCustomerID != null" class="list-group-item">
 				<strong>StripeCustomerID link:</strong>
