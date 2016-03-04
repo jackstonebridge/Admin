@@ -96,5 +96,11 @@
         </table>
     </div>
 
+    <div ng-show="!!Subscriptions">
+		<hr>
+		<a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+        <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ Subscriptions | json }}</pre>
+        <hr>
+	</div>
 
 </div>
