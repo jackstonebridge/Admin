@@ -1,7 +1,7 @@
 /**
  * Master Controller
  */
-var DEBUG = false;
+var DEBUG = true;
 
 angular
 .module('RDash')
@@ -622,7 +622,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.blast= function() {
+    $scope.blast = function() {
 
         var papaBlastList = Papa.parse(this.blastList);
         var List = [];
@@ -890,6 +890,96 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $scope.Subscriptions = response.data;
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.listCouponWhitelist = function(couponName)
+    {
+        $rootScope.loading = true;
+        $scope.couponName = couponName;
+        $http.get(apiUrl + '/admin/coupons/' + couponName + '/whitelist')
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.CouponWhitelist = response.data;
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.addUserCouponWhitelist = function(couponName, couponInputData)
+    {
+        $rootScope.loading = true;
+
+        var parsedInputData = Papa.parse(couponInputData);
+        var userIDs = [];
+
+        for(var i = 0; i < parsedInputData.data.length; i++)
+        {
+            userIDs.push(parsedInputData.data[i][0]);
+        }
+
+        var data = {
+            "UserIDs": userIDs
+        };
+
+        $http.put(apiUrl + '/admin/coupons/' + couponName + '/whitelist', data)
+        .then(
+            function(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Added to whitelist.');
+                    $scope.listCouponWhitelist(couponName)
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (error) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.listCouponHistory = function()
+    {
+        $rootScope.loading = true;
+        $http.get(apiUrl + '/admin/coupons/' + this.couponName + '/history')
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.CouponHistory = response.data;
                 }
             },
             function errorCallback(response) {
