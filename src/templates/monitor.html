@@ -1,14 +1,14 @@
 <div class="container-fluid">
 
   <p ng-show="!monitorAccounts.data.Accounts">
-  <a href class="btn btn-default" ng-click="monitor()" ng-disabled="loading">Get Accounts</a><br>
+  <a href class="btn btn-primary btn-lg" ng-click="monitor()" ng-disabled="loading">Get Accounts</a><br>
   <em>(This can take up to a minute and will freeze the app.)</em>
   </p>
   <h1 class="alert alert-info" ng-show="monitorAccounts.data.Accounts">
-  <a ng-click="forceMonitor()" ng-disabled="loading" class="pull-right btn btn-default">
+  <a ng-click="forceMonitor()" ng-disabled="loading" class="pull-right btn btn-primary btn-lg">
   <span class="fa fa-refresh"></span> Refresh Accounts
   </a>
-  <kbd>{{ TotalUnread }}</kbd> unread emails 
+  <kbd>{{ TotalUnread }}</kbd> unread emails
   <span ng-show="TotalUnread < 100">...Niceee!</span>
   <span ng-show="TotalUnread > 500">...fuck</span>
   </h1>

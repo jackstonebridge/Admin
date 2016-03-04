@@ -47,8 +47,8 @@ dingchaolu.com
 	<div ng-show="!!lookupResponse.length">
 		<hr>
 		<a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+        <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ lookupResponse | json }}</pre> <!-- ng-style="{'height':'20rem'}" -->
+        <hr>
 	</div>
-
-	<pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ lookupResponse | json }}</pre> <!-- ng-style="{'height':'20rem'}" -->
 
 </div>
