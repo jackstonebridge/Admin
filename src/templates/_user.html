@@ -3,386 +3,392 @@
 
 <div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
 
-	<div class="col-md-12">
-		<!-- User lookup results -->
-		<h1 ng-if="result.User.UserName">{{ result.User.UserName }}</h1>
-		<h1 ng-if="!result.User.UserName">{{ result.Invite.CleanUserName }}</h1>
-		<h1 ng-if="!result.Invite.CleanUserName">{{ result.Address.Email }}</h1>
-	</div>
+    <div class="col-md-12">
+        <!-- User lookup results -->
+        <h1 ng-if="result.User.UserName">{{ result.User.UserName }}</h1>
+        <h1 ng-if="!result.User.UserName">{{ result.Invite.CleanUserName }}</h1>
+        <h1 ng-if="!result.Invite.CleanUserName">{{ result.Address.Email }}</h1>
+    </div>
 
-	<div class="col-md-6">
-		<div ng-if="result.Invite" class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Waiting List</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right">{{ result.Invite.UserID }}</code>
-				<strong>UserID:</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right">{{ result.Invite.CleanUserName }}</code>
-				<strong>Clean user name:</strong>
-			</div>
-			<div class="list-group-item form-inline">
-				<strong>Notification Email:</strong>
-				<form method="POST" class="input-group pull-right" ng-submit="changeInviteEmail()">
-					<input type="text" class="form-control" ng-init="Email = result.Invite.NotificationEmail"  ng-model="Email">
-					<span class="input-group-btn">
-						<button class="btn btn-primary" type="submit">Update</button>
-					</span>
-				</form>
-				<div class="clearfix"></div>
-			</div>
-			<div class="list-group-item text-center">
-				<form method="POST" class="list-group-item text-center" ng-submit="sendInvite()">
-					<button type="submit" href class="btn btn-primary">
-						<span ng-show="result.Invite.Sent==0"><span class="fa fa-send"></span> Send invite</span>
-						<span ng-show="result.Invite.Sent==1"><span class="fa fa-send"></span> Resend invite</span>
-					</button>
-				</form>
-			</div>
+    <div class="col-md-6">
+        <div ng-if="result.Invite" class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Waiting List</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right">{{ result.Invite.UserID }}</code>
+                <strong>UserID:</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right">{{ result.Invite.CleanUserName }}</code>
+                <strong>Clean user name:</strong>
+            </div>
+            <div class="list-group-item form-inline">
+                <strong>Notification Email:</strong>
+                <form method="POST" class="input-group pull-right" ng-submit="changeInviteEmail()">
+                    <input type="text" class="form-control" ng-init="Email = result.Invite.NotificationEmail"  ng-model="Email">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Update</button>
+                    </span>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+            <div class="list-group-item text-center">
+                <form method="POST" class="list-group-item text-center" ng-submit="sendInvite()">
+                    <button type="submit" href class="btn btn-primary">
+                        <span ng-show="result.Invite.Sent==0"><span class="fa fa-send"></span> Send invite</span>
+                        <span ng-show="result.Invite.Sent==1"><span class="fa fa-send"></span> Resend invite</span>
+                    </button>
+                </form>
+            </div>
 
-			<div class="list-group-item">
-				<code class="pull-right" ng-if="result.Invite.CreateTime!=0">
-				{{ result.Invite.CreateTime*1000 | date:'medium' }}
-				</code>
-				<strong>Create Time:</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right" ng-if="result.Invite.SendTime!=0">
-				{{ result.Invite.SendTime*1000 | date:'medium' }}
-				</code>
-				<strong>Send Time:</strong>
-			</div>
-			<div class="list-group-item">
-				<strong>Comment:</strong>
-				<br>
-				<pre ng-show="{{ result.Invite.Comment!='' }}">{{ result.Invite.Comment }}</pre>
-			</div>
-			<div class="list-group-item text-center">
-				<form method="POST" class="list-group-item text-center" ng-submit="deleteUserWL()">
-					<input type="hidden" ng-init="accountID=result.Invite.UserID" ng-model="accountID">
-					<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
-						<span class="fa fa-trash-o"></span> Delete from waiting List
-					</button>
-				</form>
-			</div>
-		</div>
+            <div class="list-group-item">
+                <code class="pull-right" ng-if="result.Invite.CreateTime!=0">
+                {{ result.Invite.CreateTime*1000 | date:'medium' }}
+                </code>
+                <strong>Create Time:</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right" ng-if="result.Invite.SendTime!=0">
+                {{ result.Invite.SendTime*1000 | date:'medium' }}
+                </code>
+                <strong>Send Time:</strong>
+            </div>
+            <div class="list-group-item">
+                <strong>Comment:</strong>
+                <br>
+                <pre ng-show="{{ result.Invite.Comment!='' }}">{{ result.Invite.Comment }}</pre>
+            </div>
+            <div class="list-group-item text-center">
+                <form method="POST" class="list-group-item text-center" ng-submit="deleteUserWL()">
+                    <input type="hidden" ng-init="accountID=result.Invite.UserID" ng-model="accountID">
+                    <button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+                        <span class="fa fa-trash-o"></span> Delete from waiting List
+                    </button>
+                </form>
+            </div>
+        </div>
 
-		<div ng-if="result.Subscription" class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Subscription</strong>
-			</div>
-			<div class="list-group-item">
-				<strong>Billing cycle:</strong>
-				<code class="pull-right">{{ result.Subscription.Cycle }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Period start:</strong>
-				<code class="pull-right">{{ result.Subscription.PeriodStart*1000 | date:'medium' }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Period end:</strong>
-				<code class="pull-right">{{ result.Subscription.PeriodEnd*1000 | date:'medium' }}</code>
-			</div>
-			<div ng-if="result.Subscription.CouponCode != NULL" class="list-group-item">
-				<strong>Coupon code used:</strong>
-				<code class="pull-right">{{ result.Subscription.CouponCode }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Currency:</strong>
-				<code class="pull-right">{{ result.Subscription.Currency }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Amount:</strong>
-				<code class="pull-right">{{ result.Subscription.Amount }}</code>
-			</div>
-			<div ng-repeat="plan in result.Subscription.Plans">
-				<div class="list-group-item list-group-item-success">
-					<strong>Plan:</strong>
-					<code class="pull-right">{{ plan.Title }}</code>
-				</div>
-				<div class="list-group-item">
-					<strong>Details:</strong>
-					<div class="table-responsive">
-						<div class="list-group-item">
-							<strong>Amount:</strong>
-							<code class="pull-right">{{ plan.Amount }}</code>
-						</div>
-						<div class="list-group-item">
-							<strong>Currency:</strong>
-							<code class="pull-right">{{ plan.Currency }}</code>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div ng-if="result.Subscription" class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Subscription</strong>
+            </div>
+            <div class="list-group-item">
+                <strong>Billing cycle:</strong>
+                <code class="pull-right">{{ result.Subscription.Cycle }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Period start:</strong>
+                <code class="pull-right">{{ result.Subscription.PeriodStart*1000 | date:'medium' }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Period end:</strong>
+                <code class="pull-right">{{ result.Subscription.PeriodEnd*1000 | date:'medium' }}</code>
+            </div>
+            <div ng-if="result.Subscription.CouponCode != NULL" class="list-group-item">
+                <strong>Coupon code used:</strong>
+                <code class="pull-right">{{ result.Subscription.CouponCode }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Currency:</strong>
+                <code class="pull-right">{{ result.Subscription.Currency }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Amount:</strong>
+                <code class="pull-right">{{ result.Subscription.Amount }}</code>
+            </div>
+            <div ng-repeat="plan in result.Subscription.Plans">
+                <div class="list-group-item list-group-item-success">
+                    <strong>Plan:</strong>
+                    <code class="pull-right">{{ plan.Title }}</code>
+                </div>
+                <div class="list-group-item">
+                    <strong>Details:</strong>
+                    <div class="table-responsive">
+                        <div class="list-group-item">
+                            <strong>Amount:</strong>
+                            <code class="pull-right">{{ plan.Amount }}</code>
+                        </div>
+                        <div class="list-group-item">
+                            <strong>Currency:</strong>
+                            <code class="pull-right">{{ plan.Currency }}</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div ng-if="result.Organization" class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Organization</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right">{{ result.Organization.OrganizationID }}</code>
-				<strong>OrganizationID:</strong>
-			</div>
-			<div class="list-group-item text-center">
-				<div class="list-group-item text-center">
-					<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.Organization.OrganizationID)">
-						<span>Lookup organization</span>
-					</button>
-				</div>
-			</div>
-		</div>
+        <div ng-if="result.Organization" class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Organization</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right">{{ result.Organization.OrganizationID }}</code>
+                <strong>OrganizationID:</strong>
+            </div>
+            <div class="list-group-item text-center">
+                <div class="list-group-item text-center">
+                    <button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.Organization.OrganizationID)">
+                        <span>Lookup organization</span>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-		<div ng-if="result.Addresses" class="list-group">
-			<div class="list-group-item list-group-item-info">
-				<strong>Addresses</strong>
-			</div>
-			<div ng-repeat="x in result.Addresses">
-				<div class="list-group-item">
-					<code class="pull-right">{{ x.AddressID }}</code>
-					<strong>AddressID:</strong>
-				</div>
-				<div class="list-group-item form-inline">
-					<code class="pull-right">{{ x.Email }}</code>
-					<strong>Email:</strong>
-				</div>
-				<div class="list-group-item">
-					<strong>Send priority (Receive allowed)</strong>
-					<div class="pull-right">
-						<code>{{ x.Send }}</code>
-						(<code>{{ x.Receive }}</code>)
-					</div>
-				</div>
-				<div class="list-group-item">
-					<strong>Type</strong>
-					<div class="pull-right">
-						<code>{{ x.Type }}</code>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div ng-if="result.Addresses" class="list-group">
+            <div class="list-group-item list-group-item-info">
+                <strong>Addresses</strong>
+            </div>
+            <div ng-repeat="x in result.Addresses">
+                <div class="list-group-item">
+                    <code class="pull-right">{{ x.AddressID }}</code>
+                    <strong>AddressID:</strong>
+                </div>
+                <div class="list-group-item form-inline">
+                    <code class="pull-right">{{ x.Email }}</code>
+                    <strong>Email:</strong>
+                </div>
+                <div class="list-group-item">
+                    <strong>Send priority (Receive allowed)</strong>
+                    <div class="pull-right">
+                        <code>{{ x.Send }}</code>
+                        (<code>{{ x.Receive }}</code>)
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <strong>Type</strong>
+                    <div class="pull-right">
+                        <code>{{ x.Type }}</code>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	</div>
+    </div>
 
-	<div class="col-md-6 right">
+    <div class="col-md-6 right">
 
-		<div ng-if="result.User" class="list-group">
-			<div class="list-group-item list-group-item-info">
-				<strong>Active Users</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right">{{ result.User.UserID }}</code>
-				<input type="hidden" ng-init="accountID=result.User.UserID">
-				<strong>UserID:</strong>
-			</div>
-			<div class="list-group-item form-inline">
-				<strong>Notification Email:</strong>
-				<form method="POST" class="input-group pull-right" ng-submit="changeNotificationEmail()">
-					<input type="text" class="form-control" ng-init="accountNotfEmail =  result.User.NotificationEmail"  ng-model="accountNotfEmail">
-					<span class="input-group-btn">
-						<button class="btn btn-primary" type="submit">Update</button>
-					</span>
-				</form>
-				<div class="clearfix"></div>
-			</div>
+        <div ng-if="result.User" class="list-group">
+            <div class="list-group-item list-group-item-info">
+                <strong>Active Users</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right">{{ result.User.UserID }}</code>
+                <input type="hidden" ng-init="accountID=result.User.UserID">
+                <strong>UserID:</strong>
+            </div>
+            <div class="list-group-item form-inline">
+                <strong>Notification Email:</strong>
+                <form method="POST" class="input-group pull-right" ng-submit="changeNotificationEmail()">
+                    <input type="text" class="form-control" ng-init="accountNotfEmail =  result.User.NotificationEmail"  ng-model="accountNotfEmail">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Update</button>
+                    </span>
+                </form>
+                <div class="clearfix"></div>
+            </div>
 
-			<div class="list-group-item">
-				<form method="POST" class="input-group" ng-submit="updateLoginPassword()">
-					<input type="text" class="form-control mono" id="resetLoginPW" ng-init="newLoginPass = randPass()" ng-model="newLoginPass">
-					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
-					<span class="input-group-btn">
-						<button class="btn btn-primary" type="submit">
-							<span class="fa fa-retweet"></span> Reset Login PW
-						</button>
-					</span>
-				</form>
-				<div class="clearfix"></div>
-			</div>
-			<div class="list-group-item text-center">
-				<form method="POST" class="list-group-item text-center" ng-submit="logoutUser()">
-					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
-					<button type="submit" href class="btn btn-warning">
-						<span class="fa fa-power-off"></span> Logout user
-					</button>
-				</form>
-			</div>
+            <div class="list-group-item">
+                <form method="POST" class="input-group" ng-submit="updateLoginPassword()">
+                    <input type="text" class="form-control mono" id="resetLoginPW" ng-init="newLoginPass = randPass()" ng-model="newLoginPass">
+                    <input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="fa fa-retweet"></span> Reset Login PW
+                        </button>
+                    </span>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+            <div class="list-group-item text-center">
+                <form method="POST" class="list-group-item text-center" ng-submit="logoutUser()">
+                    <input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
+                    <button type="submit" href class="btn btn-warning">
+                        <span class="fa fa-power-off"></span> Logout user
+                    </button>
+                </form>
+            </div>
 
-			<div class="list-group-item">
-				<code class="pull-right" ng-if="result.User.LastLoginTime!=0">
-				{{ result.User.LastLoginTime*1000 | date:'medium' }}
-				</code>
-				<strong>Last Login Time:</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right" ng-if="result.User.LastActivityTime!=0">
-				{{ result.User.LastActivityTime*1000 | date:'medium' }}
-				</code>
-				<strong>Last Activity Time:</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right" ng-if="result.User.CreateTime!=0">
-				{{ result.User.CreateTime*1000 | date:'medium' }}
-				</code>
-				<strong>Create Time:</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right" ng-if="result.User.UsedSpace==0">{{ result.User.UsedSpace }}</code>
-				<code class="pull-right" ng-if="result.User.UsedSpace!=0">{{ result.User.UsedSpace | bytes }}</code>
-				<strong>Used Space:</strong>
-			</div>
-			<div class="list-group-item">
-				<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
-					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID" />
-					<button type="button" disabled class="btn btn-default btn-xs"
-						ng-class="{'btn-primary': result.User.Status===0}">
-						Deleted
-					</button>
-					<button ng-click="changeStatus(1, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
-					ng-class="{'btn-primary': result.User.Status===1}">
-						Disabled
-					</button>
-					<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
-					ng-class="{'btn-primary': result.User.Status===2}">
-						Enabled
-					</button>
-					<button type="button" disabled class="btn btn-default btn-xs"
-					ng-class="{'btn-primary': result.User.Status===3}">
-						Admin
-					</button>
-					<button type="button" disabled class="btn btn-default btn-xs"
-					ng-class="{'btn-primary': result.User.Status===4}">
-						Super
-					</button>
-				</form>
-				<form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
-					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
-					<button type="button" disabled class="btn btn-default btn-xs"
-						ng-class="{'btn-primary': result.User.Status==0}">
-						Deleted
-					</button>
-					<button ng-click="changeStatus(1, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
-						ng-class="{'btn-primary': result.User.Status==1}">
-						Disabled
-					</button>
-					<button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
-						ng-class="{'btn-primary': result.User.Status==2}">
-						Enabled
-					</button>
-					<button ng-click="changeStatus(3, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
-						ng-class="{'btn-primary': result.User.Status==3}">
-						Admin
-					</button>
-					<button type="button" disabled class="btn btn-default btn-xs"
-						ng-class="{'btn-primary': result.User.Status==4}">
-						Super
-					</button>
-				</form>
-				<strong>User Status:</strong>
-			</div>
-			<form method="POST" class="list-group-item" ng-show="{{ user.Scope === 'admin' }}">
-				<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
-				<div class="btn-group pull-right">
-					<button type="submit" ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==1}">500 MB</button>
-					<button type="submit" ng-click="changeLevel(2)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==2}">1 GB</button>
-					<button type="submit" ng-click="changeLevel(3)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==3}">10 GB</button>
-				</div>
-				<strong>User Level:</strong>
-			</form>
-			<div class="list-group-item text-center">
-				<form method="POST" class="list-group-item text-center" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU(force_delete)">
-					<input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
-					<button type="submit" class="btn btn-danger" ng-confirm-click="Are you sure you want to delete the user?">
-						<span class="fa fa-trash-o"></span> Delete from Active Users
-					</button>
-					<label>
-						<select ng-model="currentDeleteUserOption" class="form-control" ng-options="value.label for value in deleteUserOptions"></select>
-					</label>
-				</form>
-			</div>
-		</div>
+            <div class="list-group-item">
+                <code class="pull-right" ng-if="result.User.LastLoginTime!=0">
+                {{ result.User.LastLoginTime*1000 | date:'medium' }}
+                </code>
+                <strong>Last Login Time:</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right" ng-if="result.User.LastActivityTime!=0">
+                {{ result.User.LastActivityTime*1000 | date:'medium' }}
+                </code>
+                <strong>Last Activity Time:</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right" ng-if="result.User.CreateTime!=0">
+                {{ result.User.CreateTime*1000 | date:'medium' }}
+                </code>
+                <strong>Create Time:</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right" ng-if="result.User.UsedSpace==0">{{ result.User.UsedSpace }}</code>
+                <code class="pull-right" ng-if="result.User.UsedSpace!=0">{{ result.User.UsedSpace | bytes }}</code>
+                <strong>Used Space:</strong>
+            </div>
+            <div class="list-group-item">
+                <form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
+                    <input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID" />
+                    <button type="button" disabled class="btn btn-default btn-xs"
+                        ng-class="{'btn-primary': result.User.Status===0}">
+                        Deleted
+                    </button>
+                    <button ng-click="changeStatus(1, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
+                    ng-class="{'btn-primary': result.User.Status===1}">
+                        Disabled
+                    </button>
+                    <button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}" class="btn btn-default btn-xs"
+                    ng-class="{'btn-primary': result.User.Status===2}">
+                        Enabled
+                    </button>
+                    <button type="button" disabled class="btn btn-default btn-xs"
+                    ng-class="{'btn-primary': result.User.Status===3}">
+                        Admin
+                    </button>
+                    <button type="button" disabled class="btn btn-default btn-xs"
+                    ng-class="{'btn-primary': result.User.Status===4}">
+                        Super
+                    </button>
+                </form>
+                <form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin super' }}">
+                    <input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
+                    <button type="button" disabled class="btn btn-default btn-xs"
+                        ng-class="{'btn-primary': result.User.Status==0}">
+                        Deleted
+                    </button>
+                    <button ng-click="changeStatus(1, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
+                        ng-class="{'btn-primary': result.User.Status==1}">
+                        Disabled
+                    </button>
+                    <button ng-click="changeStatus(2, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
+                        ng-class="{'btn-primary': result.User.Status==2}">
+                        Enabled
+                    </button>
+                    <button ng-click="changeStatus(3, account)" type="submit" ng-disabled="{{ result.User.Status == 4 }}" class="btn btn-default btn-xs"
+                        ng-class="{'btn-primary': result.User.Status==3}">
+                        Admin
+                    </button>
+                    <button type="button" disabled class="btn btn-default btn-xs"
+                        ng-class="{'btn-primary': result.User.Status==4}">
+                        Super
+                    </button>
+                </form>
+                <strong>User Status:</strong>
+            </div>
+            <form method="POST" class="list-group-item" ng-show="{{ user.Scope === 'admin' }}">
+                <input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
+                <div class="btn-group pull-right">
+                    <button type="submit" ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==1}">500 MB</button>
+                    <button type="submit" ng-click="changeLevel(2)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==2}">1 GB</button>
+                    <button type="submit" ng-click="changeLevel(3)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==3}">10 GB</button>
+                </div>
+                <strong>User Level:</strong>
+            </form>
+            <div class="list-group-item text-center">
+                <form method="POST" class="list-group-item text-center" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU(force_delete)">
+                    <input type="hidden" ng-init="accountID=result.User.UserID" ng-model="accountID">
+                    <button type="submit" class="btn btn-danger" ng-confirm-click="Are you sure you want to delete the user?">
+                        <span class="fa fa-trash-o"></span> Delete from Active Users
+                    </button>
+                    <label>
+                        <select ng-model="currentDeleteUserOption" class="form-control" ng-options="value.label for value in deleteUserOptions"></select>
+                    </label>
+                </form>
+            </div>
+        </div>
 
-		<div class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Payments</strong>
-			</div>
-			<div class="list-group-item">
-				<strong>Credit:</strong>
-				<code class="pull-right">{{ result.User.Credit / 100 + ' ' + result.User.Currency }}</code>
-			</div>
-			<div ng-if="result.User.StripeCustomerID != null" class="list-group-item">
-				<strong>StripeCustomerID link:</strong>
-				<a href="https://dashboard.stripe.com/customers/{{ result.User.StripeCustomerID }}" class="pull-right">{{ result.User.StripeCustomerID }}</a>
-			</div>
-			<div class="list-group-item text-center">
-				<div class="list-group-item form-group text-center">
-					<div class="col-md-6">
-						<form method="POST" class="input-group" ng-submit="creditUser(UserID, Credit)">
-							<input type="text" class="form-control" ng-init="UserID = this.result.User.UserID; Credit = 0" ng-model="Credit" >
-							<span class="input-group-btn">
-								<button class="btn btn-primary" type="submit">Add credit</button>
-							</span>
-						</form>
-					</div>
-					<div ng-if="result.User.StripeCustomerID != null" class="col-md-6">
-						<form method="POST" ng-submit="deleteCustomer()">
-							<input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
-							<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
-								<span class="fa fa-trash-o"></span> Delete customer
-							</button>
-						</form>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-		</div>
+        <div ng-if="result.User" class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Payments</strong>
+            </div>
+            <div class="list-group-item">
+                <strong>Credit:</strong>
+                <code class="pull-right">{{ result.User.Credit / 100 + ' ' + result.User.Currency }}</code>
+            </div>
+            <div ng-if="result.User.StripeCustomerID != null" class="list-group-item">
+                <strong>StripeCustomerID link:</strong>
+                <a href="https://dashboard.stripe.com/customers/{{ result.User.StripeCustomerID }}" class="pull-right">{{ result.User.StripeCustomerID }}</a>
+            </div>
+            <div class="list-group-item text-center">
+                <div class="list-group-item form-group text-center">
+                    <div class="col-md-6">
+                        <form method="POST" class="input-group" ng-submit="creditUser(UserID, Credit)">
+                            <input type="text" class="form-control" ng-init="UserID = this.result.User.UserID; Credit = 0" ng-model="Credit" >
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">Add credit</button>
+                            </span>
+                        </form>
+                    </div>
+                    <div ng-if="result.User.StripeCustomerID != null" class="col-md-6">
+                        <form method="POST" ng-submit="deletePaymentsCustomer()">
+                            <input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
+                            <button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+                                <span class="fa fa-trash-o"></span> Delete customer
+                            </button>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
 
-		<div ng-if="result.PaymentMethods !== NULL" class="list-group-item list-group-item-warning">
-			<strong>Payment methods</strong>
-		</div>
-		<div ng-repeat="payment in result.PaymentMethods">
-			<div class="list-group-item list-group-item-success">
-				<strong>Payment method type:</strong>
-				<code class="pull-right">{{ payment.Type }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Details:</strong>
-				<div ng-if="payment.Type == 'card'" class="table-responsive">
-					<div class="list-group-item">
-						<strong>Card brand:</strong>
-						<code class="pull-right">{{ payment.Details.Brand }}</code>
-					</div>
-					<div class="list-group-item">
-						<strong>Last 4 digits:</strong>
-						<code class="pull-right">{{ payment.Details.Last4 }}</code>
-					</div>
-					<div class="list-group-item">
-						<strong>Name:</strong>
-						<code class="pull-right">{{ payment.Details.Name }}</code>
-					</div>
-					<div class="list-group-item">
-						<strong>Country:</strong>
-						<code class="pull-right">{{ payment.Details.Country }}</code>
-					</div>
-					<div class="list-group-item">
-						<strong>ZIP code:</strong>
-						<code class="pull-right">{{ payment.Details.ZIP }}</code>
-					</div>
-					<div class="list-group-item">
-						<strong>Expiration date (month):</strong>
-						<code class="pull-right">{{ payment.Details.ExpMonth }}</code>
-					</div>
-					<div class="list-group-item">
-						<strong>Expiration date (year):</strong>
-						<code class="pull-right">{{ payment.Details.ExpYear }}</code>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div ng-if="result.PaymentMethods !== NULL" class="list-group-item list-group-item-warning">
+            <strong>Payment methods</strong>
+        </div>
+        <div ng-repeat="payment in result.PaymentMethods">
+            <div class="list-group-item list-group-item-success">
+                <strong>Payment method type:</strong>
+                <code class="pull-right">{{ payment.Type }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Details:</strong>
+                <div ng-if="payment.Type == 'card'" class="table-responsive">
+                    <div class="list-group-item">
+                        <strong>Card brand:</strong>
+                        <code class="pull-right">{{ payment.Details.Brand }}</code>
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Last 4 digits:</strong>
+                        <code class="pull-right">{{ payment.Details.Last4 }}</code>
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Name:</strong>
+                        <code class="pull-right">{{ payment.Details.Name }}</code>
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Country:</strong>
+                        <code class="pull-right">{{ payment.Details.Country }}</code>
+                    </div>
+                    <div class="list-group-item">
+                        <strong>ZIP code:</strong>
+                        <code class="pull-right">{{ payment.Details.ZIP }}</code>
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Expiration date (month):</strong>
+                        <code class="pull-right">{{ payment.Details.ExpMonth }}</code>
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Expiration date (year):</strong>
+                        <code class="pull-right">{{ payment.Details.ExpYear }}</code>
+                    </div>
+                    <form class="list-group-item text-center" method="POST" ng-submit="deletePaymentsMethod(payment.ID)">
+                        <input type="hidden" ng-init="accountID = result.User.UserID" ng-model="accountID">
+                        <button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+                            <span class="fa fa-trash-o"></span> Delete payment method
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-	</div>
+    </div>
 
 </div>
 

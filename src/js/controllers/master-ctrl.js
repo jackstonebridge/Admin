@@ -1,7 +1,7 @@
 /**
  * Master Controller
  */
-var DEBUG = true;
+var DEBUG = false;
 
 angular
 .module('RDash')
@@ -97,7 +97,10 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-        // console.log(!$scope.isLoggedIn(), (toState.name!=='index'), AT);
+        if (DEBUG)
+        {
+            console.log(!$scope.isLoggedIn(), (toState.name!=='index'), AT);
+        }
 
         if (!$scope.isLoggedIn() && toState.name!=='index' && !AT) {
             event.preventDefault();
@@ -135,7 +138,10 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         var UN = sessionStorage.getItem('UN');
         $scope.showLogin = false;
         if (AT && UID) {
-            // console.log(AT, UID, RF, UN);
+            if (DEBUG)
+            {
+                console.log(AT, UID, RF, UN);
+            }
             $http.defaults.headers.common['Authorization'] = 'Bearer '+AT;
             $http.defaults.headers.common['x-pm-uid'] = UID;
             if ($state.current.name==='') {
@@ -181,7 +187,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         var template = hash.split('=')[0];
         var query    = hash.split('=')[1];
 
-        if ( DEBUG )
+        if (DEBUG)
         {
             console.debug("Reading hash: "     + hash);
             console.debug("Reading template: " + template);
@@ -355,8 +361,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             lookupString = query;
         }
 
-        // Debug
-        if ( DEBUG )
+        if (DEBUG)
         {
             console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
             console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
@@ -787,11 +792,11 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.deleteCustomer = function()
+    $scope.deletePaymentsCustomer = function()
     {
         $rootScope.loading = true;
 
-        $http.delete(apiUrl+'/admin/customer/' + this.accountID)
+        $http.delete(apiUrl + '/admin/payments/customer/' + this.accountID)
         .then(
             function(response)
             {
@@ -806,12 +811,39 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     window.location.reload();
                 }
             },
-            function(response) {
+            function errorCallback(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
-                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.deletePaymentsMethod = function(PaymentMethodID)
+    {
+        $rootScope.loading = true;
+
+        $http.delete(apiUrl + '/admin/payments/method/' + this.accountID + '?PaymentMethodID=' +  PaymentMethodID)
+        .then(
+            function(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Customer deleted.');
+                    $scope.lookupResponse.Results = 'undefined';
+                    window.location.reload();
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
             }
         );
     };
@@ -825,7 +857,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             "Description": "Admin panel credit adjustment"
         };
 
-        $http.put(apiUrl+'/admin/user/' + UserID + '/credit', data)
+        $http.put(apiUrl + '/admin/user/' + UserID + '/credit', data)
         .then(
             function successCallback(response)
             {
@@ -901,11 +933,21 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    $scope.listCoupon = function(couponName)
+    {
+        $rootScope.loading = true;
+        $scope.CouponName = couponName;
+        $rootScope.loading = false;
+    }
+
     $scope.listCouponWhitelist = function(couponName)
     {
         $rootScope.loading = true;
-        $scope.couponName = couponName;
-        $http.get(apiUrl + '/admin/coupons/' + couponName + '/whitelist')
+        if ($scope.CouponName !== couponName) {
+            $scope.CouponHistory = undefined;
+        }
+        $scope.CouponName = couponName;
+        $http.get(apiUrl + '/admin/coupons/' + $scope.CouponName + '/whitelist')
         .then(
             function successCallback(response)
             {
@@ -966,10 +1008,14 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.listCouponHistory = function()
+    $scope.listCouponHistory = function(couponName)
     {
         $rootScope.loading = true;
-        $http.get(apiUrl + '/admin/coupons/' + this.couponName + '/history')
+        if ($scope.CouponName !== couponName) {
+            $scope.CouponWhitelist = undefined;
+        }
+        $scope.CouponName = couponName;
+        $http.get(apiUrl + '/admin/coupons/' + $scope.CouponName + '/history')
         .then(
             function successCallback(response)
             {
