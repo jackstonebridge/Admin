@@ -1,154 +1,133 @@
+<!DOCTYPE HTML>
 <section ng-repeat="response in lookupResponse">
 
 <div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
 
-	<!-- User lookup results -->
-	<h1 ng-if="result.DomainID">{{ result.DomainName }}</h1>
+    <div class="col-md-12">
+        <h1 ng-if="result.ID">{{ result.DomainName }}</h1>
+    </div>
 
-	<div class="col">
-		<div ng-if="result.DomainName" class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Domain records</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right">{{ result.DomainID }}</code>
-				<strong>DomainID:</strong>
-			</div>
+    <div class="col-md-6">
+        <div ng-if="result.DomainName" class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Domain records</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right">{{ result.ID }}</code>
+                <strong>DomainID:</strong>
+            </div>
 
-			<div class="list-group-item">
-				<strong>State:</strong>
-				<code class="pull-right">{{ result.State }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Check time:</strong>
-				<code class="pull-right" ng-if="result.CheckTime !== 0">
-				{{ result.CheckTime * 1000 | date:'medium' }}
-				</code>
-			</div>
+            <div class="list-group-item">
+                <strong>State:</strong>
+                <code class="pull-right">{{ result.State }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Check time:</strong>
+                <code class="pull-right" ng-if="result.CheckTime !== 0">
+                {{ result.CheckTime * 1000 | date:'medium' }}
+                </code>
+            </div>
 
 
-			<div class="list-group-item">
-				<strong>Verify code:</strong>
-				<pre>{{ result.VerifyCode }}</pre>
-			</div>
-			<div class="list-group-item">
-				<strong>MX record:</strong>
-				<pre>{{ result.MxRecord }}</pre>
-			</div>
-			<div class="list-group-item">
-				<strong>SPF record:</strong>
-				<pre>{{ result.SpfRecord }}</pre>
-			</div>
-			<div class="list-group-item">
-				<strong>DKIM record:</strong>
-				<pre>{{ result.DkimRecord }}</pre>
-			</div>
-			<div class="list-group-item">
-				<strong>DKIM public key:</strong>
-				<br>
-				<pre>{{ result.DkimPublicKey }}</pre>
-			</div>
-			<div class="list-group-item">
-				<strong>DMARC record:</strong>
-				<pre>{{ result.DmarcRecord }}</pre>
-			</div>
+            <div class="list-group-item">
+                <strong>Verify code:</strong>
+                <pre>{{ result.VerifyCode }}</pre>
+            </div>
+            <div class="list-group-item">
+                <strong>MX record:</strong>
+                <pre>{{ result.MxRecord }}</pre>
+            </div>
+            <div class="list-group-item">
+                <strong>SPF record:</strong>
+                <pre>{{ result.SpfRecord }}</pre>
+            </div>
+            <div class="list-group-item">
+                <strong>DKIM record:</strong>
+                <pre>{{ result.DkimRecord }}</pre>
+            </div>
+            <div class="list-group-item">
+                <strong>DKIM public key:</strong>
+                <br>
+                <pre>{{ result.DkimPublicKey }}</pre>
+            </div>
+            <div class="list-group-item">
+                <strong>DMARC record:</strong>
+                <pre>{{ result.DmarcRecord }}</pre>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<div class="col right">
+    <div class="col-md-6 right">
 
-		<div class="list-group">
+        <div class="list-group">
 
-			<div class="list-group-item list-group-item-warning">
-				<strong>Domain state</strong>
-			</div>
-			<div class="list-group-item">
-				<code class="pull-right">{{ result.DomainID }}</code>
-				<strong>DomainID:</strong>
-			</div>
+            <div class="list-group-item list-group-item-warning">
+                <strong>Domain state</strong>
+            </div>
+            <div class="list-group-item">
+                <strong>Verify state:</strong>
+                <code class="pull-right">{{ result.VerifyState }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>MX state:</strong>
+                <code class="pull-right">{{ result.MxState }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>SPF state:</strong>
+                <code class="pull-right">{{ result.SpfState }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>DKIM state:</strong>
+                <code class="pull-right">{{ result.DkimState }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>DMARC state:</strong>
+                <code class="pull-right">{{ result.DmarcState }}</code>
+            </div>
+        </div>
 
-			<div class="list-group-item">
-				<strong>State:</strong>
-				<code class="pull-right">{{ result.State }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Check time:</strong>
-				<code class="pull-right" ng-if="result.CheckTime !== 0">
-				{{ result.CheckTime * 1000 | date:'medium' }}
-				</code>
-			</div>
-			<div class="list-group-item">
-				<strong>Verify state:</strong>
-				<code class="pull-right">{{ result.VerifyState }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>MX state:</strong>
-				<code class="pull-right">{{ result.MxState }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>SPF state:</strong>
-				<code class="pull-right">{{ result.SpfState }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>DKIM state:</strong>
-				<code class="pull-right">{{ result.DkimState }}</code>
-			</div>
-			<div class="list-group-item">
-				<strong>DMARC state:</strong>
-				<code class="pull-right">{{ result.DmarcState }}</code>
-			</div>
+        <div class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Organization</strong>
+            </div>
+            <div class="list-group-item">
+                <strong>OrganizationID:</strong>
+                <code class="pull-right">{{ result.ID }}</code>
+            </div>
 
-<!-- 			<form method="POST" class="list-group-item text-center" ng-submit="deleteDomain()">
-				<input type="hidden" ng-init="DomainID=result.DomainID" ng-model="DomainID">
-				<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANNOT BE UNDONE.">
-					<span class="fa fa-trash-o">&nbsp;Delete domain</span>
-				</button>
-			</form>
- -->
-		</div>
+            <div class="list-group-item text-center">
+                <div class="list-group-item text-center">
+                    <button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.OrganizationID)">
+                        <span>Lookup organization</span>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-		<div class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Organization</strong>
-			</div>
-			<div class="list-group-item">
-				<strong>OrganizationID:</strong>
-				<code class="pull-right">{{ result.OrganizationID }}</code>
-			</div>
+        <div ng-if="result.Addresses.lenght" class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Addresses</strong>
+            </div>
+            <div ng-repeat="x in result.Addresses">
+                <div class="list-group-item">
+                    <code class="pull-right">{{ x.ID }}</code>
+                    <strong>AddressID:</strong>
+                </div>
+                <div class="list-group-item form-inline">
+                    <code class="pull-right">{{ x.Email }}</code>
+                    <strong>Email:</strong>
+                </div>
+                <div class="list-group-item">
+                    <strong>Send / Receive:</strong>
+                    <code class="pull-right">{{ x.Send }}</code>
+                    <strong class="pull-right">&nbsp;/&nbsp;</strong>
+                    <code class="pull-right">{{ x.Receive }}</code>
+                </div>
+            </div>
+        </div>
 
-			<div class="list-group-item text-center">
-				<div class="list-group-item text-center">
-					<button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', this.result.OrganizationID)">
-						<span>Lookup organization</span>
-					</button>
-				</div>
-			</div>
-		</div>
-
-		<div ng-if="result.Addresses.lenght" class="list-group">
-			<div class="list-group-item list-group-item-warning">
-				<strong>Addresses</strong>
-			</div>
-			<div ng-repeat="x in result.Addresses">
-				<div class="list-group-item">
-					<code class="pull-right">{{ x.AddressID }}</code>
-					<strong>AddressID:</strong>
-				</div>
-				<div class="list-group-item form-inline">
-					<code class="pull-right">{{ x.Email }}</code>
-					<strong>Email:</strong>
-				</div>
-				<div class="list-group-item">
-					<strong>Send / Receive:</strong>
-					<code class="pull-right">{{ x.Send }}</code>
-					<strong class="pull-right">&nbsp;/&nbsp;</strong>
-					<code class="pull-right">{{ x.Receive }}</code>
-				</div>
-			</div>
-		</div>
-
-	</div>
+    </div>
 
 </div>
 

@@ -1,7 +1,7 @@
 /**
  * Master Controller
  */
-var DEBUG = false;
+var DEBUG = true;
 
 angular
 .module('RDash')
@@ -99,7 +99,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         if (DEBUG)
         {
-            console.log(!$scope.isLoggedIn(), (toState.name!=='index'), AT);
+            console.debug("(isLoggedIn(), isIndex(), AT) = " + !$scope.isLoggedIn(), (toState.name!=='index'), AT);
         }
 
         if (!$scope.isLoggedIn() && toState.name!=='index' && !AT) {
@@ -672,10 +672,9 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
-                // called asynchronously if an error occurs
             }
         );
     };
@@ -684,7 +683,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $rootScope.loading = true;
 
-        $http.delete(apiUrl+'/admin/invite/'+this.accountID)
+        $http.delete(apiUrl+'/admin/invite/' + this.accountID)
         .then(
             function(response) {
                 $rootScope.loading = false;
@@ -695,42 +694,14 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 else {
                     $rootScope.$emit('addAlert', 'Deleted from Waiting List.');
                     $scope.lookupResponse.Results = 'undefined';
+                    window.location.reload();
                 }
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
-                // called asynchronously if an error occurs
-            }
-        );
-    };
-
-    $scope.unsubscribeOrganization = function()
-    {
-        $rootScope.loading = true;
-
-        $http.put(apiUrl+'/admin/organization/' + this.accountID + '/unsubscribe')
-        .then(
-            function(response)
-            {
-                $rootScope.loading = false;
-                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-                if (error) {
-                    $rootScope.$emit('addAlert', error);
-                }
-                else {
-                    $rootScope.$emit('addAlert', 'Organization unsubscribed.');
-                    $scope.lookupResponse.Results = 'undefined';
-                }
-            },
-            function(response) {
-                $rootScope.loading = false;
-                if (error) {
-                    $rootScope.$emit('addAlert', response);
-                }
-                // called asynchronously if an error occurs
             }
         );
     };
@@ -756,38 +727,9 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
-                // called asynchronously if an error occurs
-            }
-        );
-    };
-
-    $scope.unsubscribeCustomer = function()
-    {
-        $rootScope.loading = true;
-
-        $http.put(apiUrl+'/admin/customer/' + this.accountID + '/unsubscribe')
-        .then(
-            function(response)
-            {
-                $rootScope.loading = false;
-                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-                if (error) {
-                    $rootScope.$emit('addAlert', error);
-                }
-                else {
-                    $rootScope.$emit('addAlert', 'Customer unsubscribed.');
-                    $scope.lookupResponse.Results = 'undefined';
-                }
-            },
-            function(response) {
-                $rootScope.loading = false;
-                if (error) {
-                    $rootScope.$emit('addAlert', response);
-                }
-                // called asynchronously if an error occurs
             }
         );
     };
@@ -806,7 +748,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     $rootScope.$emit('addAlert', error);
                 }
                 else {
-                    $rootScope.$emit('addAlert', 'Customer deleted.');
+                    $rootScope.$emit('addAlert', 'Payment method deleted.');
                     $scope.lookupResponse.Results = 'undefined';
                     window.location.reload();
                 }
