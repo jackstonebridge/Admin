@@ -1,11 +1,9 @@
 /**
  * Master Controller
  */
-var DEBUG = true;
-
 angular
 .module('RDash')
-.controller('MasterCtrl', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', MasterCtrl])
+.controller('MasterCtrl', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', 'Setup', MasterCtrl])
 .filter("bytes", function () {
     "use strict";
     return function(bytes, precision) {
@@ -47,23 +45,14 @@ angular
     $httpProvider.interceptors.push('myHttpInterceptor');
 }]);
 
-function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout)
+function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout, Setup)
 {
     "use strict";
 
-    var apiUrl = 'https://admin-api.protontech.ch';
-    // var apiUrl = 'https://test-api.protonmail.ch';
-    var appVersion   = 'Other';
-    var clientId     = 'B0SS';
-    var clientSecret = 'c916d8e8712f96c719acab4ec54e7844';
-
-    if ( DEBUG )
-    {
-        apiUrl       = "https://protonmail.local.dev/api";
-        // appVersion   = "Other";
-        // clientId     = "demoapp";
-        // clientSecret = "demopass";
-    }
+    var apiUrl       = Setup.apiUrl;
+    var appVersion   = Setup.appVersion;
+    var clientId     = Setup.clientId;
+    var clientSecret = Setup.clientSecret;
 
     $http.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
     $http.defaults.headers.common['x-pm-appversion'] = appVersion;
@@ -95,9 +84,9 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     var AT = sessionStorage.getItem('AT');
 
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$stateChangeStart', function(event, toState) {
 
-        if (DEBUG)
+        if (Setup.debug)
         {
             console.debug("(isLoggedIn(), isIndex(), AT) = " + !$scope.isLoggedIn(), (toState.name!=='index'), AT);
         }
@@ -138,7 +127,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         var UN = sessionStorage.getItem('UN');
         $scope.showLogin = false;
         if (AT && UID) {
-            if (DEBUG)
+            if (Setup.debug)
             {
                 console.log(AT, UID, RF, UN);
             }
@@ -167,7 +156,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         }
                     },
                     function(response) {
-                        if (error) {
+                        if (response) {
                             $rootScope.$emit('addAlert', response);
                         }
                     }
@@ -187,7 +176,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         var template = hash.split('=')[0];
         var query    = hash.split('=')[1];
 
-        if (DEBUG)
+        if (Setup.debug)
         {
             console.debug("Reading hash: "     + hash);
             console.debug("Reading template: " + template);
@@ -260,7 +249,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -283,7 +272,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -316,7 +305,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -361,7 +350,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             lookupString = query;
         }
 
-        if (DEBUG)
+        if (Setup.debug)
         {
             console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
             console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
@@ -431,7 +420,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -461,7 +450,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -489,7 +478,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -534,7 +523,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 $scope.forceMonitorFlag = false;
@@ -565,7 +554,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -591,7 +580,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -619,7 +608,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
@@ -943,7 +932,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
             }
@@ -1022,7 +1011,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 },
                 function(response) {
                     $rootScope.loading = false;
-                    if (error) {
+                    if (response) {
                         $rootScope.$emit('addAlert', response);
                     }
                     // called asynchronously if an error occurs
@@ -1045,7 +1034,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 },
                 function(response) {
                     $rootScope.loading = false;
-                    if (error) {
+                    if (response) {
                         $rootScope.$emit('addAlert', response);
                     }
                     // called asynchronously if an error occurs
@@ -1076,7 +1065,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             },
             function(response) {
                 $rootScope.loading = false;
-                if (error) {
+                if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
                 // called asynchronously if an error occurs
