@@ -31,6 +31,10 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
                 url: '/monitor',
                 templateUrl: 'templates/monitor.html'
             })
+            .state('messages', {
+                url: '/messages',
+                templateUrl: 'templates/messages.html'
+            })
             .state('blast', {
                 url: '/blast',
                 templateUrl: 'templates/blast.html'

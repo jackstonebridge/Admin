@@ -532,6 +532,49 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    $scope.checkSpam = function() {
+        // window.location.hash = "#/messages/" + this.accountID;
+        // window.location.reload();
+        // $scope.spamUserID = this.accountID;
+        window.open("#/messages?UserID=" + this.accountID, "_self");
+    }
+
+    $scope.forceMessages = function() {
+        $scope.forceMessagesFlag = true;
+        $scope.getUserMessages();
+    };
+
+    $scope.getUserMessages = function(location) {
+
+        $rootScope.loading = true;
+        $scope.messagesResponse = '';
+
+        var UserID = $location.absUrl().split('?UserID=')[1];
+
+        console.debug(UserID);
+        $http.get(apiUrl + '/admin/user/' + UserID + '/messages?Location=' + location + '&Page=' + this.Page + '&PageSize=' + this.PageSize + '&Unread=' + this.Unread)
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.messagesResponse = response;
+                }
+                $scope.forceMessagesFlag = false;
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                $scope.forceMessagesFlag = false;
+            }
+        );
+    };
+
     $scope.updateLoginPassword = function() {
 
         var data =  {
