@@ -1,13 +1,8 @@
 <div class="container-fluid">
 
-    <p class="text-center">
-        <a href class="btn btn-primary btn-lg" ng-click="getUserMessages(0)" ng-disabled="loading">Get inbox messages</a>
-        <a href class="btn btn-primary btn-lg" ng-click="getUserMessages(2)" ng-disabled="loading">Get sent messages</a>
-        <br>
-        <em>(This can take up to a minute and will freeze the app.)</em>
-    </p>
-
     <div class="list-group-item form-inline text-center">
+        <a href class="btn btn-primary btn-lg" ng-click="getUserMessages()" ng-disabled="loading">View messages</a>
+        &nbsp;
         <strong>Page size:</strong>
         <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="PageSize = 50"  ng-model="PageSize">
         &nbsp;
@@ -16,10 +11,15 @@
         &nbsp;
         <strong>Unread:</strong>
         <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Unread = 1"  ng-model="Unread">
-        <!-- &nbsp;
+        &nbsp;
         <strong>Location:</strong>
-        <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Location = 0"  ng-model="Location"> -->
+        <label>
+            <select ng-model="currentMessageLocationOption" class="form-control" ng-options="value.label for value in messageLocationOptions"></select>
+        </label>
     </div>
+    <p class="text-center">
+        <em>(This can take up to a minute and will freeze the app.)</em>
+    </p>
 
     <div class="account" ng-if="messagesResponse.data">
         <div class="list-group-item form-inline">
@@ -28,7 +28,7 @@
             <span>Total messages matching criteria:</span>
             <strong>{{ messagesResponse.data.Total }}</strong>
         </div>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-inline">
             <thead>
                 <tr class="active">
                     <th>Time</th>

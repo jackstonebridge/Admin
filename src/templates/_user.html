@@ -68,55 +68,6 @@
             </div>
         </div>
 
-        <div ng-if="result.Subscription" class="list-group">
-            <div class="list-group-item list-group-item-warning">
-                <strong>Subscription</strong>
-            </div>
-            <div class="list-group-item">
-                <strong>Billing cycle:</strong>
-                <code class="pull-right">{{ result.Subscription.Cycle }}</code>
-            </div>
-            <div class="list-group-item">
-                <strong>Period start:</strong>
-                <code class="pull-right">{{ result.Subscription.PeriodStart*1000 | date:'medium' }}</code>
-            </div>
-            <div class="list-group-item">
-                <strong>Period end:</strong>
-                <code class="pull-right">{{ result.Subscription.PeriodEnd*1000 | date:'medium' }}</code>
-            </div>
-            <div ng-if="result.Subscription.CouponCode != NULL" class="list-group-item">
-                <strong>Coupon code used:</strong>
-                <code class="pull-right">{{ result.Subscription.CouponCode }}</code>
-            </div>
-            <div class="list-group-item">
-                <strong>Currency:</strong>
-                <code class="pull-right">{{ result.Subscription.Currency }}</code>
-            </div>
-            <div class="list-group-item">
-                <strong>Amount:</strong>
-                <code class="pull-right">{{ result.Subscription.Amount }}</code>
-            </div>
-            <div ng-repeat="plan in result.Subscription.Plans">
-                <div class="list-group-item list-group-item-success">
-                    <strong>Plan:</strong>
-                    <code class="pull-right">{{ plan.Title }}</code>
-                </div>
-                <div class="list-group-item">
-                    <strong>Details:</strong>
-                    <div class="table-responsive">
-                        <div class="list-group-item">
-                            <strong>Amount:</strong>
-                            <code class="pull-right">{{ plan.Amount }}</code>
-                        </div>
-                        <div class="list-group-item">
-                            <strong>Currency:</strong>
-                            <code class="pull-right">{{ plan.Currency }}</code>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div ng-if="result.Organization" class="list-group">
             <div class="list-group-item list-group-item-warning">
                 <strong>Organization</strong>
@@ -131,6 +82,198 @@
                         <span>Lookup organization</span>
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <div ng-if="result.SentRate !== NULL" class="list-group">
+            <div class="list-group-item list-group-item-info">
+                <strong>Sent rate</strong>
+            </div>
+            <div class="list-group-item">
+                <strong>Reputation:</strong>
+                <code class="pull-right">{{ result.SentRate.Reputation }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Trust:</strong>
+                <code class="pull-right">{{ result.SentRate.Trust }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>No. of times banned:</strong>
+                <code class="pull-right">{{ result.SentRate.BannedNum }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Ban time:</strong>
+                <code class="pull-right">{{ result.SentRate.BanTime * 1000 | date:'medium' }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Blackhole:</strong>
+                <code class="pull-right">{{ result.SentRate.Blackhole }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Notified:</strong>
+                <code class="pull-right">{{ result.SentRate.Notified }}</code>
+            </div>
+
+            <div ng-if="result.SentRate.Feedback !== 0">
+                <div class="list-group-item">
+                    <strong>Feedback:</strong>
+                    <code class="pull-right">{{ result.SentRate.Feedback }}</code>
+                </div>
+                <div class="list-group-item">
+                    <strong>Feedback from:</strong>
+                    <code class="pull-right">{{ result.SentRate.FeedbackFrom }}</code>
+                </div>
+            </div>
+
+            <div class="list-group-item text-center no-padding">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="active">
+                            <th></th>
+                            <th>Hourly</th>
+                            <th>Daily</th>
+                            <th>Weekly</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <strong>Time:</strong>
+                        </td>
+                        <td>
+                            <code>{{ result.SentRate.HourlyTime * 1000 | date:'short' }}</code>
+                        </td>
+                        <td>
+                            <code>{{ result.SentRate.DailyTime * 1000 | date:'short' }}</code>
+                        </td>
+                        <td>
+                            <code>{{ result.SentRate.WeeklyTime * 1000 | date:'short' }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># Recipients:</strong>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.HourlyRecipients }}</code>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.DailyRecipients }}</code>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklyRecipients }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># BCC:</strong>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.HourlyBCC }}</code>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.DailyBCC }}</code>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklyBCC }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># Emails:</strong>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.HourlyEmails }}</code>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.DailyEmails }}</code>
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklyEmails }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># Spam:</strong>
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklySpam }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># Undelivered:</strong>
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklyUndelivered }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># Incoming:</strong>
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklyUndelivered }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># Internal:</strong>
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklyInternal }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong># Bad internal:</strong>
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            <code class="pull-right">{{ result.SentRate.WeeklyBadInternal }}</code>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+
+            <div  ng-if="result.SentRate.BanTime !== 0" class="list-group-item text-center">
+                <form method="POST" class="text-center" ng-submit="checkSpam()">
+                    <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                    <button type="submit" href class="btn btn-danger">
+                        <span class="fa fa-exclamation-triangle"></span> Check for spam
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -201,14 +344,6 @@
             </div>
             <div class="list-group-item text-center">
                 <div class="list-group-item text-center">
-                    <div class="col-md-6">
-                        <form method="POST" class="text-center" ng-submit="checkSpam()">
-                            <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
-                            <button type="submit" href class="btn btn-danger">
-                                <span class="fa fa-exclamation-triangle"></span> Check for spam
-                            </button>
-                        </form>
-                    </div>
                     <div class="col-md-6">
                         <form method="POST" class="text-center" ng-submit="logoutUser()">
                             <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
@@ -396,6 +531,55 @@
                             <span class="fa fa-trash-o"></span> Delete payment method
                         </button>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="result.Subscription" class="list-group">
+            <div class="list-group-item list-group-item-warning">
+                <strong>Subscription</strong>
+            </div>
+            <div class="list-group-item">
+                <strong>Billing cycle:</strong>
+                <code class="pull-right">{{ result.Subscription.Cycle }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Period start:</strong>
+                <code class="pull-right">{{ result.Subscription.PeriodStart*1000 | date:'medium' }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Period end:</strong>
+                <code class="pull-right">{{ result.Subscription.PeriodEnd*1000 | date:'medium' }}</code>
+            </div>
+            <div ng-if="result.Subscription.CouponCode != NULL" class="list-group-item">
+                <strong>Coupon code used:</strong>
+                <code class="pull-right">{{ result.Subscription.CouponCode }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Currency:</strong>
+                <code class="pull-right">{{ result.Subscription.Currency }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Amount:</strong>
+                <code class="pull-right">{{ result.Subscription.Amount }}</code>
+            </div>
+            <div ng-repeat="plan in result.Subscription.Plans">
+                <div class="list-group-item list-group-item-success">
+                    <strong>Plan:</strong>
+                    <code class="pull-right">{{ plan.Title }}</code>
+                </div>
+                <div class="list-group-item">
+                    <strong>Details:</strong>
+                    <div class="table-responsive">
+                        <div class="list-group-item">
+                            <strong>Amount:</strong>
+                            <code class="pull-right">{{ plan.Amount }}</code>
+                        </div>
+                        <div class="list-group-item">
+                            <strong>Currency:</strong>
+                            <code class="pull-right">{{ plan.Currency }}</code>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -82,6 +82,16 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     ];
     $scope.currentDeleteUserOption = $scope.deleteUserOptions[0];
 
+    $scope.messageLocationOptions = [
+        { label: "Inbox"  , value: 0 },
+        { label: "Draft"  , value: 1 },
+        { label: "Sent"   , value: 2 },
+        { label: "Trash"  , value: 3 },
+        { label: "Spam"   , value: 4 },
+        { label: "Archuve", value: 6 }
+    ];
+    $scope.currentMessageLocationOption = $scope.messageLocationOptions[0];
+
     var AT = sessionStorage.getItem('AT');
 
     $rootScope.$on('$stateChangeStart', function(event, toState) {
@@ -544,15 +554,20 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.getUserMessages();
     };
 
-    $scope.getUserMessages = function(location) {
+    $scope.getUserMessages = function() {
 
         $rootScope.loading = true;
         $scope.messagesResponse = '';
 
         var UserID = $location.absUrl().split('?UserID=')[1];
 
-        console.debug(UserID);
-        $http.get(apiUrl + '/admin/user/' + UserID + '/messages?Location=' + location + '&Page=' + this.Page + '&PageSize=' + this.PageSize + '&Unread=' + this.Unread)
+        if (Setup.debug)
+        {
+            console.debug(UserID);
+            console.debug(this.currentMessageLocationOption.value);
+        }
+
+        $http.get(apiUrl + '/admin/user/' + UserID + '/messages?Location=' + this.currentMessageLocationOption.value + '&Page=' + this.Page + '&PageSize=' + this.PageSize + '&Unread=' + this.Unread)
         .then(
             function(response) {
                 $rootScope.loading = false;

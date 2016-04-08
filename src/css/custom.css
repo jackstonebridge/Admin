@@ -1,5 +1,37 @@
-<style type="text/css">
-.limit { 
+.alerts-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  z-index: 999;
+  opacity: .95;
+}
+.row {
+  clear: both;
+}
+.col {
+  float: left;
+  width: 49%;
+}
+.col.right {
+  float: right;
+}
+body .list-group-item.disabled {
+  padding: 1px;
+}
+section .row.results {
+  margin-bottom: 4rem;
+}
+.row.results h1 {
+  background: #30426a;
+  display: block;
+  padding-left: 40px;
+  margin-left:-20px;
+  color: #fff;
+  line-height: 2em;
+}
+
+.limit {
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -18,16 +50,12 @@ a[disabled] {
   font-family: monospace;
 }
 
-body table.table {
-  margin-bottom: 6rem;
-}
-
 a {
   cursor: pointer;
 }
 
-td { 
-  color: #999; 
+td {
+  color: #999;
 }
 td strong {
   color: #000;
@@ -146,5 +174,3 @@ span.sender {
             transform: rotate(450deg);
   }
 }
-
-</style>

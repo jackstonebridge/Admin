@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css">
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
   <!-- endbuild -->
   <!-- SCRIPTS -->
   <!-- build:js lib/js/main.min.js -->
@@ -22,41 +23,6 @@
   <!-- Custom Scripts -->
   <script type="text/javascript" src="js/dashboard.min.js"></script>
 
-  <style type="text/css">
-  .alerts-container {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
-    z-index: 999;
-    opacity: .95;
-  }
-  .row {
-    clear: both;
-  }
-  .col {
-    float: left;
-    width: 49%;
-  }
-  .col.right {
-    float: right;
-  }
-  body .list-group-item.disabled {
-    padding: 1px;
-  }
-  section .row.results {
-    margin-bottom: 4rem;
-  }
-  .row.results h1 {
-    background: #30426a;
-    display: block;
-    padding-left: 40px;
-    margin-left:-20px;
-    color: #fff;
-    line-height: 2em;
-  }
-  </style>
-  <ng-include src="'templates/_loaderStyle.html'"></ng-include>
 </head>
 <body ng-controller="MasterCtrl" ng-class="{ 'limit': loading }">
   <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
