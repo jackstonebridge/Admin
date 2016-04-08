@@ -88,7 +88,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         { label: "Sent"   , value: 2 },
         { label: "Trash"  , value: 3 },
         { label: "Spam"   , value: 4 },
-        { label: "Archuve", value: 6 }
+        { label: "Archive", value: 6 }
     ];
     $scope.currentMessageLocationOption = $scope.messageLocationOptions[0];
 
