@@ -82,6 +82,13 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     ];
     $scope.currentDeleteUserOption = $scope.deleteUserOptions[0];
 
+    $scope.resetUserSentRateOptions = [
+        { label: "Reset outdated", value: 0 },
+        { label: "Reset ban"     , value: 1 },
+        { label: "Reset all"     , value: 2 }
+    ];
+    $scope.currentResetUserSentRateOption = $scope.resetUserSentRateOptions[1];
+
     $scope.messageLocationOptions = [
         { label: "Inbox"  , value: 0 },
         { label: "Draft"  , value: 1 },
@@ -542,6 +549,10 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    $scope.bannedLastWeek = function(banTime) {
+        return banTime - Math.floor(Date.now() / 1000) + 604800;
+    };
+
     $scope.checkSpam = function() {
         // window.location.hash = "#/messages/" + this.accountID;
         // window.location.reload();
@@ -586,6 +597,64 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     $rootScope.$emit('addAlert', response);
                 }
                 $scope.forceMessagesFlag = false;
+            }
+        );
+    };
+
+    $scope.resetUserSentRate = function()
+    {
+        var data =  {
+            "Force": this.currentResetUserSentRateOption.value
+        };
+
+        $rootScope.loading = true;
+
+        $http.put(apiUrl + '/admin/user/' + this.accountID + '/sentrate', data)
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.CouponHistory = response.data;
+                    window.location.reload();
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.resetUserReputation = function()
+    {
+        $rootScope.loading = true;
+
+        $http.put(apiUrl + '/admin/user/' + this.accountID + '/reputation')
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.CouponHistory = response.data;
+                    window.location.reload();
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
             }
         );
     };

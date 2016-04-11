@@ -12,7 +12,7 @@
     <div class="col-md-6">
         <div ng-if="result.Invite" class="list-group">
             <div class="list-group-item list-group-item-warning">
-                <strong>Waiting List</strong>
+                <strong>Waiting list</strong>
             </div>
             <div class="list-group-item">
                 <code class="pull-right">{{ result.Invite.ID }}</code>
@@ -23,7 +23,7 @@
                 <strong>Clean user name:</strong>
             </div>
             <div class="list-group-item form-inline">
-                <strong>Notification Email:</strong>
+                <strong>Notification email:</strong>
                 <form method="POST" class="input-group pull-right" ng-submit="changeInviteEmail()">
                     <input type="text" class="form-control" ng-init="Email = result.Invite.NotificationEmail"  ng-model="Email">
                     <span class="input-group-btn">
@@ -45,13 +45,13 @@
                 <code class="pull-right" ng-if="result.Invite.CreateTime!=0">
                 {{ result.Invite.CreateTime*1000 | date:'medium' }}
                 </code>
-                <strong>Create Time:</strong>
+                <strong>Create time:</strong>
             </div>
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.Invite.SendTime!=0">
                 {{ result.Invite.SendTime*1000 | date:'medium' }}
                 </code>
-                <strong>Send Time:</strong>
+                <strong>Send time:</strong>
             </div>
             <div class="list-group-item">
                 <strong>Comment:</strong>
@@ -267,13 +267,43 @@
             </div>
             <div class="clearfix"></div>
 
-            <div  ng-if="result.SentRate.BanTime !== 0" class="list-group-item text-center">
-                <form method="POST" class="text-center" ng-submit="checkSpam()">
-                    <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
-                    <button type="submit" href class="btn btn-danger">
-                        <span class="fa fa-exclamation-triangle"></span> Check for spam
-                    </button>
-                </form>
+            <div class="list-group-item text-center">
+                <div class="list-group-item form-group text-center">
+                    <div class="col-sm-12 col-md-8">
+                        <form method="POST" class="text-center" ng-submit="resetUserSentRate()">
+                            <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                            <button type="submit" href class="btn btn-primary">
+                                <span class="fa fa-exclamation-triangle"></span> Reset sent rate
+                            </button>
+                            <label>
+                                <select ng-model="currentResetUserSentRateOption" class="form-control" ng-options="value.label for value in resetUserSentRateOptions"></select>
+                            </label>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <form method="POST" class="text-center" ng-submit="resetUserReputation()">
+                            <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                            <button type="submit" href class="btn btn-primary">
+                                <span class="fa fa-crosshairs"></span> Reset reputation
+                            </button>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="list-group-item form-group text-center">
+                    <div class="col-sm-12" ng-if="bannedLastWeek(result.SentRate.BanTime)">
+                        <form method="POST" class="text-center" ng-submit="checkSpam()">
+                            <strong>Actions now allowed:</strong>
+                            &nbsp;
+                            <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                            <button type="submit" href class="btn btn-danger">
+                                <span class="fa fa-eye-slash"></span> Check for spam
+                            </button>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
 
@@ -312,7 +342,7 @@
 
         <div ng-if="result.User" class="list-group">
             <div class="list-group-item list-group-item-info">
-                <strong>Active Users</strong>
+                <strong>Active users</strong>
             </div>
             <div class="list-group-item">
                 <code class="pull-right">{{ result.User.ID }}</code>
@@ -320,7 +350,7 @@
                 <strong>UserID:</strong>
             </div>
             <div class="list-group-item form-inline">
-                <strong>Notification Email:</strong>
+                <strong>Notification email:</strong>
                 <form method="POST" class="input-group pull-right" ng-submit="changeNotificationEmail()">
                     <input type="text" class="form-control" ng-init="accountNotfEmail =  result.User.NotificationEmail"  ng-model="accountNotfEmail">
                     <span class="input-group-btn">
@@ -358,26 +388,32 @@
 
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.User.LastLoginTime!=0">
-                {{ result.User.LastLoginTime*1000 | date:'medium' }}
+                {{ result.User.LastLoginTime * 1000 | date:'medium' }}
                 </code>
-                <strong>Last Login Time:</strong>
+                <strong>Last login time:</strong>
             </div>
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.User.LastActivityTime!=0">
-                {{ result.User.LastActivityTime*1000 | date:'medium' }}
+                {{ result.User.LastActivityTime * 1000 | date:'medium' }}
                 </code>
-                <strong>Last Activity Time:</strong>
+                <strong>Last activity time:</strong>
+            </div>
+            <div class="list-group-item">
+                <code class="pull-right" ng-if="result.User.LastNotifyTime != 0">
+                {{ result.User.LastNotifyTime * 1000 | date:'medium' }}
+                </code>
+                <strong>Last notify time:</strong>
             </div>
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.User.CreateTime!=0">
-                {{ result.User.CreateTime*1000 | date:'medium' }}
+                {{ result.User.CreateTime * 1000 | date:'medium' }}
                 </code>
-                <strong>Create Time:</strong>
+                <strong>Create time:</strong>
             </div>
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.User.UsedSpace==0">{{ result.User.UsedSpace }}</code>
                 <code class="pull-right" ng-if="result.User.UsedSpace!=0">{{ result.User.UsedSpace | bytes }}</code>
-                <strong>Used Space:</strong>
+                <strong>Used space:</strong>
             </div>
             <div class="list-group-item">
                 <form method="POST" class="pull-right status" ng-show="{{ user.Scope === 'admin' }}">
@@ -426,7 +462,7 @@
                         Super
                     </button>
                 </form>
-                <strong>User Status:</strong>
+                <strong>User status:</strong>
             </div>
             <form method="POST" class="list-group-item" ng-show="{{ user.Scope === 'admin' }}">
                 <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
@@ -441,7 +477,7 @@
                 <form method="POST" class="list-group-item text-center" ng-show="{{ user.Scope=='admin super' }}" ng-submit="deleteUserAU(force_delete)">
                     <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
                     <button type="submit" class="btn btn-danger" ng-confirm-click="Are you sure you want to delete the user?">
-                        <span class="fa fa-trash-o"></span> Delete from Active Users
+                        <span class="fa fa-trash-o"></span> Delete from active users
                     </button>
                     <label>
                         <select ng-model="currentDeleteUserOption" class="form-control" ng-options="value.label for value in deleteUserOptions"></select>
