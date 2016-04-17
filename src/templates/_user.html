@@ -349,6 +349,10 @@
                 <input type="hidden" ng-init="accountID = result.User.ID">
                 <strong>UserID:</strong>
             </div>
+            <div class="list-group-item">
+                <strong>Display name:</strong>
+                <code class="pull-right">{{ result.User.DisplayName }}</code>
+            </div>
             <div class="list-group-item form-inline">
                 <strong>Notification email:</strong>
                 <form method="POST" class="input-group pull-right" ng-submit="changeNotificationEmail()">
