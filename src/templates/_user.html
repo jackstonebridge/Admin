@@ -468,7 +468,7 @@
                 </form>
                 <strong>User status:</strong>
             </div>
-            <form method="POST" class="list-group-item" ng-show="{{ user.Scope === 'admin' }}">
+            <form method="POST" class="list-group-item" ng-show="{{ user.Scope === 'admin' || user.Scope === 'admin super' }}">
                 <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
                 <div class="btn-group pull-right">
                     <button type="submit" ng-click="changeLevel(1)" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.Level==1}">500 MB</button>
