@@ -581,9 +581,15 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.bannedLastWeek = function(banTime) {
-        var seconds_left = banTime - Math.floor(Date.now() / 1000) + 604800;
+    $scope.flaggedPotentialSpammer = function(SentRate) {
+        var seconds_left = SentRate.BanTime - Math.floor(Date.now() / 1000) + 604800;
         if (seconds_left > 0) {
+            return 1;
+        }
+        if (SentRate.HourlyRecipients >= (SentRate.Reputation - 2)) {
+            return 1;
+        }
+        if (SentRate.Blackhole > 0) {
             return 1;
         }
         return 0;
@@ -621,9 +627,9 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $scope.messagesResponse = response;
-                    if (!response.data.Banned && !response.data.ThresholdTripped)
+                    if (!response.data.IsPotentialSpammer)
                     {
-                        $rootScope.$emit('addAlert', 'User is not banned or beyond threshold');
+                        $rootScope.$emit('addAlert', 'User is flagged as a potential spammer');
                     }
                 }
                 $scope.forceMessagesFlag = false;
