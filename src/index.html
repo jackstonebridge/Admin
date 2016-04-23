@@ -49,6 +49,9 @@
         <li ng-if="isLoggedIn()" class="sidebar-list">
           <a ng-disabled="loading" href="/#/coupons">Coupons <span class="menu-icon fa fa-money"></span></a>
         </li>
+        <li ng-if="isLoggedIn()" class="sidebar-list">
+          <a ng-disabled="loading" href="/#/invites">Invites <span class="menu-icon fa fa-gift"></span></a>
+        </li>
         <li ng-if="isLoggedIn() && user.Scope=='admin super'" class="sidebar-list">
           <a ng-disabled="loading" href="/#/blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
         </li>
