@@ -582,7 +582,11 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     };
 
     $scope.bannedLastWeek = function(banTime) {
-        return banTime - Math.floor(Date.now() / 1000) + 604800;
+        var seconds_left = banTime - Math.floor(Date.now() / 1000) + 604800;
+        if (seconds_left > 0) {
+            return 1;
+        }
+        return 0;
     };
 
     $scope.checkSpam = function() {
@@ -617,6 +621,10 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $scope.messagesResponse = response;
+                    if (!response.data.Banned && !response.data.ThresholdTripped)
+                    {
+                        $rootScope.$emit('addAlert', 'User is not banned or beyond threshold');
+                    }
                 }
                 $scope.forceMessagesFlag = false;
             },
