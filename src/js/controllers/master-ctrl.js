@@ -382,7 +382,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.lookupResponse = [];
 
         // Call backend route
-        $http.get( apiUrl + '/admin/lookup/' + escape(lookupTemplate) + '/' + escape(lookupString) + '?fuzzy=' + this.currentFuzzyOption.value )
+        $http.get( apiUrl + '/admin/lookup/' + encodeURIComponent(lookupTemplate) + '/' + encodeURIComponent(lookupString) + '?fuzzy=' + this.currentFuzzyOption.value )
         .then(
             function(response)
             {
@@ -1256,8 +1256,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             var query = $scope.debugJSON.data[i][0];
 
             var suffix = '';
-            suffix += '/' + escape(template);
-            suffix += '/' + escape(query);
+            suffix += '/' + encodeURIComponent(template);
+            suffix += '/' + encodeURIComponent(query);
 
             var promise = $http.get( apiUrl + '/admin/lookup' + suffix + '?fuzzy=0' )
             .then(
