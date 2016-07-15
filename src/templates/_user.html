@@ -386,6 +386,14 @@
                             </button>
                         </form>
                     </div>
+                    <div class="col-md-6">
+                        <form method="POST" class="text-center" ng-submit="disableTwoFactor()">
+                            <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                            <button type="submit" ng-hide="result.User.TwoFactorSharedSecret == null" href class="btn btn-warning">
+                                <span class="fa fa-power-off"></span> Disable Two Factor
+                            </button>
+                        </form>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
             </div>
