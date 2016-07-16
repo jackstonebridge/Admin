@@ -758,6 +758,32 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    $scope.disableTwoFactor = function() {
+
+        $rootScope.loading = true;
+
+        $http.delete(apiUrl+'/admin/user/'+this.accountID+'/2fa')
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $rootScope.$emit('addAlert', 'Two Factor Authentication Disabled.');
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+
     $scope.deleteUserAU = function()
     {
         $rootScope.loading = true;
