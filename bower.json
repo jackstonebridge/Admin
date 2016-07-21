@@ -32,5 +32,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/rdash/rdash-angular"
+  },
+  "resolutions": {
+    "angular": ">=1"
   }
 }
