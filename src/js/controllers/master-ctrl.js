@@ -146,7 +146,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         if (AT && UID) {
             if (Setup.debug)
             {
-                console.log(AT, UID, RF, UN);
+                console.log(sessionStorage);
             }
             $http.defaults.headers.common['Authorization'] = 'Bearer '+AT;
             $http.defaults.headers.common['x-pm-uid'] = UID;
@@ -159,6 +159,10 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     "RedirectURI": "http://protonmail.ch",
                     "State": "random_string"
                 };
+                if (Setup.debug)
+                {
+                    console.log(data);
+                }
                 $http.post(apiUrl+'/auth/refresh', data)
                 .then(
                     function(response) {
@@ -168,6 +172,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         $http.defaults.headers.common['x-pm-uid'] = response.data.Uid;
                         sessionStorage.setItem('AT', response.data.AccessToken);
                         sessionStorage.setItem('UID', response.data.Uid);
+                        sessionStorage.setItem('RF', response.data.RefreshToken);
                         if ($state.current.name === 'index') {
                             $state.go('lookup');
                         }
