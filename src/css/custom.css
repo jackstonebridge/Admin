@@ -13,6 +13,9 @@
   float: left;
   width: 49%;
 }
+.dotted {
+  border-bottom: 1px dotted #000;
+}
 .col.right {
   float: right;
 }
