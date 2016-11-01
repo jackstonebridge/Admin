@@ -50,6 +50,10 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
             .state('admin-list', {
                 url: '/admin-list',
                 templateUrl: 'templates/admins.html'
+            })
+            .state('partners', {
+                url: '/partners',
+                templateUrl: 'templates/partners.html'
             });
     }
 ]);
