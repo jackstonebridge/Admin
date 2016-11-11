@@ -2,7 +2,7 @@
 
     <h1>Partners</h1>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" ng-init="refList()">
         <tr>
             <th>ReferrerID</th>
             <th>Name</th>
@@ -13,90 +13,77 @@
             <th>Creation Expiration Time</th>
             <th>Payout Percentage</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Evil Batman Pup</td>
-            <td>woof</td>
-            <td>12</td>
-            <td>12</td>
-            <td>0</td>
-            <td>0</td>
-            <td>20</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Jason</td>
-            <td>jason</td>
-            <td>12</td>
-            <td>12</td>
-            <td>0</td>
-            <td>0</td>
-            <td>30</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Snowden</td>
-            <td>ed</td>
-            <td>12</td>
-            <td>24</td>
-            <td>0</td>
-            <td>0</td>
-            <td>15</td>
+        <tr ng-if="Referrers.Referrers.length" ng-repeat="ref in Referrers.Referrers">
+            <td>{{ ref.ID }}</td>
+            <td>{{ ref.Name }}</td>
+            <td>{{ ref.Identifier }}</td>
+            <td>{{ ref.PayoutTerm }}</td>
+            <td>{{ ref.CreationTerm }}</td>
+            <td>{{ ref.PayoutExpirationTime }}</td>
+            <td>{{ ref.CreationExpirationTime }}</td>
+            <td>{{ ref.PayoutPercentage }}</td>
         </tr>
     </table>
 
     <br>
 
     <h2>Partner Lookup</h2>
+
+    <code>{{ partnerID }}</code>
+    <code>{{ $scope.partnerID }}</code>
+
     <div class="row">
         <div class="col-md-4">
-            <form>
+            <form ng-show="Referrers.Referrers.length">
                 <div class="form-group">
                     <label>Partner</label>
-                    <select class="form-control">
-                        <option>-- Choose --</option>
-                        <option>[ All ]</option>
-                        <option>Evil Batman Pup</option>
-                        <option>Jason</option>
-                        <option>Snowden</option>
-                    </select>
+                    <div class="list-group">
+                        <a ng-repeat="ref in Referrers.Referrers" class="list-group-item" ng-click="refLookup(ref.Identifier)"><small>Lookup:</small> {{ ref.Name }}</a>
+                    </div>
                 </div> 
                 <div class="form-group">
                     <label>Time</label>
                     <select class="form-control">
-                        <option>This Month</option>
+                        <option>This Month</option> 
                         <option>Last Month</option>
                         <option>Custom</option>
                     </select>
                 </div> 
-                <button class="btn btn-default" type="button">Lookup</button>
-                <a href="#" class="btn btn-success pull-right"><i class="fa fa-retweet"></i> Generate Report(s)</a>
             </form>
         </div>
         <div class="col-md-8">
-            <h4>Evil Batman Pup - This Month</h4>
-            <table class="table table-bordered">
-                <tr>
-                    <th>Signups All</th>
-                    <td>12,345</td>
-                </tr>
-                <tr>
-                    <th>Signups Paid</th>
-                    <td>1,234</td>
-                </tr>
-                <tr>
-                    <th>Net Income</th>
-                    <td>7,890</td>
-                </tr>
-                <tr>
-                    <th>Chargebacks</th>
-                    <td>123</td>
-                </tr>
-                <tr>
-                    <th>Gross Income</th>
-                    <td>7,767</td>
-                </tr>
-            </table>
+            <div ng-hide="Partner">
+                <p>&nbsp;</p>
+                <p class="alert alert-info text-center">
+                    <i class="fa fa-arrow-left fa-2x"></i><br><br>
+                    Choose a Partner to Lookup
+                </p>
+            </div>
+            <div ng-show="Partner">
+                <h4>{{ Partner.ID }} - This Month</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Signups All</th>
+                        <td>{{ Partner.SignupsAll }}</td>
+                    </tr>
+                    <tr>
+                        <th>Signups Paid</th>
+                        <td>{{ Partner.SignupsPaid }}</td>
+                    </tr>
+                    <tr>
+                        <th>Net Income</th>
+                        <td>{{ Partner.Income }}</td>
+                    </tr>
+                    <tr>
+                        <th>Chargebacks</th>
+                        <td>{{ Partner.Chargebacks }}</td>
+                    </tr>
+                    <tr>
+                        <th>Conversion Rate</th>
+                        <td>{{ Partner.ConversionRate }}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -119,5 +106,11 @@
     </div>
 
     <br><br>
+
+    <div ng-show="!!Partners.length">
+        <hr>
+        <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+        <pre ng-show="advanced" readonly ng-style="{'height':'100%'}">{{ Partners | json }}</pre>
+    </div>
 
 </div>

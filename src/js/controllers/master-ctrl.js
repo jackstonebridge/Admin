@@ -1308,5 +1308,56 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    // Partners
+    $scope.refList = function() {
+        $rootScope.loading = true;
+        $http.get(apiUrl+'/admin/referrers')
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.Referrers = response.data;
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.refLookup = function(pid) {
+        $rootScope.loading = true;
+        $http.get(apiUrl+'/admin/referrers/' + pid)
+        .then(
+            function(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+                else {
+                    $scope.Partner = response.data;
+                    $scope.Partner.ID = pid;
+                }
+            },
+            function(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+                // called asynchronously if an error occurs
+            }
+        );
+        return false;
+    };
+
     $scope.init();
 }

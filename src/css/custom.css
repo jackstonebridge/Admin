@@ -34,12 +34,6 @@ section .row.results {
   line-height: 2em;
 }
 
-.limit {
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-}
 .container-fluid {
   padding-top: 2rem;
 }
