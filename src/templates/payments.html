@@ -1,106 +1,124 @@
 <div class="container-fluid">
+    <div class="list-group-item form-inline text-center">
+        <a href class="btn btn-primary btn-lg" ng-click="GetUserPayments()" ng-disabled="loading">View payments</a>
+    </div>
 
-    <p class="text-center">
-        <a href class="btn btn-primary btn-lg" ng-click="listSubscriptions()" ng-disabled="loading">
-            Get payments report
-        </a>
-    </p>
-
-    <div ng-if="Subscriptions">
-        <table class="table table-bordered table-striped">
+    <div class="account" ng-if="ResponsePayments.data">
+        <h3>Invoices</h3>
+        <table class="table table-bordered table-inline">
             <thead>
-                <tr class="info">
-                    <th>Plan</th>
-                    <th>Subscriptions<br>(total)</th>
-                    <th>Amount<br>(total)</th>
-                    <th>Subscriptions<br>(monthly)</th>
-                    <th>Amount<br>(monthly)</th>
-                    <th>Subscriptions<br>(yearly)</th>
-                    <th>Amount<br>(yearly)</th>
+                <tr class="active">
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>State</th>
+                    <th>Currency</th>
+                    <th>AmountDue</th>
+                    <th>AmountCharged</th>
+                    <th>CreateTime</th>
+                    <th>ModifyTime</th>
+                    <th>AttemptTime</th>
+                    <th>Attempts</th>
+                    <th>View</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="subscription in Subscriptions.SubscriptionPlans">
-                    <th>{{ subscription.Plan }}</th>
-                    <th>{{ subscription.Subscriptions }}</th>
-                    <th>{{ subscription.Amount }}</th>
-                    <th>{{ subscription.SubscriptionsMonthly }}</th>
-                    <th>{{ subscription.AmountMonthly }}</th>
-                    <th>{{ subscription.SubscriptionsYearly }}</th>
-                    <th>{{ subscription.AmountYearly }}</th>
+                <tr ng-repeat="invoice in ResponsePayments.data.Invoices">
+                    <td>
+                        {{ invoice.ID }}
+                    </td>
+                    <td>
+                        {{ invoice.Type }}
+                    </td>
+                    <td>
+                        {{ invoice.State }}
+                    </td>
+                    <td>
+                        {{ invoice.Currency }}
+                    </td>
+                    <td>
+                        {{ invoice.AmountDue / 100}}
+                    </td>
+                    <td>
+                        {{ invoice.AmountCharged / 100}}
+                    </td>
+                    <td style="width: 140px">
+                        {{ invoice.CreateTime * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
+                    </td>
+                    <td style="width: 140px">
+                        {{ invoice.ModifyTime * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
+                    </td>
+                    <td style="width: 140px">
+                        {{ invoice.AttemptTime * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
+                    </td>
+                    <td>
+                        {{ invoice.Attempts }}
+                    </td>
+                    <td>
+                        <a href ng-click="GetInvoice(invoice.ID)">PDF</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="row" ng-if="Subscriptions">
-        <table class="table table-bordered table-striped">
+    <div class="account" ng-if="ResponsePayments.data">
+        <h3>Individual charges</h3>
+        <table class="table table-bordered table-inline">
             <thead>
-                <tr class="info">
-                    <th>Extra domains (x1)</th>
-                    <th>Subscriptions<br>(total)</th>
-                    <th>Subscriptions<br>(monthly)</th>
-                    <th>Subscriptions<br>(yearly)</th>
+                <tr class="active">
+                    <th>ID</th>
+                    <th>Currency</th>
+                    <th>Amount</th>
+                    <th>CurrencyCharged</th>
+                    <th>AmountCharged</th>
+                    <th>Time</th>
+                    <th>Provider</th>
+                    <th>ExternalChargeID</th>
+                    <th>Reversed</th>
+                    <th>ForbiddenHash</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="subscription in Subscriptions.ExtraDomains">
-                    <th>{{ subscription.ExtraDomains }}</th>
-                    <th>{{ subscription.Subscriptions }}</th>
-                    <th>{{ subscription.SubscriptionsMonthly }}</th>
-                    <th>{{ subscription.SubscriptionsYearly }}</th>
+                <tr ng-repeat="charge in ResponsePayments.data.Charges">
+                    <td>
+                        {{ charge.ID }}
+                    </td>
+                    <td>
+                        {{ charge.Currency }}
+                    </td>
+                    <td>
+                        {{ charge.Amount / 100}}
+                    </td>
+                    <td>
+                        {{ charge.CurrencyCharged }}
+                    </td>
+                    <td>
+                        {{ charge.AmountCharged / 100}}
+                    </td>
+                    <td style="width: 140px">
+                        {{ charge.Time * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
+                    </td>
+                    <td>
+                        {{ charge.Provider }}
+                    </td>
+                    <td>
+                        {{ charge.ExternalChargeID }}
+                    </td>
+                    <td>
+                        {{ charge.Reversed }}
+                    </td>
+                    <td>
+                        {{ charge.ForbiddenHash }}
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div ng-if="Subscriptions">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr class="info">
-                    <th>Extra domains (x1)</th>
-                    <th>Subscriptions<br>(total)</th>
-                    <th>Subscriptions<br>(monthly)</th>
-                    <th>Subscriptions<br>(yearly)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="subscription in Subscriptions.ExtraAddresses">
-                    <th>{{ subscription.ExtraAddresses }}</th>
-                    <th>{{ subscription.Subscriptions }}</th>
-                    <th>{{ subscription.SubscriptionsMonthly }}</th>
-                    <th>{{ subscription.SubscriptionsYearly }}</th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div ng-if="Subscriptions">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr class="info">
-                    <th>Extra domains (x1)</th>
-                    <th>Subscriptions<br>(total)</th>
-                    <th>Subscriptions<br>(monthly)</th>
-                    <th>Subscriptions<br>(yearly)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="subscription in Subscriptions.ExtraSpace">
-                    <th>{{ subscription.ExtraSpace }}</th>
-                    <th>{{ subscription.Subscriptions }}</th>
-                    <th>{{ subscription.SubscriptionsMonthly }}</th>
-                    <th>{{ subscription.SubscriptionsYearly }}</th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div ng-show="!!Subscriptions">
-		<hr>
-		<a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-        <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ Subscriptions | json }}</pre>
+    <div ng-if="ResponsePayments.data">
         <hr>
-	</div>
+        <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+        <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ ResponsePayments | json }}</pre>
+    </div>
 
 </div>

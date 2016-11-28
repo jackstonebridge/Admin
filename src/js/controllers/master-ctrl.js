@@ -600,8 +600,12 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         return 0;
     };
 
-    $scope.checkSpam = function() {
+    $scope.CheckSpam = function() {
         window.open("#/messages?UserID=" + this.accountID, "_self");
+    }
+
+    $scope.CheckPayments = function() {
+        window.open("#/payments?UserID=" + this.accountID, "_self");
     }
 
     $scope.forceMessages = function() {
@@ -609,8 +613,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.getUserMessages();
     };
 
-    $scope.getUserMessages = function() {
-
+    $scope.GetUserMessages = function()
+    {
         $rootScope.loading = true;
         $scope.messagesResponse = '';
 
@@ -629,12 +633,15 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $scope.messagesResponse = response;
                     if (!response.data.IsPotentialSpammer)
                     {
-                        $rootScope.$emit('addAlert', 'User is flagged as a potential spammer');
+                        $rootScope.$emit('addAlert', 'User is not flagged as a potential spammer');
+                    }
+                    if ($scope.user.Scope === 'admin super')
+                    {
+                        $rootScope.$emit('addAlert', 'Displaying last 5 messages for super admins');
                     }
                 }
                 $scope.forceMessagesFlag = false;
@@ -665,8 +672,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $scope.CouponHistory = response.data;
                     window.location.reload();
                 }
@@ -692,8 +698,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $scope.CouponHistory = response.data;
                     window.location.reload();
                 }
@@ -707,32 +712,89 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.updateLoginPassword = function() {
-
-        var data =  {
-            "Password": this.newLoginPass
-        };
-
+    $scope.ResetLoginPassword = function()
+    {
         $rootScope.loading = true;
 
-        $http.put(apiUrl+'/admin/user/'+this.accountID+'/password', data)
+        $http.put(apiUrl + '/admin/user/' + this.accountID + '/password')
         .then(
-            function(response) {
+            function successCallback(response)
+            {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
-                    $rootScope.$emit('addAlert', 'Password Updated.');
+                } else {
+                    $rootScope.$emit('addAlert', 'Login password reset successful. User restored to two password mode.');
                 }
             },
-            function(response) {
+            function errorCallback(response)
+            {
                 $rootScope.loading = false;
                 if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
-                // called asynchronously if an error occurs
+            }
+        );
+    };
+
+    $scope.GetUserPayments = function()
+    {
+        $rootScope.loading = true;
+
+        var UserID = $location.absUrl().split('?UserID=')[1];
+
+        $http.get(apiUrl + '/admin/user/' + UserID + '/payments')
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                } else {
+                    $scope.ResponsePayments = response;
+                }
+            },
+            function errorCallback(response)
+            {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.GetInvoice = function(InvoiceID)
+    {
+        $rootScope.loading = true;
+
+        $http.get(apiUrl + '/admin/invoice/' + InvoiceID, {responseType:'arraybuffer'})
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                } else {
+                    var file = new Blob([response.data], {type: "application/pdf"});
+                    var fileURL = URL.createObjectURL(file);
+                    var a         = document.createElement('a');
+                    a.href        = fileURL;
+                    a.target      = '_blank';
+                    a.download    = 'Invoice_' + InvoiceID + '.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                }
+            },
+            function errorCallback(response)
+            {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
             }
         );
     };
@@ -997,8 +1059,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $rootScope.$emit('addAlert', 'Changed credit ' + Credit + ' of user ' + UserID + '.');
                     $scope.lookupResponse.Results = 'undefined';
                     window.location.reload();
@@ -1025,8 +1086,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $scope.Coupons = response.data.Coupons;
                 }
             },
@@ -1051,8 +1111,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $scope.Subscriptions = response.data;
                 }
             },
@@ -1087,8 +1146,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $scope.CouponWhitelist = response.data;
                 }
             },
@@ -1155,8 +1213,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
                     $scope.CouponHistory = response.data;
                 }
             },

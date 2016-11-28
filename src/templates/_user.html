@@ -32,14 +32,6 @@
                 </form>
                 <div class="clearfix"></div>
             </div>
-            <div class="list-group-item text-center">
-                <form method="POST" class="list-group-item text-center" ng-submit="sendInvite()">
-                    <button type="submit" href class="btn btn-primary">
-                        <span ng-show="result.Invite.Sent==0"><span class="fa fa-send"></span> Send invite</span>
-                        <span ng-show="result.Invite.Sent==1"><span class="fa fa-send"></span> Resend invite</span>
-                    </button>
-                </form>
-            </div>
 
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.Invite.CreateTime!=0">
@@ -58,13 +50,27 @@
                 <br>
                 <pre ng-show="{{ result.Invite.Comment!='' }}">{{ result.Invite.Comment }}</pre>
             </div>
+
             <div class="list-group-item text-center">
-                <form method="POST" class="list-group-item text-center" ng-submit="deleteUserWL()">
-                    <input type="hidden" ng-init="accountID = result.Invite.ID" ng-model="accountID">
-                    <button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
-                        <span class="fa fa-trash-o"></span> Delete from waiting List
-                    </button>
-                </form>
+                <div class="list-group-item form-group text-center">
+                    <div class="col-sm-12 col-md-5">
+                        <form method="POST" class="text-center" ng-submit="sendInvite()">
+                            <button type="submit" href class="btn btn-primary">
+                                <span ng-show="result.Invite.Sent==0"><span class="fa fa-send"></span> Send invite</span>
+                                <span ng-show="result.Invite.Sent==1"><span class="fa fa-send"></span> Resend invite</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-offset-2 col-md-5">
+                        <form method="POST"  class="text-center" ng-submit="deleteUserWL()">
+                            <input type="hidden" ng-init="accountID = result.Invite.ID" ng-model="accountID">
+                            <button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+                                <span class="fa fa-trash-o"></span> Delete from waiting list
+                            </button>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
 
@@ -95,10 +101,10 @@
             </div>
             <div class="list-group-item">
                 <strong class="dotted" title="
-                [0]: default, new accounts. 
-                [1]: suspicious, address/displayname/subject matched suspicious words. 
-                [10]: set to this during each weekly reset, unless Trust is 100. 
-                [11]: sending subjects like 'new email address', boost Reputation. 
+                [0]: default, new accounts.
+                [1]: suspicious, address/displayname/subject matched suspicious words.
+                [10]: set to this during each weekly reset, unless Trust is 100.
+                [11]: sending subjects like 'new email address', boost Reputation.
                 [100]: 'reset all' in admin panel toggles Trust between 100 and 0, 100 will override Suspicious Sender filter">Trust:</strong>
                 <code class="pull-right">{{ result.SentRate.Trust }}</code>
             </div>
@@ -311,12 +317,12 @@
                 </div>
                 <div class="list-group-item form-group text-center">
                     <div class="col-sm-12">
-                        <form method="POST" class="text-center" ng-submit="checkSpam()">
-                            <strong>Actions now allowed:</strong>
+                        <form method="POST" class="text-center" ng-submit="CheckSpam()">
+                            <strong>Allowed actions:</strong>
                             &nbsp;
                             <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
                             <button type="submit" href class="btn btn-danger">
-                                <span class="fa fa-eye-slash"></span> Check for spam
+                                <span class="fa fa-eye-slash"></span> Check message metadata
                             </button>
                         </form>
                     </div>
@@ -387,21 +393,17 @@
                 <div class="clearfix"></div>
             </div>
 
-            <div class="list-group-item">
-                <form method="POST" class="input-group" ng-submit="updateLoginPassword()">
-                    <input type="text" class="form-control mono" id="resetLoginPW" ng-init="newLoginPass = randPass()" ng-model="newLoginPass">
-                    <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">
-                            <span class="fa fa-retweet"></span> Reset Login PW
-                        </button>
-                    </span>
-                </form>
-                <div class="clearfix"></div>
-            </div>
             <div class="list-group-item text-center">
-                <div class="list-group-item text-center">
-                    <div class="col-md-6">
+                <div class="list-group-item form-group text-center">
+                    <div class="col-sm-12 col-md-5">
+                        <form method="POST" class="text-center" ng-submit="ResetLoginPassword()">
+                            <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                            <button class="btn btn-primary" type="submit">
+                                <span class="fa fa-retweet"></span> Reset Login Password
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-offset-2 col-md-5">
                         <form method="POST" class="text-center" ng-submit="logoutUser()">
                             <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
                             <button type="submit" href class="btn btn-warning">
@@ -409,17 +411,26 @@
                             </button>
                         </form>
                     </div>
-                    <div class="col-md-6">
-                        <form method="POST" class="text-center" ng-submit="disableTwoFactor()">
-                            <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
-                            <button type="submit" ng-hide="result.User.TwoFactorSharedSecret == null" href class="btn btn-warning">
-                                <span class="fa fa-power-off"></span> Disable Two Factor
-                            </button>
-                        </form>
-                    </div>
                     <div class="clearfix"></div>
                 </div>
             </div>
+
+            <div class="list-group-item">
+                <strong>Password mode:</strong>
+                <code class="pull-right">{{ result.User.PasswordMode }}</code>
+            </div>
+            <div class="list-group-item">
+                <strong>Password recovery:</strong>
+                <code class="pull-right">{{ result.User.PasswordRecovery }}</code>
+            </div>
+            <form method="POST" class="list-group-item">
+                <strong>Two-factor authentication:</strong>
+                <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                <div class="btn-group pull-right">
+                    <button type="submit" class="btn btn-default btn-xs" ng-class="{'btn-primary': result.User.TwoFactor == 1}" disabled>Enabled</button>
+                    <button type="submit" class="btn btn-default btn-xs" ng-class="{'btn-primary disabled': result.User.TwoFactor == 0}" ng-click="disableTwoFactor()" >Disabled</button>
+                </div>
+            </form>
 
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.User.LastLoginTime!=0">
@@ -552,6 +563,20 @@
                         </form>
                     </div>
                     <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="list-group-item form-group text-center">
+                <div class="col-sm-12">
+                    <form method="POST" class="text-center" ng-submit="CheckPayments()">
+                        <strong>Allowed actions:</strong>
+                        &nbsp;
+                        <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                        <button type="submit" href class="btn btn-warning">
+                            <span class="fa fa-eye-slash"></span> Check payment history
+                        </button>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
             </div>

@@ -1,0 +1,106 @@
+<div class="container-fluid">
+
+    <p class="text-center">
+        <a href class="btn btn-primary btn-lg" ng-click="listSubscriptions()" ng-disabled="loading">
+            Get payments report
+        </a>
+    </p>
+
+    <div ng-if="Subscriptions">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="info">
+                    <th>Plan</th>
+                    <th>Subscriptions<br>(total)</th>
+                    <th>Amount<br>(total)</th>
+                    <th>Subscriptions<br>(monthly)</th>
+                    <th>Amount<br>(monthly)</th>
+                    <th>Subscriptions<br>(yearly)</th>
+                    <th>Amount<br>(yearly)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="subscription in Subscriptions.SubscriptionPlans">
+                    <th>{{ subscription.Plan }}</th>
+                    <th>{{ subscription.Subscriptions }}</th>
+                    <th>{{ subscription.Amount }}</th>
+                    <th>{{ subscription.SubscriptionsMonthly }}</th>
+                    <th>{{ subscription.AmountMonthly }}</th>
+                    <th>{{ subscription.SubscriptionsYearly }}</th>
+                    <th>{{ subscription.AmountYearly }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" ng-if="Subscriptions">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="info">
+                    <th>Extra domains (x1)</th>
+                    <th>Subscriptions<br>(total)</th>
+                    <th>Subscriptions<br>(monthly)</th>
+                    <th>Subscriptions<br>(yearly)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="subscription in Subscriptions.ExtraDomains">
+                    <th>{{ subscription.ExtraDomains }}</th>
+                    <th>{{ subscription.Subscriptions }}</th>
+                    <th>{{ subscription.SubscriptionsMonthly }}</th>
+                    <th>{{ subscription.SubscriptionsYearly }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-if="Subscriptions">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="info">
+                    <th>Extra domains (x1)</th>
+                    <th>Subscriptions<br>(total)</th>
+                    <th>Subscriptions<br>(monthly)</th>
+                    <th>Subscriptions<br>(yearly)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="subscription in Subscriptions.ExtraAddresses">
+                    <th>{{ subscription.ExtraAddresses }}</th>
+                    <th>{{ subscription.Subscriptions }}</th>
+                    <th>{{ subscription.SubscriptionsMonthly }}</th>
+                    <th>{{ subscription.SubscriptionsYearly }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-if="Subscriptions">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="info">
+                    <th>Extra domains (x1)</th>
+                    <th>Subscriptions<br>(total)</th>
+                    <th>Subscriptions<br>(monthly)</th>
+                    <th>Subscriptions<br>(yearly)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="subscription in Subscriptions.ExtraSpace">
+                    <th>{{ subscription.ExtraSpace }}</th>
+                    <th>{{ subscription.Subscriptions }}</th>
+                    <th>{{ subscription.SubscriptionsMonthly }}</th>
+                    <th>{{ subscription.SubscriptionsYearly }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="!!Subscriptions">
+		<hr>
+		<a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+        <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ Subscriptions | json }}</pre>
+        <hr>
+	</div>
+
+</div>
