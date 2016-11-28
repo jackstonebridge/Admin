@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
     <div class="row">
-        <form method="POST" class="form-inline col-md-8 col-md-offset-2" ng-submit="lookup('user')">
+        <form method="POST" class="form-inline col-md-10 col-md-offset-2" ng-submit="lookup('user')">
             <div class="form-group text-center" ng-style="{'width':'100%'}">
                 <input id="lookupField" type="text" class="input-lg" ng-model="lookupString" placeholder="Search for ...">
                 <label>
@@ -14,6 +14,7 @@
                 <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="lookup('user')">User/Address/Invite</button>
                 <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="lookup('organization')">Organization</button>
                 <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="lookup('domain')">Domain</button>
+                <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="lookup('charge')">Payment</button>
             </div>
         </form>
     </div>

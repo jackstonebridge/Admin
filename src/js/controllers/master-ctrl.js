@@ -343,7 +343,8 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     {
         if (path === "user"         ||
             path === "domain"       ||
-            path === "organization"    )
+            path === "organization" ||
+            path === "charge")
         {
             $scope.template = "templates/_" + path + ".html";
         }
@@ -360,17 +361,15 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
             this.setLookupTemplate(template);
         }
 
-        if (query === undefined)
-        {
+        if (query === undefined) {
             if (this.lookupString === undefined) { return; }
             lookupString = this.lookupString.trim();
             // Set the scope lookupString to the current search
-            $scope.lookupString = lookupString;
-        }
-        else
-        {
+        } else {
             lookupString = query;
         }
+
+        $scope.lookupString = lookupString;
 
         if (Setup.debug)
         {
@@ -604,10 +603,6 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         window.open("#/messages?UserID=" + this.accountID, "_self");
     }
 
-    $scope.CheckPayments = function() {
-        window.open("#/payments?UserID=" + this.accountID, "_self");
-    }
-
     $scope.forceMessages = function() {
         $scope.forceMessagesFlag = true;
         $scope.getUserMessages();
@@ -738,13 +733,17 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
+    $scope.CheckPayments = function() {
+        window.location.hash = '#/payments';
+        this.GetUserPayments();
+    }
+
     $scope.GetUserPayments = function()
     {
         $rootScope.loading = true;
+        $scope.UserID = this.UserID;
 
-        var UserID = $location.absUrl().split('?UserID=')[1];
-
-        $http.get(apiUrl + '/admin/user/' + UserID + '/payments')
+        $http.get(apiUrl + '/admin/user/' + $scope.UserID + '/payments')
         .then(
             function successCallback(response)
             {
