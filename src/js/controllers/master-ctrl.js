@@ -486,7 +486,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         var data = {
             "Username": this.CreateInviteUsername,
             "Email"   : this.CreateInviteEmail
-        }
+        };
 
         $http.post(apiUrl + '/admin/invite', data)
         .then(
@@ -601,7 +601,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
     $scope.CheckSpam = function() {
         window.open("#/messages?UserID=" + this.accountID, "_self");
-    }
+    };
 
     $scope.forceMessages = function() {
         $scope.forceMessagesFlag = true;
@@ -651,7 +651,33 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.resetUserSentRate = function()
+    $scope.AddMobileBeta = function()
+    {
+        var data =  {
+            "UserIDs": [this.accountID]
+        };
+
+        $rootScope.loading = true;
+
+        $http.post(apiUrl + '/admin/user/mobile', data)
+        .then(
+            function successCallback(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.ResetUserSentRate = function()
     {
         var data =  {
             "Force": this.currentResetUserSentRateOption.value
@@ -661,14 +687,12 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $http.put(apiUrl + '/admin/user/' + this.accountID + '/sentrate', data)
         .then(
-            function successCallback(response)
-            {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
                 } else {
-                    $scope.CouponHistory = response.data;
                     window.location.reload();
                 }
             },
@@ -681,7 +705,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.resetUserReputation = function()
+    $scope.ResetUserReputation = function()
     {
         $rootScope.loading = true;
 
@@ -694,7 +718,6 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 if (error) {
                     $rootScope.$emit('addAlert', error);
                 } else {
-                    $scope.CouponHistory = response.data;
                     window.location.reload();
                 }
             },
@@ -736,7 +759,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     $scope.CheckPayments = function() {
         window.location.hash = '#/payments';
         this.GetUserPayments();
-    }
+    };
 
     $scope.GetUserPayments = function()
     {
@@ -824,28 +847,27 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.disableTwoFactor = function() {
-
+    $scope.DisableTwoFactor = function()
+    {
         $rootScope.loading = true;
 
-        $http.delete(apiUrl+'/admin/user/'+this.accountID+'/2fa')
+        $http.delete(apiUrl+'/admin/user/' + this.accountID + '/2fa')
         .then(
-            function(response) {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
+                    window.location.reload();
                     $rootScope.$emit('addAlert', 'Two Factor Authentication Disabled.');
                 }
             },
-            function(response) {
+            function errorCallback(response) {
                 $rootScope.loading = false;
                 if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
-                // called asynchronously if an error occurs
             }
         );
     };
@@ -963,8 +985,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $http.delete(apiUrl+'/admin/organization/' + this.accountID)
         .then(
-            function(response)
-            {
+            function(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -991,8 +1012,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $http.delete(apiUrl + '/admin/payments/customer/' + this.accountID)
         .then(
-            function(response)
-            {
+            function(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1019,8 +1039,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $http.delete(apiUrl + '/admin/payments/method/' + this.accountID + '?PaymentMethodID=' +  PaymentMethodID)
         .then(
-            function(response)
-            {
+            function(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1052,8 +1071,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $http.put(apiUrl + '/admin/user/' + UserID + '/credit', data)
         .then(
-            function successCallback(response)
-            {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1079,8 +1097,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         var param = (CouponCode === undefined) ? '' : '/' + CouponCode;
         $http.get(apiUrl + '/admin/coupons' + param)
         .then(
-            function successCallback(response)
-            {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1104,8 +1121,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         var param = (CreateTime === undefined) ? new Date().getTime() : CreateTime;
         $http.get(apiUrl + '/admin/payments/' + param)
         .then(
-            function successCallback(response)
-            {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1128,7 +1144,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $rootScope.loading = true;
         $scope.CouponName = couponName;
         $rootScope.loading = false;
-    }
+    };
 
     $scope.listCouponWhitelist = function(couponName)
     {
@@ -1139,8 +1155,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.CouponName = couponName;
         $http.get(apiUrl + '/admin/coupons/' + $scope.CouponName + '/whitelist')
         .then(
-            function successCallback(response)
-            {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1176,8 +1191,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         $http.put(apiUrl + '/admin/coupons/' + couponName + '/whitelist', data)
         .then(
-            function(response)
-            {
+            function(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1185,7 +1199,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 }
                 else {
                     $rootScope.$emit('addAlert', 'Added to whitelist.');
-                    $scope.listCouponWhitelist(couponName)
+                    $scope.listCouponWhitelist(couponName);
                 }
             },
             function(response) {
@@ -1206,8 +1220,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.CouponName = couponName;
         $http.get(apiUrl + '/admin/coupons/' + $scope.CouponName + '/history')
         .then(
-            function successCallback(response)
-            {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
@@ -1232,7 +1245,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         if (action === 1) {
             $http.put(apiUrl+'/admin/user/'+this.accountID+'/disable')
             .then(
-                function(response) {
+                function successCallback(response) {
                     $rootScope.loading = false;
                     var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                     if (error) {
@@ -1243,12 +1256,11 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         window.location.reload();
                     }
                 },
-                function(response) {
+                function errorCallback(response) {
                     $rootScope.loading = false;
-                    if (error) {
+                    if (response) {
                         $rootScope.$emit('addAlert', response);
                     }
-                    // called asynchronously if an error occurs
                 }
             );
         }
@@ -1271,7 +1283,6 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     if (response) {
                         $rootScope.$emit('addAlert', response);
                     }
-                    // called asynchronously if an error occurs
                 }
             );
         }
@@ -1294,38 +1305,36 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     if (response) {
                         $rootScope.$emit('addAlert', response);
                     }
-                    // called asynchronously if an error occurs
                 }
             );
         }
 
     };
 
-    $scope.changeLevel = function(level) {
+    $scope.ChangeLevel = function(level) {
         $rootScope.loading = true;
 
         var data = {
             "Level": level
         };
 
-        $http.put(apiUrl+'/admin/user/'+this.accountID+'/level', data)
+        $http.put(apiUrl+'/admin/user/' + this.accountID + '/level', data)
         .then(
-            function(response) {
+            function successCallback(response) {
                 $rootScope.loading = false;
                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
                 if (error) {
                     $rootScope.$emit('addAlert', error);
-                }
-                else {
+                } else {
+                    window.location.reload();
                     $rootScope.$emit('addAlert', 'Level changed.');
                 }
             },
-            function(response) {
+            function errorCallback(response) {
                 $rootScope.loading = false;
                 if (response) {
                     $rootScope.$emit('addAlert', response);
                 }
-                // called asynchronously if an error occurs
             }
         );
     };
