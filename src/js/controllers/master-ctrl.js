@@ -743,7 +743,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 if (error) {
                     $rootScope.$emit('addAlert', error);
                 } else {
-                    $rootScope.$emit('addAlert', 'Login password reset successful. User restored to two password mode.');
+                    $rootScope.$emit('addAlert', 'Reset code sent.');
                 }
             },
             function errorCallback(response)
