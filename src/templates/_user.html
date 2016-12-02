@@ -374,7 +374,7 @@
                 <strong>Display name:</strong>
                 <code class="pull-right">{{ result.User.DisplayName }}</code>
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" ng-if="result.User.Referral != NULL">
                 <code class="pull-right">{{ result.User.Referral }}</code>
                 <strong>Referral</strong>
             </div>
@@ -433,6 +433,31 @@
                     <button type="submit" class="btn btn-default btn-xs" ng-class="{'btn-primary disabled': result.User.TwoFactor == 0}" ng-click="DisableTwoFactor()" >Disabled</button>
                 </div>
             </form>
+            <div class="list-group-item">
+                <strong>Authentication logging</strong>
+                <code class="pull-right">{{ result.User.LogAuth }}</code>
+            </div>
+
+            <div class="list-group-item text-center">
+                <div class="list-group-item">
+                    <form method="POST" class="btn-group" ng-submit="ResetUserLogs()">
+                        <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                        <button type="submit" href class="btn btn-warning">
+                            <span class="fa fa-mobile"></span> Reset auth. logging
+                        </button>
+                        <input type="hidden" class="btn"> <!-- Fake sibling -->
+                    </form>
+                    <form method="POST" class="btn-group" ng-submit="ViewUserLogs()">
+                        <input type="hidden" class="btn"> <!-- Fake sibling -->
+                        <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                        <button type="submit" href class="btn btn-primary">
+                            <span class="fa fa-eye-slash"></span> View auth. logs
+                        </button>
+                        <input type="hidden" class="btn"> <!-- Fake sibling -->
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
 
             <div class="list-group-item">
                 <code class="pull-right" ng-if="result.User.LastLoginTime!=0">
@@ -568,7 +593,7 @@
                         </button>
                         <input type="hidden" class="btn"> <!-- Fake sibling -->
                     </form>
-                    <form method="POST" class="btn-group" ng-submit="CheckPayments()">
+                    <form method="POST" class="btn-group" ng-submit="ViewUserPayments()">
                         <input type="hidden" class="btn"> <!-- Fake sibling -->
                         <input type="hidden" ng-init="UserID = result.User.ID" ng-model="UserID">
                         <button type="submit" href class="btn btn-warning">

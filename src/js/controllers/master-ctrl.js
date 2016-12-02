@@ -43,7 +43,26 @@ angular
 .config(['$httpProvider', function ($httpProvider) {
     "use strict";
     $httpProvider.interceptors.push('myHttpInterceptor');
-}]);
+}])
+.filter('LogAuthEvent', function(log_auth_event) {
+    "use strict";
+    switch(log_auth_event) {
+        case 0:
+            return "Login failure password";
+
+        case 1:
+            return "Login success";
+
+        case 2:
+            return "Logout";
+
+        case 3:
+            return "Login failure 2FA";
+
+        default:
+            return "Unknown log auth event value";
+    }
+});
 
 function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout, Setup)
 {
@@ -756,7 +775,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         );
     };
 
-    $scope.CheckPayments = function() {
+    $scope.ViewUserPayments = function() {
         window.location.hash = '#/payments';
         this.GetUserPayments();
     };
@@ -776,6 +795,38 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     $rootScope.$emit('addAlert', error);
                 } else {
                     $scope.ResponsePayments = response;
+                }
+            },
+            function errorCallback(response)
+            {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.ViewUserLogs = function() {
+        window.location.hash = '#/logs';
+        this.GetUserLogs();
+    };
+
+    $scope.GetUserLogs = function()
+    {
+        $rootScope.loading = true;
+        $scope.UserID = this.UserID;
+
+        $http.get(apiUrl + '/admin/user/' + $scope.UserID + '/logs')
+        .then(
+            function successCallback(response)
+            {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                } else {
+                    $scope.ResponseLogs = response;
                 }
             },
             function errorCallback(response)
@@ -851,7 +902,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
     {
         $rootScope.loading = true;
 
-        $http.delete(apiUrl+'/admin/user/' + this.accountID + '/2fa')
+        $http.delete(apiUrl + '/admin/user/' + this.accountID + '/2fa')
         .then(
             function successCallback(response) {
                 $rootScope.loading = false;
@@ -861,6 +912,31 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 } else {
                     window.location.reload();
                     $rootScope.$emit('addAlert', 'Two Factor Authentication Disabled.');
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.ResetUserLogs = function()
+    {
+        $rootScope.loading = true;
+
+        $http.put(apiUrl + '/admin/user/' + this.accountID + '/logs')
+        .then(
+            function successCallback(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                } else {
+                    window.location.reload();
+                    $rootScope.$emit('addAlert', 'Authentication logging reset to basic.');
                 }
             },
             function errorCallback(response) {
