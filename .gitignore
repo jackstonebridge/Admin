@@ -38,11 +38,11 @@ Icon
 .Spotlight-V100
 .Trashes
 
-# Dist Directory
-/dist
+# Build Directory
+/build
 
 # Node modules
 /node_modules
 
 # Bower components
-/src/components
+/bower_components
