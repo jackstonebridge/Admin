@@ -24,7 +24,7 @@
                                 {{ log.Time * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
                             </td>
                             <td>
-                                {{ log.Event | this.LogAuthEvent }}
+                                {{ log.Event | LogAuthEvent }}
                             </td>
                             <td>
                                 {{ log.IP }}

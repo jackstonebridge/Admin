@@ -1,96 +1,96 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" ng-app="RDash" ng-class="{ 'limit': loading }">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Admin Dashboard</title>
-  <!-- STYLES -->
-  <!-- build:css lib/css/main.min.css -->
-  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="../bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="../bower_components/rdash-ui/dist/css/rdash.min.css">
-  <link rel="stylesheet" type="text/css" href="css/custom.css">
-  <!-- endbuild -->
-  <!-- SCRIPTS -->
-  <!-- build:js lib/js/main.min.js -->
-  <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
-  <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
-  <script type="text/javascript" src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script type="text/javascript" src="../bower_components/papaparse/papaparse.min.js"></script>
-  <!-- endbuild -->
-  <!-- Custom Scripts -->
-  <script type="text/javascript" src="js/dashboard.min.js"></script>
-
+    <title>Admin Dashboard</title>
+    <!-- STYLES -->
+    <!-- build:css lib/css/main.min.css -->
+    <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../bower_components/rdash-ui/dist/css/rdash.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <!-- endbuild -->
+    <!-- SCRIPTS -->
+    <!-- build:js lib/js/main.min.js -->
+    <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="../bower_components/papaparse/papaparse.min.js"></script>
+    <!-- endbuild -->
+    <!-- Custom Scripts -->
+    <script type="text/javascript" src="js/dashboard.min.js"></script>
 </head>
-<body ng-controller="MasterCtrl" ng-class="{ 'limit': loading }">
-  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-      <ul class="sidebar">
-        <li class="sidebar-main">
-          <a ng-click="toggleSidebar()">
+<body ng-controller="MasterCtrl" ng-class="{ 'limit': loading }">
+    <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar">
+                <li class="sidebar-main">
+                    <a ng-click="toggleSidebar()">
             Dashboard
             <span class="menu-icon glyphicon glyphicon-transfer"></span>
           </a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-title"><span>NAVIGATION</span></li>
-        <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a ng-disabled="loading" href="#/lookup/">Lookup <span class="menu-icon fa fa-tachometer"></span></a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a ng-disabled="loading" href="#/monitor">Monitor <span class="menu-icon fa fa-eye"></span></a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a ng-disabled="loading" href="#/reports">Reports <span class="menu-icon fa fa-credit-card"></span></a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a ng-disabled="loading" href="#/coupons">Coupons <span class="menu-icon fa fa-money"></span></a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a ng-disabled="loading" href="#/invites">Invites <span class="menu-icon fa fa-gift"></span></a>
-        </li>
-        <li ng-if="isLoggedIn() && user.Scope=='admin super'" class="sidebar-list">
-          <a ng-disabled="loading" href="#/blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a ng-disabled="loading" href="#/multi-lookup">MultiLookup <span class="menu-icon fa fa-list"></span></a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-list">
-          <a ng-disabled="loading" href="#/admin-list">Admins <span class="menu-icon fa fa-star"></span></a>
-        </li>
-        <li ng-if="isLoggedIn()" class="sidebar-title"><span>Version <kbd>0.1</kbd></span></li>
-      </ul>
-      <div class="sidebar-footer">
-        <div ng-if="isLoggedIn()">
-          <a href ng-click="logout()">Log out <kbd>{{ user.Name }}</kbd></a>
+                </li>
+                <li ng-if="isLoggedIn()" class="sidebar-title"><span>NAVIGATION</span></li>
+                <li ng-if="isLoggedIn()" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/lookup/">Lookup <span class="menu-icon fa fa-tachometer"></span></a>
+                </li>
+                <li ng-if="isLoggedIn()" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/monitor">Monitor <span class="menu-icon fa fa-eye"></span></a>
+                </li>
+                <li ng-if="isLoggedIn()" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/reports">Reports <span class="menu-icon fa fa-credit-card"></span></a>
+                </li>
+                <li ng-if="isLoggedIn()" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/coupons">Coupons <span class="menu-icon fa fa-money"></span></a>
+                </li>
+                <li ng-if="isLoggedIn()" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/invites">Invites <span class="menu-icon fa fa-gift"></span></a>
+                </li>
+                <li ng-if="isLoggedIn() && user.Scope=='admin super'" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
+                </li>
+                <li ng-if="isLoggedIn()" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/multi-lookup">MultiLookup <span class="menu-icon fa fa-list"></span></a>
+                </li>
+                <li ng-if="isLoggedIn()" class="sidebar-list">
+                    <a ng-disabled="loading" href="#/admin-list">Admins <span class="menu-icon fa fa-star"></span></a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div ng-if="isLoggedIn()">
+                    <a href ng-click="logout()">Log out <kbd>{{ user.Name }}</kbd></a>
+                </div>
+            </div>
         </div>
-      </div>
+        <!-- End Sidebar -->
+
+        <div id="content-wrapper">
+            <div class="page-content">
+
+                <p class="alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
+                    <alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" ng-click="closeAlert($index)" ng-bind-html="alert.msg"></alert>
+                </p>
+
+                <!-- Main Content -->
+                <div ui-view></div>
+
+            </div>
+            <!-- End Page Content -->
+        </div>
+        <!-- End Content Wrapper -->
     </div>
-    <!-- End Sidebar -->
+    <!-- End Page Wrapper -->
 
-    <div id="content-wrapper">
-      <div class="page-content">
-
-        <p class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
-          <alert
-          data-ng-repeat="alert in alerts"
-          type="{{alert.type}}"
-          close="closeAlert($index)"
-          ng-click="closeAlert($index)"
-          ng-bind-html="alert.msg"></alert>
-        </p>
-
-        <!-- Main Content -->
-        <div ui-view></div>
-
-      </div><!-- End Page Content -->
-    </div><!-- End Content Wrapper -->
-  </div><!-- End Page Wrapper -->
-
-
-  <ng-include src="'templates/_loaderCode.html'" ng-show="loading"></ng-include>
+    <ng-include src="templates/loading.html" ng-show="loading"></ng-include>
 </body>
+
 </html>

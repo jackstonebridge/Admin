@@ -5,7 +5,6 @@ angular
 .module('RDash')
 .controller('MasterCtrl', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', 'Setup', MasterCtrl])
 .filter("bytes", function () {
-    "use strict";
     return function(bytes, precision) {
         if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) { return '-'; }
         if (typeof precision === 'undefined') { precision = 1; }
@@ -16,7 +15,6 @@ angular
 })
 .directive('ngConfirmClick', [
   function(){
-    "use strict";
     return {
       priority: -1,
       restrict: 'A',
@@ -33,7 +31,6 @@ angular
   }
 ])
 .factory('myHttpInterceptor', function() {
-    "use strict";
     return {
         response: function(response) {
             return response;
@@ -41,27 +38,27 @@ angular
     };
 })
 .config(['$httpProvider', function ($httpProvider) {
-    "use strict";
     $httpProvider.interceptors.push('myHttpInterceptor');
 }])
-.filter('LogAuthEvent', function(log_auth_event) {
-    "use strict";
-    switch(log_auth_event) {
-        case 0:
-            return "Login failure password";
+.filter('LogAuthEvent', function() {
+    return function(log_auth_event) {
+        switch(log_auth_event) {
+            case 0:
+                return "Login failure password";
 
-        case 1:
-            return "Login success";
+            case 1:
+                return "Login success";
 
-        case 2:
-            return "Logout";
+            case 2:
+                return "Logout";
 
-        case 3:
-            return "Login failure 2FA";
+            case 3:
+                return "Login failure 2FA";
 
-        default:
-            return "Unknown log auth event value";
-    }
+            default:
+                return "Unknown log auth event value";
+        }
+    };
 });
 
 function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout, Setup)
@@ -358,14 +355,14 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $scope.lookupResponse = [];
     };
 
-    $scope.setLookupTemplate = function(path)
+    $scope.setLookupTemplate = function(template)
     {
-        if (path === "user"         ||
-            path === "domain"       ||
-            path === "organization" ||
-            path === "charge")
+        if (template === "user"         ||
+            template === "domain"       ||
+            template === "organization" ||
+            template === "charge")
         {
-            $scope.template = "templates/_" + path + ".html";
+            $scope.template = "templates/lookup/" + template + ".html";
         }
     };
 
