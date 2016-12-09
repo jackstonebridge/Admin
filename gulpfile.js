@@ -1,6 +1,7 @@
 var port = 8888;
-
+var log = false;
 var gulp = require('gulp'),
+    gulpif = require('gulp-if'),
     usemin = require('gulp-usemin'),
     connect = require('gulp-connect'),
     watch = require('gulp-watch'),
@@ -28,7 +29,8 @@ var paths = {
  */
 gulp.task('usemin', function (cb) {
     pump([
-            gulp.src(paths.main),
+            gulp.src(paths.main)
+                .pipe(gulpif(log, debug())),
             usemin({
                 js: [minify_js(), 'concat'],
                 css: [minify_css({keepSpecialComments: 0}), 'concat'],
@@ -46,7 +48,8 @@ gulp.task('build-assets', ['copy-fonts']);
 
 gulp.task('copy-fonts', function (cb) {
     pump([
-            gulp.src(paths.fonts),
+            gulp.src(paths.fonts)
+                .pipe(gulpif(log, debug())),
             rename({
                 dirname: '/fonts'
             }),
@@ -68,7 +71,8 @@ gulp.task('build-custom', [
 
 gulp.task('custom-images', function (cb) {
     pump([
-            gulp.src(paths.images),
+            gulp.src(paths.images)
+                .pipe(gulpif(log, debug())),
             gulp.dest('build/img')
         ],
         cb
@@ -77,7 +81,8 @@ gulp.task('custom-images', function (cb) {
 
 gulp.task('custom-js', function (cb) {
     pump([
-            gulp.src(paths.scripts),
+            gulp.src(paths.scripts)
+                .pipe(gulpif(log, debug())),
             babel({
               presets: ['es2015']
             }),
@@ -91,7 +96,8 @@ gulp.task('custom-js', function (cb) {
 
 gulp.task('custom-less', function (cb) {
     pump([
-            gulp.src(paths.styles),
+            gulp.src(paths.styles)
+                .pipe(gulpif(log, debug())),
             less(),
             gulp.dest('build/css')
         ],
@@ -101,7 +107,8 @@ gulp.task('custom-less', function (cb) {
 
 gulp.task('custom-templates', function (cb) {
     pump([
-            gulp.src(paths.templates),
+            gulp.src(paths.templates)
+                .pipe(gulpif(log, debug())),
             minify_html(),
             gulp.dest('build/templates')
         ],
@@ -133,7 +140,8 @@ gulp.task('webserver', function() {
 
 gulp.task('livereload', function (cb) {
     pump([
-            gulp.src('build/**/*.*'),
+            gulp.src('build/**/*.*')
+                .pipe(gulpif(log, debug())),
             watch('build/**/*.*'),
             connect.reload()
         ],
