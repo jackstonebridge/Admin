@@ -1,6 +1,6 @@
-angular.module('proton.controllers.Auth', [
-    'proton.authentication',
-    'proton.pmcw',
+angular.module('RDash', [
+    // 'proton.authentication',
+    // 'proton.pmcw',
     'proton.constants',
     'proton.models.setting',
     'proton.srp',
@@ -22,7 +22,7 @@ angular.module('proton.controllers.Auth', [
     authentication,
     networkActivityTracker,
     notify,
-    loginModal,
+    helpLoginModal,
     pmcw,
     tempStorage,
     tools,
@@ -303,11 +303,11 @@ angular.module('proton.controllers.Auth', [
     /**
      * Open login modal to help the user
      */
-    $scope.displayHelpModal = function () {
-        loginModal.activate({
+    $scope.displayHelpModal = () => {
+        helpLoginModal.activate({
             params: {
-                cancel() {
-                    loginModal.deactivate();
+                close() {
+                    helpLoginModal.deactivate();
                 }
             }
         });

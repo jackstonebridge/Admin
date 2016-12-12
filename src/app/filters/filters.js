@@ -1,4 +1,4 @@
-angular.module('proton.filters')
+angular.module('RDash')
 
 .filter('delay', (gettextCatalog) => {
     return function (input) {

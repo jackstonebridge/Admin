@@ -13,7 +13,8 @@ var gulp = require('gulp'),
     minify_html = require('gulp-htmlmin'),
     debug = require('gulp-debug'),
     pump = require('pump'),
-    babel = require('gulp-babel');
+    babel = require('gulp-babel'),
+    sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
     scripts: 'src/app/**/*.*',
@@ -31,10 +32,12 @@ gulp.task('usemin', function (cb) {
     pump([
             gulp.src(paths.main)
                 .pipe(gulpif(log, debug())),
+            sourcemaps.init({debug: log}),
             usemin({
                 js: [minify_js(), 'concat'],
                 css: [minify_css({keepSpecialComments: 0}), 'concat'],
             }),
+            sourcemaps.write('.'),
             gulp.dest('build')
         ],
         cb
