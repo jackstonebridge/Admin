@@ -4,10 +4,13 @@
  * Route configuration for the RDash module.
  */
 angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+    function($stateProvider, $urlRouterProvider, $locationProvider) {
 
         // For unmatched routes
         $urlRouterProvider.otherwise('/');
+
+        // Use the HTML5 History API
+        $locationProvider.html5Mode(true);
 
         // Application routes
         $stateProvider
