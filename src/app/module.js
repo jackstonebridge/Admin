@@ -2,6 +2,7 @@ angular.module('RDash', [
     'ui.bootstrap',
     'ui.router',
     'ngCookies',
+    'authentication'
     // 'proton.auth',
     // 'proton.filters',
     // 'proton.auth',

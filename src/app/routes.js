@@ -13,6 +13,7 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('index', {
                 url: '/',
+                controller: 'LoginController',
                 templateUrl: 'templates/login.html'
             })
             .state('lookup', {
