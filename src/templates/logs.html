@@ -1,0 +1,45 @@
+<div class="container-fluid">
+
+    <form method="POST" class="list-group-item form-inline text-center" ng-submit="GetUserLogs()">
+        <a href class="btn btn-primary btn-lg" ng-click="GetUserLogs()" ng-disabled="loading">View authentication logs</a>
+        &nbsp;
+        <strong>UserID:</strong>
+        <input type="text" class="form-control" ng-style="{width: '100px'}" ng-model="UserID">
+    </form>
+
+    <div class="row results" ng-if="ResponseLogs.data">
+        <div class="col-md-12">
+            <div class="account">
+                <table class="table table-bordered table-inline table-striped">
+                    <thead class="thead-default">
+                        <tr class="active">
+                            <th>Time</th>
+                            <th>Event</th>
+                            <th>IP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="log in ResponseLogs.data.LogAuth">
+                            <td style="width: 140px">
+                                {{ log.Time * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
+                            </td>
+                            <td>
+                                {{ log.Event | this.LogAuthEvent }}
+                            </td>
+                            <td>
+                                {{ log.IP }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div ng-if="ResponseLogs.data">
+                <hr>
+                <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+                <pre ng-show="advanced" ng-style="{'height':'100%'}">{{ ResponseLogs | json }}</pre>
+            </div>
+        </div>
+    </div>
+
+</div>

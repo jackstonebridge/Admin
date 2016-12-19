@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     <div class="list-group-item form-inline text-center">
-        <a href class="btn btn-primary btn-lg" ng-click="getUserMessages()" ng-disabled="loading">View messages</a>
+        <a href class="btn btn-primary btn-lg" ng-click="GetUserMessages()" ng-disabled="loading">View messages</a>
         &nbsp;
         <strong>Page size:</strong>
         <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="PageSize = 50"  ng-model="PageSize">
@@ -28,7 +28,7 @@
             <span>Total messages matching criteria:</span>
             <strong>{{ messagesResponse.data.Total }}</strong>
         </div>
-        <table class="table table-bordered table-inline">
+        <table class="table table-bordered table-inline table-striped">
             <thead>
                 <tr class="active">
                     <th>Time</th>
