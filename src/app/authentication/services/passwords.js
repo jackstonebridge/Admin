@@ -1,10 +1,5 @@
-// angular.module('proton.passwords', [])
-// .factory('passwords', (
-//     $q,
-//     gettextCatalog,
-//     webcrypto
-// ) => {
-//
+// angular.module('proton.authentication')
+// .factory('passwords', ($q, gettextCatalog, webcrypto) => {
 //
 //     function bcrypt(str, salt) {
 //         const deferred = $q.defer();
@@ -18,7 +13,7 @@
 //         return deferred.promise;
 //     }
 //
-//     function cleanUserName(name) {
+//     function cleanUsername(name) {
 //         return name.replace(/\.|-|_/g, '').toLowerCase();
 //     }
 //
@@ -65,7 +60,7 @@
 //         },
 //
 //         2(password, userName, modulus) {
-//             return hashPasswordVersion[1](password, cleanUserName(userName), modulus);
+//             return hashPasswordVersion[1](password, cleanUsername(userName), modulus);
 //         },
 //
 //         1(password, userName, modulus) {
@@ -92,7 +87,7 @@
 //
 //     const api = {
 //         currentAuthVersion: 4,
-//         cleanUserName,
+//         cleanUsername,
 //         expandHash,
 //         hashPassword(version, password, salt, userName, modulus) {
 //             switch (version) {

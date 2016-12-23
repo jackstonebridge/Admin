@@ -17,7 +17,11 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
-    scripts: 'src/app/**/*.*',
+    scripts: [
+        'src/app/module.js', // Master file
+        'src/app/**/index.js', // Individual modules
+        'src/app/**/*.*' // Then everything else
+    ],
     styles: 'src/less/**/*.*',
     images: 'src/img/**/*.*',
     templates: 'src/templates/**/*.html',
@@ -34,8 +38,8 @@ gulp.task('usemin', function (cb) {
                 .pipe(gulpif(log, debug())),
             sourcemaps.init({debug: log}),
             usemin({
-                js: [minify_js(), 'concat'],
-                css: [minify_css({keepSpecialComments: 0}), 'concat'],
+                js: ['concat'],
+                css: ['concat'],
             }),
             sourcemaps.write('.'),
             gulp.dest('build')
@@ -89,7 +93,7 @@ gulp.task('custom-js', function (cb) {
             babel({
               presets: ['es2015']
             }),
-            minify_js(),
+            // minify_js(),
             concat('dashboard.min.js'),
             gulp.dest('build/js')
         ],
@@ -112,7 +116,7 @@ gulp.task('custom-templates', function (cb) {
     pump([
             gulp.src(paths.templates)
                 .pipe(gulpif(log, debug())),
-            minify_html(),
+            // minify_html(),
             gulp.dest('build/templates')
         ],
         cb

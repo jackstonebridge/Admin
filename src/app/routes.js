@@ -1,11 +1,6 @@
-'use strict';
-
-/**
- * Route configuration for the RDash module.
- */
-angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
+angular.module('RDash')
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
     function($stateProvider, $urlRouterProvider, $locationProvider) {
-
         // For unmatched routes
         $urlRouterProvider.otherwise('/');
 
@@ -16,7 +11,7 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('index', {
                 url: '/',
-                controller: 'LoginController',
+                // controller: 'LoginController',
                 templateUrl: 'templates/login.html'
             })
             .state('lookup', {

@@ -1,4 +1,4 @@
-angular.module('core')
+angular.module('admin.core')
 .filter('bytes', () => {
     return (bytes, precision) => {
         if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) { return '-'; }

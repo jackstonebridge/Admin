@@ -19,5 +19,4 @@ angular
     clientId    : "demoapp",
     clientSecret: "demopass",
     apiUrl      : "http://localhost/api"
-}
-);
+});

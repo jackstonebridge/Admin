@@ -1,4 +1,4 @@
-// angular.module('proton.setting', [])
+// angular.module('proton.models')
 // .factory('Setting', ($http, url, srp) => {
 //     const Setting = {
 //         password(newPassword = '') {
@@ -12,6 +12,9 @@
 //                 .catch((error = {}) => {
 //                     throw error.error_description || error;
 //                 });
+//         },
+//         passwordUpgrade(params) {
+//             return $http.put(url.get() + '/settings/password/upgrade', params);
 //         },
 //         noticeEmail(params, creds) {
 //             return srp
@@ -28,9 +31,6 @@
 //         },
 //         display(params) {
 //             return $http.put(url.get() + '/settings/display', params);
-//         },
-//         addressOrder(params) {
-//             return $http.put(url.get() + '/settings/addressorder', params);
 //         },
 //         theme(params) {
 //             return $http.put(url.get() + '/settings/theme', params);
