@@ -27,13 +27,14 @@
     "openpgp": "^2.3.5",
     "underscore": "~1.8.3",
     "es6-promise": "^4.0.5",
-    "angular-gettext": "^2.2.1"
+    "angular-gettext": "^2.2.1",
+    "angular-notify": "EpokK/angular-notify#^2.5.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/rdash/rdash-angular"
   },
   "resolutions": {
-    "angular": "^1.4.14"
+    "angular": "1.4.14"
   }
 }

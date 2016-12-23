@@ -22,6 +22,7 @@ var paths = {
         'src/app/**/index.js', // Individual modules
         'src/app/**/*.*' // Then everything else
     ],
+    libs: 'bower_components/openpgp/dist/*.min.js',
     styles: 'src/less/**/*.*',
     images: 'src/img/**/*.*',
     templates: 'src/templates/**/*.html',
@@ -71,6 +72,7 @@ gulp.task('copy-fonts', function (cb) {
  */
 gulp.task('build-custom', [
     'custom-images',
+    'custom-libs',
     'custom-js',
     'custom-less',
     'custom-templates'
@@ -81,6 +83,16 @@ gulp.task('custom-images', function (cb) {
             gulp.src(paths.images)
                 .pipe(gulpif(log, debug())),
             gulp.dest('build/img')
+        ],
+        cb
+    );
+});
+
+gulp.task('custom-libs', function (cb) {
+    pump([
+            gulp.src(paths.libs)
+                .pipe(gulpif(log, debug())),
+            gulp.dest('build/')
         ],
         cb
     );
