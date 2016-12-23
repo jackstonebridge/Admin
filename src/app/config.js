@@ -1,6 +1,7 @@
 angular.module('proton.config', [])
 .constant('CONFIG', {
     debug: true,
+    url: 'http://protonmail.dev',
     apiUrl: 'http://protonmail.dev/api',
     app_version:'3.6.7',
     api_version:'1',

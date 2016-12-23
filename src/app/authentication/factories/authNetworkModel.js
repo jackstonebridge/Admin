@@ -9,7 +9,7 @@ angular.module('proton.authentication')
                 ClientID: CONFIG.clientID,
                 GrantType: 'refresh_token',
                 RefreshToken,
-                RedirectURI: 'https://protonmail.com',
+                RedirectURI: CONFIG.url,
                 State: cryptoUtils.randomString(24)
             })
                 .then(({ data = {} } = {}) => {

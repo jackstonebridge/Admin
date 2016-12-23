@@ -24,7 +24,10 @@ angular.module('RDash')
                     }
                 }
             })
-
+            .state('hello', {
+                url: '/hello',
+                template: '<h1>Hello World</h1>'
+            })
             .state('login.unlock', {
                 url: '/unlock',
                 views: {
@@ -41,32 +44,6 @@ angular.module('RDash')
                     'panel@login': {
                         controller: 'SetupController',
                         templateUrl: 'templates/views/setup.tpl.html'
-                    }
-                },
-                resolve: {
-                    domains($q, Domain) {
-                        const deferred = $q.defer();
-
-                        Domain.available().then((result) => {
-                            if (result.data && angular.isArray(result.data.Domains)) {
-                                deferred.resolve(result.data.Domains);
-                            } else {
-                                deferred.reject();
-                            }
-                        }, () => {
-                            deferred.reject();
-                        });
-
-                        return deferred.promise;
-                    },
-                    user(User) {
-                        return User.get()
-                        .then(({ data }) => {
-                            if (data && data.Code !== 1000) {
-                                return Promise.reject();
-                            }
-                            return data.User;
-                        });
                     }
                 }
             })

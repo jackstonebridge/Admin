@@ -11,16 +11,22 @@ angular.module('RDash', [
     'proton.authentication'
 ])
 .config(
-    function (urlProvider, authStatesProvider, CONFIG) {
+    function ($httpProvider, urlProvider, authStatesProvider, CONFIG) {
+        $httpProvider.defaults.headers.common['x-pm-appversion'] = 'Web_' + CONFIG.app_version;
+        $httpProvider.defaults.headers.common['x-pm-apiversion'] = CONFIG.api_version;
+        $httpProvider.defaults.headers.common.Accept = 'application/vnd.protonmail.v1+json';
+        $httpProvider.defaults.withCredentials = true;
+
         urlProvider.setBaseUrl(CONFIG.apiUrl);
+
         authStatesProvider.config({
-            main: 'lookup',
+            main: 'hello',
+            loginUnlock: 'hello',
             login: 'login',
-            loginSub: 'login.sub',
-            loginSetup: 'login.setup',
-            loginUnlock: 'login.unlock',
-            resetPassword: 'support.reset-password',
-            reset: 'reset'
+            loginSub: 'hello',
+            loginSetup: 'hello',
+            resetPassword: 'hello',
+            reset: 'hello'
         });
     }
 );
