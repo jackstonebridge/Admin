@@ -22,7 +22,7 @@ angular.module('RDash', [
         authStatesProvider.config({
             main: 'hello',
             loginUnlock: 'hello',
-            login: 'login',
+            login: 'index',
             loginSub: 'hello',
             loginSetup: 'hello',
             resetPassword: 'hello',

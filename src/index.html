@@ -36,8 +36,72 @@
     <script type="text/javascript" src="js/dashboard.min.js"></script>
 </head>
 
-<body ui-view>
+<body ng-class="{ 'limit': loading }">
+    <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar">
+                <li class="sidebar-main">
+                    <a ng-click="toggleSidebar()">
+            Dashboard
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+          </a>
+                </li>
+                <div ng-if="isLoggedIn">
+                    <li  class="sidebar-title"><span>NAVIGATION</span></li>
+                    <li class="sidebar-list">
+                        <a ng-disabled="loading" href="#/lookup/">Lookup <span class="menu-icon fa fa-tachometer"></span></a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a ng-disabled="loading" href="#/monitor">Monitor <span class="menu-icon fa fa-eye"></span></a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a ng-disabled="loading" href="#/reports">Reports <span class="menu-icon fa fa-credit-card"></span></a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a ng-disabled="loading" href="#/coupons">Coupons <span class="menu-icon fa fa-money"></span></a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a ng-disabled="loading" href="#/invites">Invites <span class="menu-icon fa fa-gift"></span></a>
+                    </li>
+                    <li ng-if="user.Scope=='admin super'" class="sidebar-list">
+                        <a ng-disabled="loading" href="#/blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a ng-disabled="loading" href="#/multi-lookup">MultiLookup <span class="menu-icon fa fa-list"></span></a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a ng-disabled="loading" href="#/admin-list">Admins <span class="menu-icon fa fa-star"></span></a>
+                    </li>
+                </div>
+            </ul>
+            <div class="sidebar-footer">
+                <div ng-if="isLoggedIn">
+                    <a href ng-click="logout()">Log out <kbd>{{ user.Name }}</kbd></a>
+                </div>
+            </div>
+        </div>
+        <!-- End Sidebar -->
+
+        <div id="content-wrapper">
+            <div class="page-content">
+
+                <p class="alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
+                    <alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" ng-click="closeAlert($index)" ng-bind-html="alert.msg"></alert>
+                </p>
+
+                <!-- Main Content -->
+                <div ui-view></div>
+
+            </div>
+            <!-- End Page Content -->
+        </div>
+        <!-- End Content Wrapper -->
+    </div>
+    <!-- End Page Wrapper -->
+
+    <ng-include src="templates/loading.html" ng-show="loading"></ng-include>
 </body>
 
 </html>

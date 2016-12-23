@@ -21,7 +21,8 @@ angular.module('proton.authentication')
     this.$get = ($state) => {
         const go = (key, opt = {}) => $state.go(STATES[key], opt);
         const is = (key) => $state.is(STATES[key]);
+        const value = (key) => STATES[key];
 
-        return { go, is };
+        return { go, is, value };
     };
 });
