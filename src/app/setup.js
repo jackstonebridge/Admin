@@ -18,5 +18,5 @@ angular
     appVersion  : "Other",
     clientId    : "demoapp",
     clientSecret: "demopass",
-    apiUrl      : "http://localhost/api"
+    apiUrl      : "http://protonmail.dev/api"
 });

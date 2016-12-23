@@ -11,7 +11,7 @@ angular.module('RDash')
         $stateProvider
             .state('index', {
                 url: '/',
-                // controller: 'LoginController',
+                controller: 'LoginController',
                 templateUrl: 'templates/login.html'
             })
             .state('lookup', {

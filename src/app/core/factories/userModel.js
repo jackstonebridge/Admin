@@ -1,4 +1,9 @@
 angular.module('admin.core')
 .factory('userModel', function () {
-    return {};
+    function isLoggedIn() {
+        return false;
+    }
+    return {
+        isLoggedIn
+    };
 });

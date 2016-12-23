@@ -9,4 +9,9 @@ angular.module('RDash', [
     'proton.config',
     'proton.models',
     'proton.authentication'
-]);
+])
+.config(
+    function (urlProvider, CONFIG) {
+        urlProvider.setBaseUrl(CONFIG.apiUrl); 
+    }
+);

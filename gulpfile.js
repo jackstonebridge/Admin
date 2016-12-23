@@ -128,7 +128,7 @@ gulp.task('custom-templates', function (cb) {
     pump([
             gulp.src(paths.templates)
                 .pipe(gulpif(log, debug())),
-            // minify_html(),
+            minify_html(),
             gulp.dest('build/templates')
         ],
         cb
