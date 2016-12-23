@@ -6,7 +6,7 @@ angular.module('proton.authentication')
         const currentState = state.name;
         const specialStates = ['login.setup'];
 
-        if (currentState.indexOf('secured') === -1 && specialStates.indexOf(currentState) === -1) {
+        if (currentState.indexOf('lookup') === -1 && specialStates.indexOf(currentState) === -1) {
 
             callbacks.forEach((cb) => cb());
 
