@@ -448,6 +448,13 @@
 
             <div class="list-group-item text-center">
                 <div class="list-group-item">
+                    <form method="POST" class="btn-group" ng-submit="ResetUserPasswordRecovery()">
+                        <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                        <button type="submit" href class="btn btn-danger">
+                            <span class="fa fa-mobile"></span> Reset pass. recovery
+                        </button>
+                        <input type="hidden" class="btn"> <!-- Fake sibling -->
+                    </form>
                     <form method="POST" class="btn-group" ng-submit="ResetUserLogs()">
                         <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
                         <button type="submit" href class="btn btn-warning">
@@ -457,7 +464,7 @@
                     </form>
                     <form method="POST" class="btn-group" ng-submit="ViewUserLogs()">
                         <input type="hidden" class="btn"> <!-- Fake sibling -->
-                        <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
+                        <input type="hidden" ng-init="UserID = result.User.ID" ng-model="UserID">
                         <button type="submit" href class="btn btn-primary">
                             <span class="fa fa-eye-slash"></span> View auth. logs
                         </button>

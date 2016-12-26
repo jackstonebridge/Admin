@@ -44,24 +44,26 @@ angular
     "use strict";
     $httpProvider.interceptors.push('myHttpInterceptor');
 }])
-.filter('LogAuthEvent', function(log_auth_event) {
+.filter('LogAuthEvent', function() {
     "use strict";
-    switch(log_auth_event) {
-        case 0:
-            return "Login failure password";
+    return function (log_auth_event) {
+        switch(log_auth_event) {
+            case 0:
+                return "Login failure password";
 
-        case 1:
-            return "Login success";
+            case 1:
+                return "Login success";
 
-        case 2:
-            return "Logout";
+            case 2:
+                return "Logout";
 
-        case 3:
-            return "Login failure 2FA";
+            case 3:
+                return "Login failure 2FA";
 
-        default:
-            return "Unknown log auth event value";
-    }
+            default:
+                return "Unknown log auth event value";
+        }
+    };
 });
 
 function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout, Setup)
@@ -826,7 +828,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 if (error) {
                     $rootScope.$emit('addAlert', error);
                 } else {
-                    $scope.ResponseLogs = response;
+                    $scope.ResponseLogs = response.data;
                 }
             },
             function errorCallback(response)
@@ -912,6 +914,31 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                 } else {
                     window.location.reload();
                     $rootScope.$emit('addAlert', 'Two Factor Authentication Disabled.');
+                }
+            },
+            function errorCallback(response) {
+                $rootScope.loading = false;
+                if (response) {
+                    $rootScope.$emit('addAlert', response);
+                }
+            }
+        );
+    };
+
+    $scope.ResetUserPasswordRecovery = function()
+    {
+        $rootScope.loading = true;
+
+        $http.put(apiUrl + '/admin/user/' + this.accountID + '/recovery')
+        .then(
+            function successCallback(response) {
+                $rootScope.loading = false;
+                var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
+                if (error) {
+                    $rootScope.$emit('addAlert', error);
+                } else {
+                    window.location.reload();
+                    $rootScope.$emit('addAlert', 'User password recovery force enabled.');
                 }
             },
             function errorCallback(response) {
