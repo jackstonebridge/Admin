@@ -448,7 +448,7 @@
 
             <div class="list-group-item text-center">
                 <div class="list-group-item">
-                    <form method="POST" class="btn-group" ng-submit="ResetUserPasswordRecovery()">
+                    <form method="POST" class="btn-group" ng-submit="ResetUserPasswordRecovery()" ng-show="{{ user.Scope === 'admin super' }}">
                         <input type="hidden" ng-init="accountID = result.User.ID" ng-model="accountID">
                         <button type="submit" href class="btn btn-danger">
                             <span class="fa fa-mobile"></span> Reset pass. recovery
