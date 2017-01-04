@@ -1,16 +1,18 @@
 angular.module('proton.authentication')
-.factory('logoutManager', ($rootScope, userAuth, userModel) => {
+.factory('logoutManager', ($rootScope, userAuth, authStates, userModel) => {
 
     const callbacks = [];
+    const SPECIALS = [authStates.value('loginSetup')];
+    const contains = (input = '', key = '') => input.indexOf(key) !== -1;
+
     $rootScope.$on('$stateChangeStart', (e, state, sParams, previous) => {
-        const currentState = state.name;
-        const specialStates = ['login.setup'];
+        const isNotPrivate = !contains(state.name, authStates.value('authenticated', true));
+        const isNotSpecial = !contains(SPECIALS, state.name);
 
-        if (currentState.indexOf('lookup') === -1 && specialStates.indexOf(currentState) === -1) {
-
+        if (isNotPrivate && isNotSpecial) {
             callbacks.forEach((cb) => cb());
 
-            if (previous.name === 'login.unlock' && state.name === 'login') {
+            if ((previous.name === authStates.value('loginUnlock') && state.name === authStates.value('login')) || contains(previous.name, authStates.value('authenticated', true))) {
                 userAuth.clear();
             }
             // Dispatch an event to notify everybody that the user is no longer logged in

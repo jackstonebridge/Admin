@@ -1,5 +1,5 @@
 angular.module('proton.authentication')
-.controller('LoginController', ($rootScope, $state, $scope, $timeout, $location, CONSTANTS, gettextCatalog, notify, helpLoginModal, tempStorage, tools, userAuth, authStates) => {
+.controller('LoginController', ($rootScope, $state, $scope, $timeout, $location, CONSTANTS, gettextCatalog, notify, helpLoginModal, tempStorage, aboutClient, userAuth, authStates) => {
     $scope.maxPW = CONSTANTS.LOGIN_PW_MAX_LEN;
     $scope.twoFactor = 0;
     $scope.showOld = window.location.hostname !== 'old.protonmail.com';
@@ -67,7 +67,7 @@ angular.module('proton.authentication')
      * or notify the user
      */
     function testSessionStorage() {
-        if (tools.hasSessionStorage() === false) {
+        if (!aboutClient.hasSessionStorage()) {
             notify({ message: gettextCatalog.getString('You are in Private Mode or have Session Storage disabled.\nPlease deactivate Private Mode and then reload the page.\n<a href="https://protonmail.com/support/knowledge-base/enabling-cookies/" target="_blank">More information here</a>.', null, 'Error'), classes: 'notification-danger', duration: '0' });
         }
     }
@@ -77,8 +77,7 @@ angular.module('proton.authentication')
      * or notify the user
      */
     function testCookie() {
-        //
-        if (tools.hasCookie() === false) {
+        if (!aboutClient.hasCookie()) {
             notify({ message: gettextCatalog.getString('Cookies are disabled.\nPlease activate it and then reload the page.\n<a href="https://protonmail.com/support/knowledge-base/enabling-cookies/" target="_blank">More information here</a>.', null, 'Error'), classes: 'notification-danger', duration: '0' });
         }
     }

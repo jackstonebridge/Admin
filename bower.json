@@ -15,27 +15,27 @@
   ],
   "dependencies": {
     "rdash-ui": "^1.0.1",
-    "angular": "~1.4.*",
-    "angular-cookies": "~1.4.*",
     "angular-bootstrap": "~0.11.0",
-    "angular-ui-router": "^0.2.15",
-    "angular-resource": "^1.4.10",
-    "bcryptjs": "~2.3.0",
-    "bootstrap": "~3.3.6",
-    "font-awesome": "~4.1.0",
-    "papaparse": "~4.1.2",
-    "openpgp": "^2.3.5",
-    "underscore": "~1.8.3",
-    "es6-promise": "^4.0.5",
+    "angular-cookies": "~1.4.*",
     "angular-gettext": "^2.2.1",
     "angular-notify": "EpokK/angular-notify#^2.5.0",
-    "jquery": "^3.1.1"
+    "angular-resource": "^1.4.10",
+    "angular-ui-router": "^0.2.15",
+    "angular": "^1.6.1",
+    "bcryptjs": "~2.3.0",
+    "bootstrap": "~3.3.6",
+    "es6-promise": "^4.0.5",
+    "font-awesome": "~4.1.0",
+    "jquery": "^3.1.1",
+    "openpgp": "^2.3.5",
+    "papaparse": "~4.1.2",
+    "underscore": "~1.8.3"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/rdash/rdash-angular"
   },
   "resolutions": {
-    "angular": "1.4.14"
+    "angular": "1.6.1"
   }
 }

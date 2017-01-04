@@ -20,7 +20,7 @@ var paths = {
     scripts: [
         'src/app/module.js', // Master file
         'src/app/**/index.js', // Individual modules
-        'src/app/**/*.*' // Then everything else
+        'src/app/**/*.js' // Then everything else
     ],
     libs: 'bower_components/openpgp/dist/*.min.js',
     styles: 'src/less/**/*.*',

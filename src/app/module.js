@@ -7,26 +7,28 @@ angular.module('RDash', [
     'cgNotify',
     'admin.core',
     'proton.config',
-    'proton.models',
+    'proton.commons',
     'proton.authentication'
 ])
-.config(
-    function ($httpProvider, urlProvider, authStatesProvider, CONFIG) {
-        $httpProvider.defaults.headers.common['x-pm-appversion'] = 'Web_' + CONFIG.app_version;
-        $httpProvider.defaults.headers.common['x-pm-apiversion'] = CONFIG.api_version;
-        $httpProvider.defaults.headers.common.Accept = 'application/vnd.protonmail.v1+json';
-        $httpProvider.defaults.withCredentials = true;
+.config(($httpProvider, urlProvider, authStatesProvider, CONFIG) => {
+    $httpProvider.defaults.headers.common['x-pm-appversion'] = 'Web_' + CONFIG.app_version;
+    $httpProvider.defaults.headers.common['x-pm-apiversion'] = CONFIG.api_version;
+    $httpProvider.defaults.headers.common.Accept = 'application/vnd.protonmail.v1+json';
+    $httpProvider.defaults.withCredentials = true;
 
-        urlProvider.setBaseUrl(CONFIG.apiUrl);
+    urlProvider.setBaseUrl(CONFIG.apiUrl);
 
-        authStatesProvider.config({
-            main: 'hello',
-            loginUnlock: 'hello',
-            login: 'index',
-            loginSub: 'hello',
-            loginSetup: 'hello',
-            resetPassword: 'hello',
-            reset: 'hello'
-        });
-    }
-);
+    authStatesProvider.config({
+        main: 'lookup',
+        login: 'index',
+        loginSub: 'login.sub',
+        loginSetup: 'login.setup',
+        loginUnlock: 'login.unlock',
+        resetPassword: 'support.reset-password',
+        reset: 'reset',
+        namespaces: {
+             authenticated: 'lookup',
+             login: 'index'
+        }
+    });
+});

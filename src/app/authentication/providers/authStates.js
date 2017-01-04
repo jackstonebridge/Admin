@@ -8,7 +8,11 @@ angular.module('proton.authentication')
         loginSetup: 'login.setup',
         loginUnlock: 'login.unlock',
         resetPassword: 'support.reset-password',
-        reset: 'reset'
+        reset: 'reset',
+        namespaces: {
+            authenticated: 'secured',
+            login: 'login'
+        }
     };
 
     this.config = (config = {}) => {
@@ -21,8 +25,7 @@ angular.module('proton.authentication')
     this.$get = ($state) => {
         const go = (key, opt = {}) => $state.go(STATES[key], opt);
         const is = (key) => $state.is(STATES[key]);
-        const value = (key) => STATES[key];
-
+        const value = (key, isNamespace = false) => (!isNamespace ? STATES[key] : STATES.namespaces[key]);
         return { go, is, value };
     };
 });
