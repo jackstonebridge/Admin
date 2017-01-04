@@ -1,5 +1,6 @@
 var port = 8888;
 var log = false;
+var fs = require('fs');
 var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     usemin = require('gulp-usemin'),
@@ -15,6 +16,7 @@ var gulp = require('gulp'),
     pump = require('pump'),
     babel = require('gulp-babel'),
     sourcemaps = require('gulp-sourcemaps');
+var serveStatic = require('serve-static');
 
 var paths = {
     scripts: [
@@ -153,7 +155,23 @@ gulp.task('webserver', function() {
     connect.server({
         root: 'build',
         livereload: true,
-        port: port
+        port: port,
+        middleware: function(connect, options, middlewares) {
+            var base = __dirname + '/build/' ;
+            return [
+                serveStatic(base),
+                function(req, res, next) {
+                    // no file found; send app.html
+                    var file = base + 'index.html';
+                    if (fs.existsSync(file)) {
+                        fs.createReadStream(file).pipe(res);
+                        return;
+                    }
+                    res.statusCode(404);
+                    res.end();
+                }
+            ];
+        }
     });
 });
 
