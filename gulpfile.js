@@ -181,5 +181,5 @@ gulp.task('default', [
     'build',
     'webserver',
     'livereload',
-    'watch']
-);
+    'watch'
+]);

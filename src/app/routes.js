@@ -17,6 +17,9 @@ angular.module('RDash')
                 controller: 'LoginController',
                 templateUrl: 'templates/login.html'
             })
+            .state('private', {
+                abstract: true
+            })
             .state('private.lookup', {
                 url: '/lookup/:query',
                 templateUrl: 'templates/lookup.html'
