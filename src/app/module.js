@@ -20,15 +20,15 @@ angular.module('RDash', [
 
     authStatesProvider.config({
         main: 'private.lookup',
-        login: 'public.index',
-        loginSub: 'public.index',
-        loginSetup: 'public.index',
-        loginUnlock: 'public.index',
-        resetPassword: 'public.index',
-        reset: 'public.index',
+        login: 'index',
+        loginSub: 'index',
+        loginSetup: 'index',
+        loginUnlock: 'index',
+        resetPassword: 'index',
+        reset: 'index',
         namespaces: {
              authenticated: 'private',
-             login: 'public'
+             login: 'index'
         }
     });
 });

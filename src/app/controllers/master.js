@@ -112,10 +112,10 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         if (Setup.debug)
         {
-            console.debug("(isLoggedIn(), isIndex(), AT) = " + !$scope.isLoggedIn(), (toState.name!=='index'), AT);
+            console.debug("(isLoggedIn(), isIndex(), AT) = " + !$scope.isLoggedIn(), (toState.name!=='public.index'), AT);
         }
 
-        if (!$scope.isLoggedIn() && toState.name!=='index' && !AT) {
+        if (!$scope.isLoggedIn() && toState.name!=='public.index' && !AT) {
             event.preventDefault();
             $state.go('public.index');
             return;
@@ -180,7 +180,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         sessionStorage.setItem('AT', response.data.AccessToken);
                         sessionStorage.setItem('UID', response.data.Uid);
                         sessionStorage.setItem('RF', response.data.RefreshToken);
-                        if ($state.current.name === 'index') {
+                        if ($state.current.name === 'public.index') {
                             $state.go('private.lookup');
                         }
                     },

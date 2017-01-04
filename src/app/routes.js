@@ -12,7 +12,7 @@ angular.module('RDash')
             // ------------
             // LOGIN ROUTES
             // ------------
-            .state('public.index', {
+            .state('index', {
                 url: '/',
                 controller: 'LoginController',
                 templateUrl: 'templates/login.html'
