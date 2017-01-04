@@ -19,16 +19,16 @@ angular.module('RDash', [
     urlProvider.setBaseUrl(CONFIG.apiUrl);
 
     authStatesProvider.config({
-        main: 'lookup',
-        login: 'index',
-        loginSub: 'login.sub',
-        loginSetup: 'login.setup',
-        loginUnlock: 'login.unlock',
-        resetPassword: 'support.reset-password',
-        reset: 'reset',
+        main: 'private.lookup',
+        login: 'public.index',
+        loginSub: 'public.index',
+        loginSetup: 'public.index',
+        loginUnlock: 'public.index',
+        resetPassword: 'public.index',
+        reset: 'public.index',
         namespaces: {
-             authenticated: 'lookup',
-             login: 'index'
+             authenticated: 'private',
+             login: 'public'
         }
     });
 });

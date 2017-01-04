@@ -117,7 +117,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         if (!$scope.isLoggedIn() && toState.name!=='index' && !AT) {
             event.preventDefault();
-            $state.go('index');
+            $state.go('public.index');
             return;
         }
     });
@@ -181,7 +181,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         sessionStorage.setItem('UID', response.data.Uid);
                         sessionStorage.setItem('RF', response.data.RefreshToken);
                         if ($state.current.name === 'index') {
-                            $state.go('lookup');
+                            $state.go('private.lookup');
                         }
                     },
                     function(response) {
@@ -273,7 +273,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                     sessionStorage.setItem('UID', response.data.Uid);
                     sessionStorage.setItem('RF', response.data.RefreshToken);
                     sessionStorage.setItem('UN', username);
-                    $state.go('lookup');
+                    $state.go('private.lookup');
                 }
             },
             function(response) {
@@ -312,7 +312,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $http.defaults.headers.common['x-pm-uid'] = undefined;
         sessionStorage.clear();
         $scope.showLogin = true;
-        $state.go('index');
+        $state.go('public.index');
         window.location.reload();
 
     };
