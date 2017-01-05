@@ -120,6 +120,7 @@ gulp.task('custom-less', function (cb) {
             gulp.src(paths.styles)
                 .pipe(gulpif(log, debug())),
             less(),
+            concat('app.css'),
             gulp.dest('build/css')
         ],
         cb
