@@ -74,7 +74,7 @@ angular.module('RDash')
             })
             .state('private.admin-list', {
                 url: 'admin-list',
-                controller: 'AdminController',
+                // controller: 'AdminController',
                 templateUrl: 'templates/admins.html'
             });
     }
