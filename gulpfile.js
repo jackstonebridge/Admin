@@ -15,7 +15,9 @@ var gulp = require('gulp'),
     debug = require('gulp-debug'),
     pump = require('pump'),
     babel = require('gulp-babel'),
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    cached      = require('gulp-cached'),
+    remember    = require('gulp-remember');
 var serveStatic = require('serve-static');
 
 var paths = {
@@ -104,9 +106,11 @@ gulp.task('custom-js', function (cb) {
     pump([
             gulp.src(paths.scripts)
                 .pipe(gulpif(log, debug())),
+            cached(),
             babel({
               presets: ['es2015']
             }),
+            remember(),
             // minify_js(),
             concat('dashboard.min.js'),
             gulp.dest('build/js')

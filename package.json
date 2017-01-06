@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-remember": "^0.3.1",
     "serve-static": "^1.11.1"
   }
 }
