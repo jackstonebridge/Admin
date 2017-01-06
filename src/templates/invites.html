@@ -1,28 +1,24 @@
-<!DOCTYPE HTML>
-<div class="container-fluid">
-
-    <div class="col-lg-6 col-md-8 col-sm-12">
-        <div class="list-group">
-            <div class="list-group-item list-group-item-warning">
-                <strong>Use the following form to add invites to the waiting list:</strong>
-            </div>
-            <form method="POST" class="list-group-item text-center" ng-submit="createInvite()">
-                <div class="list-group-item">
-                    <strong class="pull-left">Clean user name:</strong>
-                    <input type="text" class="form-control" ng-model="CreateInviteUsername">
-                    <div class="clearfix"></div>
-                </div>
-                <div class="list-group-item">
-                    <strong class="pull-left">Notification email:</strong>
-                    <input type="text" class="form-control" ng-model="CreateInviteEmail">
-                    <div class="clearfix"></div>
-                </div>
-                <div class="list-group-item text-center">
-                        <button type="submit" href class="btn btn-primary">
-                            <span class="fa fa-send"></span> Create invite
-                        </button>
-                </div>
-            </form>
+<div class="col-lg-6 col-md-8 col-sm-12">
+    <div class="list-group">
+        <div class="list-group-item list-group-item-warning">
+            <strong>Use the following form to add invites to the waiting list:</strong>
         </div>
+        <form method="POST" class="list-group-item text-center" ng-submit="createInvite()">
+            <div class="list-group-item">
+                <strong class="pull-left">Clean user name:</strong>
+                <input type="text" class="form-control" ng-model="CreateInviteUsername">
+                <div class="clearfix"></div>
+            </div>
+            <div class="list-group-item">
+                <strong class="pull-left">Notification email:</strong>
+                <input type="text" class="form-control" ng-model="CreateInviteEmail">
+                <div class="clearfix"></div>
+            </div>
+            <div class="list-group-item text-center">
+                    <button type="submit" href class="btn btn-primary">
+                        <span class="fa fa-send"></span> Create invite
+                    </button>
+            </div>
+        </form>
     </div>
 </div>

@@ -1,56 +1,56 @@
 <div ng-if="response.Invites.length">
-	<div class="list-group" ng-repeat="account in response.Invites">
-		<div class="list-group-item list-group-item-warning">
-			<strong>Waiting List</strong>
-		</div>                   
-		<div class="list-group-item">
-			<code class="pull-right">{{ account.ID }}</code>
-			<strong>UserID:</strong>
-		</div>
-		<div class="list-group-item">
-			<code class="pull-right">{{ account.Name }}</code>
-			<strong>Username:</strong>
-		</div>
-		<div class="list-group-item form-inline">
-			<strong>Notification Email:</strong>
-			<form method="POST" class="input-group pull-right" ng-submit="changeInviteEmail()">
-				<input class="form-control" ng-init="Email =  account.NotificationEmail"  ng-model="Email">
-				<span class="input-group-btn">
-					<button class="btn btn-primary" type="submit">Update</button>
-				</span>
-			</form>
-			<div class="clearfix"></div>
-		</div>
-		<div class="list-group-item disabled"></div>
-		<form method="POST" class="list-group-item" ng-submit="sendInvite()">
-			<button type="submit" href class="btn btn-primary">
-				<span ng-show="account.Sent==0"><span class="fa fa-send"></span> Send Invite</span>
-				<span ng-show="account.Sent==1"><span class="fa fa-send"></span> Resend Invite</span>
-			</button>
-		</form>
-		<div class="list-group-item">
-			<code class="pull-right" ng-if="account.CreateTime!=0">
-			{{ account.CreateTime*1000 | date:'medium' }}
-			</code>
-			<strong>Create Time:</strong>
-		</div>
-		<div class="list-group-item">
-			<code class="pull-right" ng-if="account.SendTime!=0">
-			{{ account.SendTime*1000 | date:'medium' }}
-			</code>
-			<strong>Send Time:</strong>
-		</div>
-		<div class="list-group-item">
-			<strong>Comment:</strong>
-			<br>
-			<pre ng-show="{{ account.Comment!='' }}">{{ account.Comment }}</pre>
-		</div>
-		<div class="list-group-item disabled"></div>
-		<form method="POST" class="list-group-item" ng-submit="deleteUserWL()">
-			<input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
-			<button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
-				<span class="fa fa-trash-o"></span> Delete from Waiting List
-			</button>
-		</form>                    
-	</div>
+    <div class="list-group" ng-repeat="account in response.Invites">
+        <div class="list-group-item list-group-item-warning">
+            <strong>Waiting List</strong>
+        </div>
+        <div class="list-group-item">
+            <code class="pull-right">{{ account.ID }}</code>
+            <strong>UserID:</strong>
+        </div>
+        <div class="list-group-item">
+            <code class="pull-right">{{ account.Name }}</code>
+            <strong>Username:</strong>
+        </div>
+        <div class="list-group-item form-inline">
+            <strong>Notification Email:</strong>
+            <form method="POST" class="input-group pull-right" ng-submit="changeInviteEmail()">
+                <input class="form-control" ng-init="Email =  account.NotificationEmail" ng-model="Email">
+                <span class="input-group-btn">
+    <button class="btn btn-primary" type="submit">Update</button>
+    </span>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        <div class="list-group-item disabled"></div>
+        <form method="POST" class="list-group-item" ng-submit="sendInvite()">
+            <button type="submit" href class="btn btn-primary">
+    <span ng-show="account.Sent==0"><span class="fa fa-send"></span> Send Invite</span>
+    <span ng-show="account.Sent==1"><span class="fa fa-send"></span> Resend Invite</span>
+    </button>
+        </form>
+        <div class="list-group-item">
+            <code class="pull-right" ng-if="account.CreateTime!=0">
+    {{ account.CreateTime*1000 | date:'medium' }}
+    </code>
+            <strong>Create Time:</strong>
+        </div>
+        <div class="list-group-item">
+            <code class="pull-right" ng-if="account.SendTime!=0">
+    {{ account.SendTime*1000 | date:'medium' }}
+    </code>
+            <strong>Send Time:</strong>
+        </div>
+        <div class="list-group-item">
+            <strong>Comment:</strong>
+            <br>
+            <pre ng-show="{{ account.Comment!='' }}">{{ account.Comment }}</pre>
+        </div>
+        <div class="list-group-item disabled"></div>
+        <form method="POST" class="list-group-item" ng-submit="deleteUserWL()">
+            <input type="hidden" ng-init="accountID=account.ID" ng-model="accountID">
+            <button type="submit" class="btn btn-danger" ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE.">
+    <span class="fa fa-trash-o"></span> Delete from Waiting List
+    </button>
+        </form>
+    </div>
 </div>

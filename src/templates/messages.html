@@ -1,80 +1,76 @@
-<div class="container-fluid">
+<div class="list-group-item form-inline text-center">
+    <a href class="btn btn-primary btn-lg" ng-click="GetUserMessages()" ng-disabled="loading">View messages</a>
+    &nbsp;
+    <strong>Page size:</strong>
+    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="PageSize = 50"  ng-model="PageSize">
+    &nbsp;
+    <strong>Page:</strong>
+    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Page = 0"  ng-model="Page">
+    &nbsp;
+    <strong>Unread:</strong>
+    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Unread = 0"  ng-model="Unread">
+    &nbsp;
+    <strong>Location:</strong>
+    <label>
+        <select ng-model="currentMessageLocationOption" class="form-control" ng-options="value.label for value in messageLocationOptions"></select>
+    </label>
+</div>
+<p class="text-center">
+    <em>(This can take up to a minute and will freeze the app.)</em>
+</p>
 
-    <div class="list-group-item form-inline text-center">
-        <a href class="btn btn-primary btn-lg" ng-click="GetUserMessages()" ng-disabled="loading">View messages</a>
-        &nbsp;
-        <strong>Page size:</strong>
-        <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="PageSize = 50"  ng-model="PageSize">
-        &nbsp;
-        <strong>Page:</strong>
-        <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Page = 0"  ng-model="Page">
-        &nbsp;
-        <strong>Unread:</strong>
-        <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Unread = 0"  ng-model="Unread">
-        &nbsp;
-        <strong>Location:</strong>
-        <label>
-            <select ng-model="currentMessageLocationOption" class="form-control" ng-options="value.label for value in messageLocationOptions"></select>
-        </label>
+<div class="account" ng-if="messagesResponse.data">
+    <div class="list-group-item form-inline">
+        <span>Listing for user:</span>
+        <strong>{{ messagesResponse.data.User  }}</strong>,
+        <span>Total messages matching criteria:</span>
+        <strong>{{ messagesResponse.data.Total }}</strong>
     </div>
-    <p class="text-center">
-        <em>(This can take up to a minute and will freeze the app.)</em>
-    </p>
+    <table class="table table-bordered table-inline table-striped">
+        <thead>
+            <tr class="active">
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Sender</th>
+                <th>ToList</th>
+                <th>CCList</th>
+                <th>BCCList</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="message in messagesResponse.data.Messages">
+                <td style="width: 140px">{{ message.Time * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
+                </td>
+                <td>
+                    <strong>{{ message.Subject }}</strong>
+                </td>
+                <td style="width: 10rem">
+                    <span>
+                        {{ message.SenderAddress }}
+                    </span>
+                </td>
+                <td>
+                    <span ng-repeat="entry in message.ToList">
+                        {{ entry.Address }}<br>
+                    </span>
+                </td>
+                <td>
+                    <span ng-repeat="entry in message.CCList">
+                        {{ entry.Address }}<br>
+                    </span>
+                </td>
+                <td>
+                    <span ng-repeat="entry in message.BCCList">
+                        {{ entry.Address }}<br>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-    <div class="account" ng-if="messagesResponse.data">
-        <div class="list-group-item form-inline">
-            <span>Listing for user:</span>
-            <strong>{{ messagesResponse.data.User  }}</strong>,
-            <span>Total messages matching criteria:</span>
-            <strong>{{ messagesResponse.data.Total }}</strong>
-        </div>
-        <table class="table table-bordered table-inline table-striped">
-            <thead>
-                <tr class="active">
-                    <th>Time</th>
-                    <th>Subject</th>
-                    <th>Sender</th>
-                    <th>ToList</th>
-                    <th>CCList</th>
-                    <th>BCCList</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="message in messagesResponse.data.Messages">
-                    <td style="width: 140px">{{ message.Time * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
-                    </td>
-                    <td>
-                        <strong>{{ message.Subject }}</strong>
-                    </td>
-                    <td style="width: 10rem">
-                        <span>
-                            {{ message.SenderAddress }}
-                        </span>
-                    </td>
-                    <td>
-                        <span ng-repeat="entry in message.ToList">
-                            {{ entry.Address }}<br>
-                        </span>
-                    </td>
-                    <td>
-                        <span ng-repeat="entry in message.CCList">
-                            {{ entry.Address }}<br>
-                        </span>
-                    </td>
-                    <td>
-                        <span ng-repeat="entry in message.BCCList">
-                            {{ entry.Address }}<br>
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div ng-if="messagesResponse.data">
-        <hr>
-        <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-        <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ messagesResponse | json }}</pre>
-    </div>
-
+<div ng-if="messagesResponse.data">
+    <hr>
+    <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ messagesResponse | json }}</pre>
 </div>

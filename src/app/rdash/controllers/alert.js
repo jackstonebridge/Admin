@@ -3,7 +3,7 @@
  */
 
 angular.module('RDash')
-.controller('AlertsCtrl', ($scope, $rootScope, $sce) => {
+.controller('AlertsController', ($scope, $rootScope, $sce) => {
     $scope.alerts = [];
 
     $scope.addAlert = function(message) {

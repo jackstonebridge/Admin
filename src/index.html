@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../bower_components/rdash-ui/dist/css/rdash.min.css">
-    <link rel="stylesheet" type="text/css" href="styles/css/custom.css">
     <!-- endbuild -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <!-- SCRIPTS -->
@@ -30,14 +29,13 @@
     <script type="text/javascript" src="../bower_components/angular-gettext/dist/angular-gettext.min.js"></script>
     <script type="text/javascript" src="../bower_components/papaparse/papaparse.min.js"></script>
     <script type="text/javascript" src="../bower_components/bcryptjs/dist/bcrypt.min.js"></script>
-    <script
     <!-- endbuild -->
     <!-- Custom Scripts -->
     <script type="text/javascript" src="openpgp.min.js"></script>
     <script type="text/javascript" src="js/dashboard.min.js"></script>
 </head>
 
-<body ng-controller="MasterCtrl" ng-class="{ 'limit': loading }">
+<body ng-controller="MasterController" ng-class="{ 'limit': loading }">
     <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
         <!-- Sidebar -->
@@ -45,12 +43,12 @@
             <ul class="sidebar">
                 <li class="sidebar-main">
                     <a ng-click="toggleSidebar()">
-            Dashboard
-            <span class="menu-icon glyphicon glyphicon-transfer"></span>
-          </a>
+                    Dashboard
+                    <span class="menu-icon glyphicon glyphicon-transfer"></span>
+                    </a>
                 </li>
                 <div ng-if="isLoggedIn">
-                    <li  class="sidebar-title"><span>NAVIGATION</span></li>
+                    <li class="sidebar-title"><span>NAVIGATION</span></li>
                     <li class="sidebar-list">
                         <a ng-disabled="loading" ui-sref="private.lookup">Lookup <span class="menu-icon fa fa-tachometer"></span></a>
                     </li>
@@ -88,12 +86,15 @@
         <div id="content-wrapper">
             <div class="page-content">
 
-                <p class="alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
+                <!-- Alerts bar -->
+                <p class="alerts-container" data-ng-controller="AlertsController" data-ng-show="alerts.length">
                     <alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" ng-click="closeAlert($index)" ng-bind-html="alert.msg"></alert>
                 </p>
 
                 <!-- Main Content -->
-                <div ui-view></div>
+                <div class="container-fluid">
+                    <div ui-view></div>
+                </div>
 
             </div>
             <!-- End Page Content -->

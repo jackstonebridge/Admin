@@ -1,5 +1,3 @@
-<div class="container-fluid">
-
   <form method="POST" id="blastForm" name="blastForm" ng-submit="blast()">
 
 
@@ -7,7 +5,7 @@
       <p>Blast Mode:</p>
       <p>
         <label><input type="radio" name="blastMode" ng-value="false" ng-model="blastMode"> Normal Mode</label>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         <label><input type="radio" name="blastMode" ng-value="true" ng-model="blastMode"> Except Mode</label>
       </p>
     </div>
@@ -15,13 +13,13 @@
       <label>Subject</label>
       <input type="text" class="form-control" placeholder="Subject" ng-model="blastSubject">
     </div>
-    <div class="form-group">    
+    <div class="form-group">
       <label>Body:</label>
-      <textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="blastMessage"></textarea>         
+      <textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="blastMessage"></textarea>
     </div>
     <div class="form-group">
       <div class="row">
-        <div class="col-md-6">            
+        <div class="col-md-6">
           <label>Username List:</label>
           <textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="blastList"></textarea>
         </div>
@@ -33,15 +31,13 @@ andy
 dcl
 </pre>
 
-        </div>    
-      </div>    
+        </div>
+      </div>
     </div>
     <p>
       <button type="submit" class="btn btn-primary">Blast to List</button>
       <button type="button" disabled class="btn btn-danger pull-right" ng-click="open('lg')">Blast to All EXCEPT List</button>
     </p>
 
-    <pre>{{ blastData }}</pre>  
+    <pre>{{ blastData }}</pre>
   </form>
-
-</div>

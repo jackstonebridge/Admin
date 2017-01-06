@@ -1,54 +1,50 @@
-<div class="container-fluid">
+<form method="POST" ng-submit="multilookup('user')">
 
-	<form method="POST" ng-submit="multilookup('user')">
+    <p class="alert alert-info">Enter multiple rows and click the appropriate to search for multiple entries at once.</p>
 
-		<p class="alert alert-info">Enter multiple rows and click the appropriate to search for multiple entries at once.</p>
+    <div class="row">
+    <div class="col-md-6">
+    <textarea class="form-control" ng-style="{'height':'30rem'}" ng-model="csvData"></textarea>
+    </div>
+    <div class="col-md-6">
 
-		<div class="row">
-			<div class="col-md-6">
-				<textarea class="form-control" ng-style="{'height':'30rem'}" ng-model="csvData"></textarea>
-			</div>
-			<div class="col-md-6">
-
-		<label>Example for users:</label>
+    <label>Example for users:</label>
 <pre>
 jason
 jason@protonmail.ch
 131
 </pre>
 
-		<label>Example for organizations:</label>
+    <label>Example for organizations:</label>
 <pre>
 My Org
 1000
 </pre>
 
-		<label>Example for domains:</label>
+    <label>Example for domains:</label>
 <pre>
 protonmail.ch
 dingchaolu.com
 1000
 </pre>
 
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="multilookup('user')">User/Address/Invite</button>
-				<button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="multilookup('domain')">Domain</button>
-				<button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="multilookup('organization')">Organization</button>
-			</div>
-		</div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-md-12 text-center">
+    <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="multilookup('user')">User/Address/Invite</button>
+    <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="multilookup('domain')">Domain</button>
+    <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="multilookup('organization')">Organization</button>
+    </div>
+    </div>
 
-	</form>
+</form>
 
-	<ng-include src="this.template" ng-if="this.template" ng-init="initInfo()"></ng-include>
+<ng-include src="this.template" ng-if="this.template" ng-init="initInfo()"></ng-include>
 
-	<div ng-show="!!lookupResponse.length">
-		<hr>
-		<a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-        <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ lookupResponse | json }}</pre> <!-- ng-style="{'height':'20rem'}" -->
-        <hr>
-	</div>
-
+<div ng-show="!!lookupResponse.length">
+    <hr>
+    <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
+    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ lookupResponse | json }}</pre> <!-- ng-style="{'height':'20rem'}" -->
+    <hr>
 </div>
