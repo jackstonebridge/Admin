@@ -22,46 +22,57 @@ angular.module('RDash')
             })
             .state('private.lookup', {
                 url: '/lookup/:query',
+                // controller: 'MasterController',
                 templateUrl: 'templates/lookup.html'
             })
             .state('private.coupons', {
                 url: '/coupons',
+                // controller: 'MasterController',
                 templateUrl: 'templates/coupons.html'
             })
             .state('private.invites', {
                 url: '/invites',
+                // controller: 'MasterController',
                 templateUrl: 'templates/invites.html'
             })
             .state('private.payments', {
                 url: '/payments',
+                // controller: 'MasterController',
                 templateUrl: 'templates/payments.html'
             })
             .state('private.logs', {
                 url: '/logs',
+                // controller: 'MasterController',
                 templateUrl: 'templates/logs.html'
             })
             .state('private.reports', {
                 url: '/reports',
+                // controller: 'MasterController',
                 templateUrl: 'templates/reports.html'
             })
             .state('private.monitor', {
                 url: '/monitor',
+                // controller: 'MasterController',
                 templateUrl: 'templates/monitor.html'
             })
             .state('private.messages', {
                 url: '/messages',
+                // controller: 'MasterController',
                 templateUrl: 'templates/messages.html'
             })
             .state('private.blast', {
                 url: '/blast',
+                // controller: 'MasterController',
                 templateUrl: 'templates/blast.html'
             })
             .state('private.multi-lookup', {
                 url: '/multi-lookup',
+                // controller: 'MasterController',
                 templateUrl: 'templates/multi.html'
             })
             .state('private.admin-list', {
                 url: '/admin-list',
+                controller: 'MasterController',
                 templateUrl: 'templates/admins.html'
             });
     }

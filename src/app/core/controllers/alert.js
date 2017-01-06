@@ -2,11 +2,8 @@
  * Alerts Controller
  */
 
-angular
-    .module('RDash')
-    .controller('AlertsCtrl', ['$scope', '$rootScope', '$sce', AlertsCtrl]);
-
-function AlertsCtrl($scope, $rootScope, $sce) {
+angular.module('RDash')
+.controller('AlertsCtrl', ($scope, $rootScope, $sce) => {
     $scope.alerts = [];
 
     $scope.addAlert = function(message) {
@@ -26,4 +23,4 @@ function AlertsCtrl($scope, $rootScope, $sce) {
     $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
     };
-}
+});

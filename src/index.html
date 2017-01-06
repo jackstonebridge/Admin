@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../bower_components/rdash-ui/dist/css/rdash.min.css">
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/custom.css">
     <!-- endbuild -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <!-- SCRIPTS -->
@@ -37,7 +37,7 @@
     <script type="text/javascript" src="js/dashboard.min.js"></script>
 </head>
 
-<body ng-class="{ 'limit': loading }">
+<body ng-controller="MasterCtrl" ng-class="{ 'limit': loading }">
     <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
         <!-- Sidebar -->
@@ -66,14 +66,14 @@
                     <li class="sidebar-list">
                         <a ng-disabled="loading" ui-sref="private.invites">Invites <span class="menu-icon fa fa-gift"></span></a>
                     </li>
-                    <li ng-if="user.Scope=='admin super'" class="sidebar-list">
-                        <a ng-disabled="loading" ui-sref="private.blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
-                    </li>
                     <li class="sidebar-list">
                         <a ng-disabled="loading" ui-sref="private.multi-lookup">MultiLookup <span class="menu-icon fa fa-list"></span></a>
                     </li>
                     <li class="sidebar-list">
                         <a ng-disabled="loading" ui-sref="private.admin-list">Admins <span class="menu-icon fa fa-star"></span></a>
+                    </li>
+                    <li ng-if="user.Scope=='admin super'" class="sidebar-list">
+                        <a ng-disabled="loading" ui-sref="private.blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
                     </li>
                 </div>
             </ul>

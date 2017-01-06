@@ -25,8 +25,8 @@ var paths = {
         'src/app/**/*.js' // Then everything else
     ],
     libs: 'bower_components/openpgp/dist/*.min.js',
-    styles: 'src/less/**/*.*',
-    images: 'src/img/**/*.*',
+    styles: 'src/styles/**/*.*',
+    images: 'src/assets/img/*.*',
     templates: 'src/templates/**/*.html',
     main: 'src/*.html',
     fonts: 'bower_components/**/*.{ttf,woff,eof,svg}'
@@ -84,7 +84,7 @@ gulp.task('custom-images', function (cb) {
     pump([
             gulp.src(paths.images)
                 .pipe(gulpif(log, debug())),
-            gulp.dest('build/img')
+            gulp.dest('build/assets/img')
         ],
         cb
     );
