@@ -112,12 +112,12 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
 
         if (Setup.debug)
         {
-            console.debug("(isLoggedIn(), isIndex(), AT) = " + !$scope.isLoggedIn(), (toState.name!=='public.index'), AT);
+            console.debug("(isLoggedIn(), isIndex(), AT) = " + !$scope.isLoggedIn(), (toState.name!=='index'), AT);
         }
 
-        if (!$scope.isLoggedIn() && toState.name!=='public.index' && !AT) {
+        if (!$scope.isLoggedIn() && toState.name!=='index' && !AT) {
             event.preventDefault();
-            $state.go('public.index');
+            $state.go('index');
             return;
         }
     });
@@ -180,7 +180,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
                         sessionStorage.setItem('AT', response.data.AccessToken);
                         sessionStorage.setItem('UID', response.data.Uid);
                         sessionStorage.setItem('RF', response.data.RefreshToken);
-                        if ($state.current.name === 'public.index') {
+                        if ($state.current.name === 'index') {
                             $state.go('private.lookup');
                         }
                     },
@@ -312,7 +312,7 @@ function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $
         $http.defaults.headers.common['x-pm-uid'] = undefined;
         sessionStorage.clear();
         $scope.showLogin = true;
-        $state.go('public.index');
+        $state.go('index');
         window.location.reload();
 
     };
