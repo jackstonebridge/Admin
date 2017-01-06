@@ -11,7 +11,7 @@ angular.module('RDash', [
     'proton.authentication'
 ])
 .config(($httpProvider, urlProvider, authStatesProvider, CONFIG) => {
-    $httpProvider.defaults.headers.common['x-pm-appversion'] = 'Web_' + CONFIG.app_version;
+    $httpProvider.defaults.headers.common['x-pm-appversion'] = 'Admin_' + CONFIG.app_version;
     $httpProvider.defaults.headers.common['x-pm-apiversion'] = CONFIG.api_version;
     $httpProvider.defaults.headers.common.Accept = 'application/vnd.protonmail.v1+json';
     $httpProvider.defaults.withCredentials = true;
