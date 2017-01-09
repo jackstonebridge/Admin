@@ -1,7 +1,9 @@
-<h1>Hello world</h1>
+<pre>
+    {{ admin | json }}
+</pre>
 
-<!-- <p class="text-center">
-    <a href class="btn btn-primary btn-lg" ng-click="adminList()" ng-disabled="loading">
+<p class="text-center">
+    <a href class="btn btn-primary btn-lg" ng-click="admin.GetAdmins()" ng-disabled="loading">
         Get list of admins
     </a><br>
 </p>
@@ -23,4 +25,4 @@
             <td>Admin</td>
         </tr>
     </tbody>
-</table> -->
+</table>

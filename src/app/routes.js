@@ -72,9 +72,10 @@ angular.module('RDash')
                 // controller: 'MasterController',
                 templateUrl: 'templates/multi.html'
             })
-            .state('private.admin-list', {
-                url: 'admin-list',
-                // controller: 'AdminController',
+            .state('private.admins', {
+                url: 'admins',
+                controller: 'AdminController',
+                controllerAs: 'admin',
                 templateUrl: 'templates/admins.html'
             });
     }
