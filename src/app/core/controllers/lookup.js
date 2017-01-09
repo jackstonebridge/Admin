@@ -3,7 +3,7 @@
  */
 angular
 .module('admin.core')
-.controller('AdminController', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', 'CONFIG', MasterCtrl])
+.controller('LookupController', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', 'CONFIG', MasterCtrl])
 .directive('ngConfirmClick', [
   function(){
     return {

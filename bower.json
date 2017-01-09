@@ -29,7 +29,8 @@
     "jquery": "^3.1.1",
     "openpgp": "^2.3.5",
     "papaparse": "~4.1.2",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-sanitize": "^1.6.1"
   },
   "repository": {
     "type": "git",

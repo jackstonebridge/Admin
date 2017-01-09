@@ -3,6 +3,7 @@ angular.module('RDash', [
     'ui.router',
     'ngCookies',
     'ngResource',
+    'ngSanitize',
     'gettext',
     'cgNotify',
     'admin.core',
