@@ -5,7 +5,7 @@ angular.module('proton.authentication')
             model: {}
         };
 
-        const save = (data) => (STATE_AUTH.model = data);
+        const save = (data = {}) => (STATE_AUTH.model = _.extend({}, STATE_AUTH.model, data));
         const read = (key = '') => STATE_AUTH.model[key];
         const clear = () => {
             STATE_AUTH.model = {};
