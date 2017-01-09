@@ -1,5 +1,15 @@
 angular.module('admin.core')
 .factory('httpInterceptor', ($rootScope, $q) => {
+
+    const DEFAULT_ERROR = 'Something does not work as expected, sorry.';
+
+    const hasError = ({ data }) => !!((data.ErrorDescription) ? data.ErrorDescription : data.Error);
+    const getError = ({ data }) => {
+        const error = (data.ErrorDescription) ? data.ErrorDescription : data.Error;
+        return error || DEFAULT_ERROR;
+    };
+
+
     return {
         request(config) {
             $rootScope.loading = true;
@@ -7,19 +17,21 @@ angular.module('admin.core')
         },
         response(response) {
             var data = response.data = response.data || {};
-            var error = (data.ErrorDescription) ? data.ErrorDescription : data.Error;
-
             $rootScope.loading = false;
-            if (error) {
-                $rootScope.$emit('addAlert', error);
+            if (hasError(response)) {
+                $rootScope.$emit('addAlert', getError(response));
                 return $q.reject(response);
             }
             return $q.resolve(response);
         },
         responseError(response) {
             $rootScope.loading = false;
-            $rootScope.$emit('addAlert', response);
-            return $q.reject(response);
+            response.data = response.data || {
+                Error: DEFAULT_ERROR
+            };
+            const error = getError(response);
+            $rootScope.$emit('addAlert', error);
+            return $q.reject(response.data);
         }
     };
 })
