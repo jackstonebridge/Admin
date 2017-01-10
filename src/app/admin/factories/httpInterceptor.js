@@ -1,4 +1,4 @@
-angular.module('admin.core')
+angular.module('proton.admin')
 .factory('httpInterceptor', ($rootScope, $q) => {
 
     const DEFAULT_ERROR = 'Something does not work as expected, sorry.';

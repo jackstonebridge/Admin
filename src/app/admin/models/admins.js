@@ -1,4 +1,4 @@
-angular.module('admin.core')
+angular.module('proton.admin')
 .factory('admins', ($http, $q, url) => {
     return {
         get() {

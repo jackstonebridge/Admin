@@ -2,7 +2,7 @@
 //  * Master Controller
 //  */
 // angular
-// .module('admin.core')
+// .module('proton.admin')
 // .controller('LookupController', ['$scope', '$http', '$rootScope', '$state', '$q', '$stateParams', '$log', '$location', '$timeout', 'CONFIG', MasterCtrl])
 // .directive('ngConfirmClick', [
 //   function(){

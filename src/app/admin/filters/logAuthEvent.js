@@ -1,4 +1,4 @@
-angular.module('admin.core')
+angular.module('proton.admin')
 .filter('LogAuthEvent', () => {
     return function(log_auth_event) {
         switch (log_auth_event) {

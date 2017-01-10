@@ -1,4 +1,4 @@
-angular.module('admin.core')
+angular.module('proton.admin')
 .filter('bytes', () => {
     return (bytes, precision) => {
         if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {

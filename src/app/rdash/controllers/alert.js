@@ -1,7 +1,3 @@
-/**
- * Alerts Controller
- */
-
 angular.module('RDash')
 .controller('AlertsController', ($scope, $rootScope, $sce) => {
     $scope.alerts = [];

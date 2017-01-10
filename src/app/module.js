@@ -6,10 +6,10 @@ angular.module('RDash', [
     'ngSanitize',
     'gettext',
     'cgNotify',
-    'admin.core',
     'proton.config',
     'proton.commons',
-    'proton.authentication'
+    'proton.authentication',
+    'proton.admin'
 ])
 .config(($httpProvider, urlProvider, authStatesProvider, CONFIG) => {
     $httpProvider.defaults.headers.common['x-pm-appversion'] = 'Admin_' + CONFIG.app_version;
