@@ -4,6 +4,10 @@
   "authors": [
     "Proton Technologies AG"
   ],
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "gulp"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:ProtonMail/rdash-angular.git"
