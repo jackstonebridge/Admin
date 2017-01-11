@@ -329,12 +329,11 @@ angular.module('proton.authentication')
                 if (!CREDENTIALS.username || !CREDENTIALS.password) {
                     return (CREDENTIALS = {});
                 }
+                return srpLogin(CREDENTIALS.username, CREDENTIALS.password)
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
-
-            return srpLogin(CREDENTIALS.username, CREDENTIALS.password)
-                .catch((error) => {
-                    console.log(error);
-                });
         }
 
         /**

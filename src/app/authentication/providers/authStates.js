@@ -26,7 +26,7 @@ angular.module('proton.authentication')
             });
     };
 
-    this.fromLoginToMain = (valid = false) => {
+    this.activeSimpleLoginMode = (valid = false) => {
         CONFIG.isSimpleLogin = valid;
     };
 

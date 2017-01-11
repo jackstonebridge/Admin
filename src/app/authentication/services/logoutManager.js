@@ -31,12 +31,6 @@ angular.module('proton.authentication')
             userAuth.clear();
             return $rootScope.$emit('auth.user', { type: 'logout' });
         }
-
-        // now, redirect only not authenticated
-        if (!isLoggedIn) {
-            e.preventDefault(); // stop current execution
-            $state.go('login'); // go to login
-        }
     });
 
     const attach = (cb = angular.noop) => callbacks.push(cb);

@@ -18,6 +18,7 @@ angular.module('RDash', [
     $httpProvider.defaults.withCredentials = true;
 
     urlProvider.setBaseUrl(CONFIG.apiUrl);
+    authStatesProvider.activeSimpleLoginMode(true);
 
     authStatesProvider.config({
         main: 'private.lookup',
