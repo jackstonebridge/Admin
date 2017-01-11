@@ -1,12 +1,12 @@
 angular.module('proton.admin')
-.controller('AdminController', function(admins, $http) {
+.controller('AdminController', function(admins) {
     var vm = this;
-    console.log($http.defaults.headers.common);
+
     vm.GetAdmins = () => {
         admins.get()
         .then(({data}) => {
-            this.Admins = data.Admins;
-            this.Supers = data.Supers;
+            vm.Admins = data.Admins;
+            vm.Supers = data.Supers;
         });
     };
 });

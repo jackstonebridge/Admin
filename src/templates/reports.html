@@ -1,10 +1,10 @@
 <p class="text-center">
-    <a href class="btn btn-primary btn-lg" ng-click="listSubscriptions()" ng-disabled="loading">
+    <a href class="btn btn-primary btn-lg" ng-click="controller.GetPayments()" ng-disabled="loading">
         Get payments report
     </a>
 </p>
 
-<div ng-if="Subscriptions">
+<div ng-if="controller.Subscriptions">
     <table class="table table-bordered table-striped">
         <thead>
             <tr class="info">
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in Subscriptions.SubscriptionPlans">
+            <tr ng-repeat="subscription in controller.Subscriptions.SubscriptionPlans">
                 <th>{{ subscription.Plan }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.Amount }}</th>
@@ -29,9 +29,7 @@
             </tr>
         </tbody>
     </table>
-</div>
 
-<div class="row" ng-if="Subscriptions">
     <table class="table table-bordered table-striped">
         <thead>
             <tr class="info">
@@ -42,7 +40,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in Subscriptions.ExtraDomains">
+            <tr ng-repeat="subscription in controller.Subscriptions.ExtraDomains">
                 <th>{{ subscription.ExtraDomains }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -50,20 +48,18 @@
             </tr>
         </tbody>
     </table>
-</div>
 
-<div ng-if="Subscriptions">
     <table class="table table-bordered table-striped">
         <thead>
             <tr class="info">
-                <th>Extra domains (x1)</th>
+                <th>Extra addresses (x1)</th>
                 <th>Subscriptions<br>(total)</th>
                 <th>Subscriptions<br>(monthly)</th>
                 <th>Subscriptions<br>(yearly)</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in Subscriptions.ExtraAddresses">
+            <tr ng-repeat="subscription in controller.Subscriptions.ExtraAddresses">
                 <th>{{ subscription.ExtraAddresses }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -71,20 +67,18 @@
             </tr>
         </tbody>
     </table>
-</div>
 
-<div ng-if="Subscriptions">
     <table class="table table-bordered table-striped">
         <thead>
             <tr class="info">
-                <th>Extra domains (x1)</th>
+                <th>Extra space (x1)</th>
                 <th>Subscriptions<br>(total)</th>
                 <th>Subscriptions<br>(monthly)</th>
                 <th>Subscriptions<br>(yearly)</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in Subscriptions.ExtraSpace">
+            <tr ng-repeat="subscription in controller.Subscriptions.ExtraSpace">
                 <th>{{ subscription.ExtraSpace }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -94,9 +88,9 @@
     </table>
 </div>
 
-<div ng-show="!!Subscriptions">
+<div ng-show="!!controller.Subscriptions">
     <hr>
     <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ Subscriptions | json }}</pre>
+    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ controller.Subscriptions | json }}</pre>
     <hr>
 </div>

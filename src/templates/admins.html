@@ -1,5 +1,5 @@
 <p class="text-center">
-    <a href class="btn btn-primary btn-lg" ng-click="admin.GetAdmins()" ng-disabled="loading">
+    <a href class="btn btn-primary btn-lg" ng-click="controller.GetAdmins()" ng-disabled="loading">
         Get list of admins
     </a><br>
 </p>
@@ -12,12 +12,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="admin in Supers">
-            <th>{{ admin }}</th>
+        <tr ng-repeat="super in controller.Supers">
+            <th>{{ super }}</th>
             <th>Super</th>
         </tr>
-        <tr ng-repeat="super in Admins">
-            <td>{{ super }}</td>
+        <tr ng-repeat="admin in controller.Admins">
+            <td>{{ admin }}</td>
             <td>Admin</td>
         </tr>
     </tbody>

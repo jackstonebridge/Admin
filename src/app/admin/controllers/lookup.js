@@ -1149,29 +1149,6 @@
 //         );
 //     };
 //
-//     $scope.listSubscriptions = function(CreateTime)
-//     {
-//         $rootScope.loading = true;
-//         var param = (CreateTime === undefined) ? new Date().getTime() : CreateTime;
-//         $http.get(apiUrl + '/admin/payments/' + param)
-//         .then(
-//             function successCallback(response) {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 } else {
-//                     $scope.Subscriptions = response.data;
-//                 }
-//             },
-//             function errorCallback(response) {
-//                 $rootScope.loading = false;
-//                 if (response) {
-//                     $rootScope.$emit('addAlert', response);
-//                 }
-//             }
-//         );
-//     };
 //
 //     $scope.listCoupon = function(couponName)
 //     {

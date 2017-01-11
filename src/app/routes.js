@@ -49,7 +49,8 @@ angular.module('RDash')
             })
             .state('private.reports', {
                 url: 'reports',
-                // controller: 'MasterController',
+                controller: 'ReportController',
+                controllerAs: 'controller',
                 templateUrl: 'templates/reports.html'
             })
             .state('private.monitor', {
@@ -75,7 +76,7 @@ angular.module('RDash')
             .state('private.admins', {
                 url: 'admins',
                 controller: 'AdminController',
-                controllerAs: 'admin',
+                controllerAs: 'controller',
                 templateUrl: 'templates/admins.html'
             });
     }
