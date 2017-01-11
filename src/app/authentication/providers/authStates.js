@@ -15,6 +15,10 @@ angular.module('proton.authentication')
         }
     };
 
+    const CONFIG = {
+        isSimpleLogin: true
+    };
+
     this.config = (config = {}) => {
         Object.keys(config)
             .forEach((key) => {
@@ -22,10 +26,15 @@ angular.module('proton.authentication')
             });
     };
 
+    this.fromLoginToMain = (valid = false) => {
+        CONFIG.isSimpleLogin = valid;
+    };
+
     this.$get = ($state) => {
         const go = (key, opt = {}) => $state.go(STATES[key], opt);
         const is = (key) => $state.is(STATES[key]);
         const value = (key, isNamespace = false) => (!isNamespace ? STATES[key] : STATES.namespaces[key]);
-        return { go, is, value };
+        const isSimpleLogin = () => CONFIG.isSimpleLogin;
+        return { go, is, value, isSimpleLogin };
     };
 });

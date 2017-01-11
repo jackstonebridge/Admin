@@ -17,10 +17,23 @@ angular.module('RDash')
                 controller: 'LoginController',
                 templateUrl: 'templates/login.html'
             })
+            .state('index.logout', {
+                url: '/logout'
+            })
             .state('private', {
                 abstract: true,
                 url: '/',
-                template: '<ui-view/>'
+                template: '<ui-view/>',
+                resolve: {
+                    adminData(admins) {
+                        return admins.get().then(({ data }) => data);
+                    },
+                },
+                onEnter($rootScope, userModel) {
+                    $rootScope.isLoggedIn = userModel.isLoggedIn();
+                    $rootScope.isLocked = userModel.isLocked();
+                    $rootScope.isSecure = userModel.isSecured();
+                }
             })
             .state('private.lookup', {
                 url: 'lookup/:query',

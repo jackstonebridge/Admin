@@ -107,7 +107,7 @@ angular.module('proton.authentication')
         // Return a state name to be in in case some user authentication step is required.
         // This will null if the logged in and unlocked.
         function state() {
-            if (isLoggedIn()) {
+            if (isLoggedIn() && !authStates.isSimpleLogin()) {
                 return isLocked() ? authStates.value('loginUnlock') : null;
             }
             return authStates.value('login');

@@ -1,6 +1,11 @@
 angular.module('proton.admin')
-.controller('AdminController', function(admins) {
+.controller('AdminController', function(admins, adminData) {
     var vm = this;
+
+    console.log(adminData);
+
+    vm.Admins = adminData.Admins;
+    vm.Supers = adminData.Supers;
 
     vm.GetAdmins = () => {
         admins.get()

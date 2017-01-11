@@ -17,8 +17,10 @@ var gulp = require('gulp'),
     babel = require('gulp-babel'),
     sourcemaps = require('gulp-sourcemaps'),
     cached      = require('gulp-cached'),
-    remember    = require('gulp-remember');
-var serveStatic = require('serve-static');
+    remember    = require('gulp-remember'),
+    ngAnnotate  = require('gulp-ng-annotate'),
+    sourcemaps  = require('gulp-sourcemaps'),
+    serveStatic = require('serve-static')
 
 var paths = {
     scripts: [
@@ -107,12 +109,19 @@ gulp.task('custom-js', function (cb) {
             gulp.src(paths.scripts)
                 .pipe(gulpif(log, debug())),
             cached(),
+            sourcemaps.init(),
             babel({
               presets: ['es2015']
             }),
             remember(),
-            // minify_js(),
+            ngAnnotate({
+                add: true,
+                remove: true,
+                single_quotes: true
+            }),
             concat('dashboard.min.js'),
+            sourcemaps.write('./'),
+            // minify_js(),
             gulp.dest('build/js')
         ],
         cb

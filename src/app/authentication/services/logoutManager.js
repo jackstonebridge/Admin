@@ -7,18 +7,35 @@ angular.module('proton.authentication')
 
     $rootScope.$on('$stateChangeStart', (e, state, sParams, previous) => {
         const isNotPrivate = !contains(state.name, authStates.value('authenticated', true));
-        const isNotSpecial = !contains(SPECIALS, state.name);
+        const isLoggedIn = userModel.isLoggedIn();
 
-        if (isNotPrivate && isNotSpecial) {
-            callbacks.forEach((cb) => cb());
+        if (!authStates.isSimpleLogin()) {
+            const isNotSpecial = !contains(SPECIALS, state.name);
 
-            if ((previous.name === authStates.value('loginUnlock') && state.name === authStates.value('login')) || contains(previous.name, authStates.value('authenticated', true))) {
-                userAuth.clear();
+            if (isNotPrivate && isNotSpecial) {
+                callbacks.forEach((cb) => cb());
+
+                if ((previous.name === authStates.value('loginUnlock') && state.name === authStates.value('login')) || contains(previous.name, authStates.value('authenticated', true))) {
+                    userAuth.clear();
+                }
+                // Dispatch an event to notify everybody that the user is no longer logged in
+                if (isLoggedIn) {
+                    $rootScope.$emit('auth.user', { type: 'logout' });
+                }
             }
-            // Dispatch an event to notify everybody that the user is no longer logged in
-            if (userModel.isLoggedIn()) {
-                $rootScope.$emit('auth.user', { type: 'logout' });
-            }
+            return;
+        }
+
+        // Dispatch an event to notify everybody that the user is no longer logged in
+        if (isNotPrivate && isLoggedIn) {
+            userAuth.clear();
+            return $rootScope.$emit('auth.user', { type: 'logout' });
+        }
+
+        // now, redirect only not authenticated
+        if (!isLoggedIn) {
+            e.preventDefault(); // stop current execution
+            $state.go('login'); // go to login
         }
     });
 

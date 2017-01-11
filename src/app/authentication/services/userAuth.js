@@ -83,6 +83,9 @@ angular.module('proton.authentication')
                         return authNetworkModel.setAuthCookie(data)
                             .then(() => {
                                 $rootScope.isLoggedIn = true;
+                                if (authStates.isSimpleLogin()) {
+                                    return authStates.go('main');
+                                }
                                 authStates.go('loginSetup');
                             })
                             .catch((error) => {
@@ -103,6 +106,10 @@ angular.module('proton.authentication')
                             username, password,
                             authResponse: data
                         };
+
+                        if (authStates.isSimpleLogin()) {
+                            return authStates.go('main');
+                        }
 
                         return authStates.go('loginUnlock');
                     }
@@ -300,25 +307,28 @@ angular.module('proton.authentication')
          * @return {void}
          */
         function autoLogin() {
-            if (authStates.is('loginUnlock')) {
 
-                if (!isLoggedIn()) {
-                    return authStates.go('login');
+            if (!authStates.isSimpleLogin()) {
+                if (authStates.is('loginUnlock')) {
+
+                    if (!isLoggedIn()) {
+                        return authStates.go('login');
+                    }
+
+                    if (CREDENTIALS.authResponse.PasswordMode === 1) {
+                        $rootScope.domoArigato = true;
+                        return unlock(CREDENTIALS.password);
+                    }
+                    return;
                 }
 
-                if (CREDENTIALS.authResponse.PasswordMode === 1) {
-                    $rootScope.domoArigato = true;
-                    return unlock(CREDENTIALS.password);
+                if (authStates.is('loginSub')) {
+                    return loginSub();
                 }
-                return;
-            }
 
-            if (authStates.is('loginSub')) {
-                return loginSub();
-            }
-
-            if (!CREDENTIALS.username || !CREDENTIALS.password) {
-                return (CREDENTIALS = {});
+                if (!CREDENTIALS.username || !CREDENTIALS.password) {
+                    return (CREDENTIALS = {});
+                }
             }
 
             return srpLogin(CREDENTIALS.username, CREDENTIALS.password)
