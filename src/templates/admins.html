@@ -1,8 +1,13 @@
-<p class="text-center">
-    <a href class="btn btn-primary btn-lg" ng-click="controller.GetAdmins()" ng-disabled="loading">
-        Get list of admins
-    </a><br>
-</p>
+<div
+    class="row results"
+    ng-if="response.Results.length"
+    ng-repeat="result in response.Results"
+>
+
+    <div class="col-md-12">
+        <h1 ng-if="result.User.UserName"> {{ result.User.UserName }} </h1>
+    </div>
+</div>
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -12,13 +17,28 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="super in controller.Supers">
+        <tr ng-repeat="super in ctrl.Supers">
             <th>{{ super }}</th>
             <th>Super</th>
         </tr>
-        <tr ng-repeat="admin in controller.Admins">
+        <tr ng-repeat="admin in ctrl.Admins">
             <td>{{ admin }}</td>
             <td>Admin</td>
         </tr>
     </tbody>
 </table>
+
+<div ng-show="ctrl.Admins == NULL && ctrl.Supers == NULL">
+    <hr>
+    <a
+        class="btn btn-link"
+        ng-click="advanced = !advanced"
+    > Show / Hide raw response </a>
+    <pre
+        ng-show="advanced"
+        readonly
+        class="form-control"
+        ng-style="{'height':'100%'}"
+    > {{ controller.Response | json }} </pre>
+    <hr>
+</div>
