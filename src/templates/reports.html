@@ -1,10 +1,10 @@
 <p class="text-center">
-    <a href class="btn btn-primary btn-lg" ng-click="controller.GetPayments()" ng-disabled="loading">
+    <a href class="btn btn-primary btn-lg" ng-click="ctrl.GetSubscriptions()" ng-disabled="loading">
         Get payments report
     </a>
 </p>
 
-<div ng-if="controller.Subscriptions">
+<div ng-if="ctrl.Subscriptions">
     <table class="table table-bordered table-striped">
         <thead>
             <tr class="info">
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in controller.Subscriptions.SubscriptionPlans">
+            <tr ng-repeat="subscription in ctrl.Subscriptions.SubscriptionPlans">
                 <th>{{ subscription.Plan }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.Amount }}</th>
@@ -40,7 +40,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in controller.Subscriptions.ExtraDomains">
+            <tr ng-repeat="subscription in ctrl.Subscriptions.ExtraDomains">
                 <th>{{ subscription.ExtraDomains }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -59,7 +59,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in controller.Subscriptions.ExtraAddresses">
+            <tr ng-repeat="subscription in ctrl.Subscriptions.ExtraAddresses">
                 <th>{{ subscription.ExtraAddresses }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -78,7 +78,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in controller.Subscriptions.ExtraSpace">
+            <tr ng-repeat="subscription in ctrl.Subscriptions.ExtraSpace">
                 <th>{{ subscription.ExtraSpace }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -88,9 +88,9 @@
     </table>
 </div>
 
-<div ng-show="!!controller.Subscriptions">
+<div ng-show="!!ctrl.Subscriptions">
     <hr>
     <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ controller.Subscriptions | json }}</pre>
+    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ ctrl.Subscriptions | json }}</pre>
     <hr>
 </div>
