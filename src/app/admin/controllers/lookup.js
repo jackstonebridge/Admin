@@ -484,13 +484,6 @@
 //         );
 //     };
 //
-//     $scope.getTotalUnread = function() {
-//         var total = 0;
-//         angular.forEach($scope.monitorAccounts.data.Accounts, function(value, key) {
-//             total += value.Total;
-//         });
-//         return total;
-//     };
 //
 //     $scope.forceMonitor = function() {
 //         $scope.forceMonitorFlag = true;

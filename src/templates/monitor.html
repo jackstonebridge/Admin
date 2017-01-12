@@ -1,36 +1,65 @@
-<p ng-show="!monitorAccounts.data.Accounts">
-<a href class="btn btn-primary btn-lg" ng-click="monitor()" ng-disabled="loading">Get Accounts</a><br>
-<em>(This can take up to a minute and will freeze the app.)</em>
+<p
+    class="text-center"
+    ng-show="!ctrl.Accounts"
+    >
+    <a
+        href
+        class="btn btn-primary btn-lg"
+        ng-click="ctrl.Monitor()"
+        ng-disabled="loading"
+    >Get Accounts</a>
+    <br>
+    <em>This can take up to a minute and will freeze the app</em>
 </p>
-<h1 class="alert alert-info" ng-show="monitorAccounts.data.Accounts">
-<a ng-click="forceMonitor()" ng-disabled="loading" class="pull-right btn btn-primary btn-lg">
-<span class="fa fa-refresh"></span> Refresh Accounts
-</a>
-<kbd>{{ TotalUnread }}</kbd> unread emails
-<span ng-show="TotalUnread < 100">...Niceee!</span>
-<span ng-show="TotalUnread > 500">...fuck</span>
-</h1>
+<h2
+    class="alert alert-info"
+    ng-show="ctrl.Accounts"
+>
+    <a
+        ng-click="ctrl.Monitor()"
+        ng-disabled="loading"
+        class="pull-right btn btn-primary btn-lg"
+    >
+        <span class="fa fa-refresh"></span> Refresh Accounts </a>
+    <code>{{ ctrl.TotalUnread }}</code> unread messages
+</h2>
 
-<div class="account" ng-repeat="acc in monitorAccounts.data.Accounts">
-<a><h2 ng-click="acc.IsEncrypted = !acc.IsEncrypted" id="{{ acc.Name }}">{{ acc.Name }} <kbd class="mono pull-right">{{ acc.Total }}</kbd></h2></a>
-<table class="table table-bordered" ng-show="acc.IsEncrypted">
-  <thead>
-    <tr class="active">
-      <th>Sender</th>
-      <th>Title</th>
-      <th>Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="msg in acc.Messages">
-      <td style="width: 10rem">
-        <span class="sender">
-          <strong>{{ msg.SenderName }}</strong> &lt;{{ msg.SenderAddress }}&gt;
-        </span>
-      </td>
-      <td><strong>{{ msg.Subject }}</strong></td>
-      <td style="width: 140px">{{ msg.Time*1000 | date }}</td>
-    </tr>
-  </tbody>
-</table>
+<div
+    class="account"
+    ng-repeat="acc in ctrl.Accounts"
+>
+    <a>
+        <h1
+            ng-click="acc.IsEncrypted = !acc.IsEncrypted"
+            id="{{ acc.Name }}"
+        >
+            {{ acc.Name }}
+            <p class="pull-right">{{ acc.Total }} unread &nbsp;</p>
+        </h1>
+    </a>
+
+    <table
+        class="table table-bordered table-striped"
+        ng-show="acc.IsEncrypted"
+    >
+        <thead>
+            <tr class="active">
+                <th>Sender</th>
+                <th>Title</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="msg in acc.Messages">
+                <td style="width: 10rem">
+                    <span class="sender">
+                        <strong>{{ msg.SenderName }}</strong> &lt;{{ msg.SenderAddress }}&gt; </span>
+                </td>
+                <td>
+                    <strong>{{ msg.Subject }}</strong>
+                </td>
+                <td style="width: 140px">{{ msg.Time*1000 | date }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

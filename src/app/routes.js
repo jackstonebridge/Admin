@@ -44,11 +44,6 @@ angular.module('RDash')
             // controller: 'MasterController',
             templateUrl: 'templates/logs.html'
         })
-        .state('private.monitor', {
-            url: 'monitor',
-            // controller: 'MasterController',
-            templateUrl: 'templates/monitor.html'
-        })
         .state('private.messages', {
             url: 'messages',
             // controller: 'MasterController',
@@ -65,6 +60,13 @@ angular.module('RDash')
             templateUrl: 'templates/multi.html'
         })
 
+
+        .state('private.monitor', {
+            url: 'monitor',
+            controller: 'MonitorController',
+            controllerAs: 'ctrl',
+            templateUrl: 'templates/monitor.html'
+        })
         .state('private.invites', {
             url: 'invites',
             controller: 'InviteController',
