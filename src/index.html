@@ -69,6 +69,9 @@
                         <a ng-disabled="loading" ui-sref="private.multi-lookup">MultiLookup <span class="menu-icon fa fa-list"></span></a>
                     </li>
                     <li class="sidebar-list">
+                        <a ng-disabled="loading" ui-sref="private.referrers">Referrers <span class="menu-icon fa fa-star"></span></a>
+                    </li>
+                    <li class="sidebar-list">
                         <a ng-disabled="loading" ui-sref="private.admins">Admins <span class="menu-icon fa fa-star"></span></a>
                     </li>
                     <li ng-if="user.Scope=='admin super'" class="sidebar-list">
@@ -94,7 +97,9 @@
 
                 <!-- Main Content -->
                 <div class="container-fluid">
-                    <div ui-view></div>
+                    <div class="row results">
+                        <div class="col-lg-12" ui-view></div>
+                    </div>
                 </div>
 
             </div>

@@ -1,0 +1,151 @@
+<h1>Referrals</h1>
+
+<table class="table table-bordered table-inline table-striped">
+    <thead class="thead-default">
+        <tr class="active">
+            <th>ReferrerID</th>
+            <th>Name</th>
+            <th>Identifier</th>
+            <th>Payout Term</th>
+            <th>Creation Term</th>
+            <th>Payout Expiration Time</th>
+            <th>Creation Expiration Time</th>
+            <th>Payout Percentage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            ng-if="ctrl.Referrers.length"
+            ng-repeat="ref in ctrl.Referrers"
+        >
+            <td>{{ ref.ID }}</td>
+            <td>{{ ref.Name }}</td>
+            <td>{{ ref.Identifier }}</td>
+            <td>{{ ref.PayoutTerm }}</td>
+            <td>{{ ref.CreationTerm }}</td>
+            <td>{{ ref.PayoutExpirationTime }}</td>
+            <td>{{ ref.CreationExpirationTime }}</td>
+            <td>{{ ref.PayoutPercentage }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h1>Partner Lookup</h1>
+<code>{{ partnerID }}</code>
+<code>{{ $scope.partnerID }}</code>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <form ng-show="ctrl.Referrers.length">
+
+            <div class="form-group">
+                <label>Partner</label>
+
+                <div class="list-group">
+                    <a
+                        ng-repeat="ref in ctrl.Referrers"
+                        class="list-group-item"
+                        ng-click="ctrl.GetReferrerDetails(ref.Identifier)"
+                    >
+                        <small>Lookup:</small> {{ ref.Name }}</a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Time</label>
+                <select class="form-control">
+                    <option>This Month</option>
+                    <option>Last Month</option>
+                    <option>Custom</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-8">
+
+        <div ng-hide="ctrl.Referrer">
+            <p>&nbsp;</p>
+            <p class="alert alert-info text-center">
+                <i class="fa fa-arrow-left fa-2x"></i>
+                <br>
+                <br> Choose a partner to Lookup </p>
+        </div>
+
+        <div ng-show="ctrl.Referrer">
+            <h4>{{ ctrl.Referrer.Identifier }} (This Month)</h4>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Signups All</th>
+                    <td>{{ ctrl.Referrer.SignupsAll }}</td>
+                </tr>
+                <tr>
+                    <th>Signups Paid</th>
+                    <td>{{ ctrl.Referrer.SignupsPaid }}</td>
+                </tr>
+                <tr>
+                    <th>Net Income</th>
+                    <td>{{ ctrl.Referrer.Income }}</td>
+                </tr>
+                <tr>
+                    <th>Chargebacks</th>
+                    <td>{{ ctrl.Referrer.Chargebacks }}</td>
+                </tr>
+                <tr>
+                    <th>Conversion Rate</th>
+                    <td>{{ ctrl.Referrer.ConversionRate }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<h1>Partner Reports</h1>
+<br>
+
+<div
+    class="list-group"
+    style="width: 40rem"
+>
+    <a
+        href="#"
+        class="list-group-item"
+    >
+        <i class="fa fa-download"></i> jason_oct_2016 </a>
+    <a
+        href="#"
+        class="list-group-item"
+    >
+        <i class="fa fa-download"></i> woof_apr_2015 </a>
+    <a
+        href="#"
+        class="list-group-item"
+    >
+        <i class="fa fa-download"></i> ed_14780326642840-1478036216 </a>
+</div>
+
+<div>
+    <hr>
+    <a
+        class="btn btn-link"
+        ng-click="advanced = !advanced"
+    >Show / Hide raw response</a>
+    <pre
+        ng-if="ctrl.Referrers"
+        ng-show="advanced"
+        readonly
+        ng-style="{'height':'100%'}"
+    >{{ ctrl.Referrers | json }}</pre>
+    <pre
+        ng-if="ctrl.Referrer"
+        ng-show="advanced"
+        readonly
+        ng-style="{'height':'100%'}"
+    >{{ ctrl.Referrer | json }}</pre>
+</div>

@@ -54,12 +54,6 @@ angular.module('RDash')
             // controller: 'MasterController',
             templateUrl: 'templates/logs.html'
         })
-        .state('private.reports', {
-            url: 'reports',
-            controller: 'ReportController',
-            controllerAs: 'ctrl',
-            templateUrl: 'templates/reports.html'
-        })
         .state('private.monitor', {
             url: 'monitor',
             // controller: 'MasterController',
@@ -79,6 +73,19 @@ angular.module('RDash')
             url: 'multi-lookup',
             // controller: 'MasterController',
             templateUrl: 'templates/multi.html'
+        })
+
+        .state('private.referrers', {
+            url: 'referrers',
+            controller: 'ReferrerController',
+            controllerAs: 'ctrl',
+            templateUrl: 'templates/referrers.html'
+        })
+        .state('private.reports', {
+            url: 'reports',
+            controller: 'ReportController',
+            controllerAs: 'ctrl',
+            templateUrl: 'templates/reports.html'
         })
         .state('private.admins', {
             url: 'admins',
