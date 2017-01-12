@@ -1,7 +1,7 @@
 angular.module('proton.admin')
 .factory('admins', ($http, $q, url) => {
     return {
-        get() {
+        GetAdmins() {
             return $http.get(url.get() + '/admin/admins');
         }
     };

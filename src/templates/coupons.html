@@ -1,12 +1,5 @@
-<p class="text-center">
-    <a href class="btn btn-primary btn-lg" ng-click="listCoupons()" ng-disabled="loading">
-        Get available coupons
-    </a>
-</p>
+<div ng-if="ctrl.Coupons">
 
-<hr>
-
-<div ng-if="Coupons">
     <table class="table table-bordered table-striped">
         <thead>
             <tr class="info">
@@ -16,21 +9,31 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="coupon in Coupons">
+            <tr ng-repeat="coupon in ctrl.Coupons">
                 <th>{{ coupon.Code }}</th>
                 <th>{{ coupon.Description }}</th>
                 <th>
-                    <form class="form-inline" method="POST">
+                    <form
+                        class="form-inline"
+                        method="POST"
+                    >
+
                         <div>
-                            <button class="btn btn-primary" type="submit" ng-click="couponName = coupon.Code; listCoupon(couponName)">
-                                Edit
-                            </button>
-                            <button class="btn btn-primary" type="submit" ng-click="couponName = coupon.Code; listCouponWhitelist(couponName)">
-                                Show whitelist
-                            </button>
-                            <button class="btn btn-primary" type="submit" ng-click="couponName = coupon.Code; listCouponHistory(couponName)">
-                                Show history
-                            </button>
+                            <button
+                                class="btn btn-primary"
+                                type="submit"
+                                ng-click="ctrl.GetCouponDetails(coupon.Code)"
+                            > Edit </button>
+                            <button
+                                class="btn btn-primary"
+                                type="submit"
+                                ng-click="ctrl.GetCouponWhitelist(coupon.Code)"
+                            > Show whitelist </button>
+                            <button
+                                class="btn btn-primary"
+                                type="submit"
+                                ng-click="ctrl.GetCouponHistory(coupon.Code)"
+                            > Show history </button>
                         </div>
                     </form>
                 </th>
@@ -39,34 +42,50 @@
     </table>
 </div>
 
-<div class="results" ng-show="!!CouponName">
+<div
+    class="results"
+    ng-show="ctrl.CouponName"
+>
     <!-- For some reason ng-include does not work here -->
+
     <div class="row results">
+
         <div class="col-md-12">
-            <h1>{{ this.CouponName }}</h1>
+            <h1>{{ ctrl.CouponName }}</h1>
         </div>
 
         <div class="col-md-6">
-            <textarea class="form-control" ng-style="{'height':'22rem'}" ng-model="couponInputData"></textarea>
+            <textarea
+                class="form-control"
+                ng-style="{'height':'22rem'}"
+                ng-model="ctrl.CouponInputData"
+            ></textarea>
         </div>
+
         <div class="col-md-6">
+
             <div class="alert alert-info">Enter multiple rows and click the appropriate button.</div>
             <label>Example list for whitelisting / adding to history:</label>
-<pre>
-105
-131
-136
-</pre>
+            <pre> 105 131 136 </pre>
+
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="addUserCouponWhitelist(CouponName, couponInputData)">Whitelist users</button>
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-lg"
+                    ng-disabled="loading"
+                    ng-click="ctrl.UpdateCouponWhitelist(ctrl.CouponName, ctrl.CouponInputData)"
+                >Whitelist users</button>
                 <!-- <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="addUserCouponHistory(couponInput)">Add to history</button> -->
             </div>
         </div>
     </div>
+
     <div class="row">
 
         <div class="col-md-6">
-            <div ng-if="CouponWhitelist">
+
+            <div ng-if="ctrl.CouponWhitelist">
+
                 <div class="list-group-item list-group-item-warning">
                     <strong>Coupon whitelist</strong>
                 </div>
@@ -79,7 +98,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in CouponWhitelist.CouponWhitelist">
+                        <tr ng-repeat="user in ctrl.CouponWhitelist">
                             <th>{{ user.UserID }}</th>
                             <th>{{ user.CleanUserName }}</th>
                         </tr>
@@ -89,7 +108,9 @@
         </div>
 
         <div class="col-md-6">
-            <div ng-if="CouponHistory">
+
+            <div ng-if="ctrl.CouponHistory">
+
                 <div class="list-group-item list-group-item-warning">
                     <strong>Coupon history</strong>
                 </div>
@@ -103,7 +124,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in CouponHistory.CouponHistory">
+                        <tr ng-repeat="user in ctrl.CouponHistory">
                             <th>{{ user.UserID }}</th>
                             <th>{{ user.CleanUserName }}</th>
                             <th>{{ user.Used }}</th>
@@ -117,14 +138,29 @@
 
 <div ng-show="!!Coupons.length">
     <hr>
-    <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-    <pre ng-show="advanced" readonly ng-style="{'height':'100%'}">{{ Coupons | json }}</pre>
+    <a
+        class="btn btn-link"
+        ng-click="advanced = !advanced"
+    >Show / Hide raw response</a>
+    <pre
+        ng-show="advanced"
+        readonly
+        ng-style="{'height':'100%'}"
+    >{{ ctrl.Coupons | json }}</pre>
 </div>
 
 <div ng-show="!!CouponWhitelist">
-    <pre ng-show="advanced" readonly ng-style="{'height':'100%'}">{{ CouponWhitelist | json }}</pre>
+    <pre
+        ng-show="advanced"
+        readonly
+        ng-style="{'height':'100%'}"
+    >{{ ctrl.CouponWhitelist | json }}</pre>
 </div>
 
 <div ng-show="!!CouponHistory">
-    <pre ng-show="advanced" readonly ng-style="{'height':'100%'}">{{ CouponHistory | json }}</pre>
+    <pre
+        ng-show="advanced"
+        readonly
+        ng-style="{'height':'100%'}"
+    >{{ ctrl.CouponHistory | json }}</pre>
 </div>

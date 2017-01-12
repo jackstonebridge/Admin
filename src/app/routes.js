@@ -34,11 +34,6 @@ angular.module('RDash')
             // controller: 'MasterController',
             templateUrl: 'templates/lookup.html'
         })
-        .state('private.coupons', {
-            url: 'coupons',
-            // controller: 'MasterController',
-            templateUrl: 'templates/coupons.html'
-        })
         .state('private.invites', {
             url: 'invites',
             // controller: 'MasterController',
@@ -75,17 +70,23 @@ angular.module('RDash')
             templateUrl: 'templates/multi.html'
         })
 
-        .state('private.referrers', {
-            url: 'referrers',
-            controller: 'ReferrerController',
+        .state('private.coupons', {
+            url: 'coupons',
+            controller: 'CouponController',
             controllerAs: 'ctrl',
-            templateUrl: 'templates/referrers.html'
+            templateUrl: 'templates/coupons.html'
         })
         .state('private.reports', {
             url: 'reports',
             controller: 'ReportController',
             controllerAs: 'ctrl',
             templateUrl: 'templates/reports.html'
+        })
+        .state('private.referrers', {
+            url: 'referrers',
+            controller: 'ReferrerController',
+            controllerAs: 'ctrl',
+            templateUrl: 'templates/referrers.html'
         })
         .state('private.admins', {
             url: 'admins',
