@@ -34,11 +34,6 @@ angular.module('RDash')
             // controller: 'MasterController',
             templateUrl: 'templates/lookup.html'
         })
-        .state('private.invites', {
-            url: 'invites',
-            // controller: 'MasterController',
-            templateUrl: 'templates/invites.html'
-        })
         .state('private.payments', {
             url: 'payments',
             // controller: 'MasterController',
@@ -70,6 +65,12 @@ angular.module('RDash')
             templateUrl: 'templates/multi.html'
         })
 
+        .state('private.invites', {
+            url: 'invites',
+            controller: 'InviteController',
+            controllerAs: 'ctrl',
+            templateUrl: 'templates/invites.html'
+        })
         .state('private.coupons', {
             url: 'coupons',
             controller: 'CouponController',

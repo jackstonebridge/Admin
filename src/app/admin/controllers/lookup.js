@@ -456,38 +456,6 @@
 //         );
 //     };
 //
-//     $scope.createInvite = function() {
-//
-//         $rootScope.loading = true;
-//
-//         var data = {
-//             "Username": this.CreateInviteUsername,
-//             "Email"   : this.CreateInviteEmail
-//         };
-//
-//         $http.post(apiUrl + '/admin/invite', data)
-//         .then(
-//             function(response) {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 }
-//                 else {
-//                     $rootScope.$emit('addAlert', 'Invite created for ' + data.Username + ' (' + data.Email + ')');
-//                     $scope.lookupString = data.Email;
-//                     // window.location.hash = "#/lookup/user=" + data.Email;
-//                     $scope.lookup('user');
-//                 }
-//             },
-//             function(response) {
-//                 $rootScope.loading = false;
-//                 if (response) {
-//                     $rootScope.$emit('addAlert', response);
-//                 }
-//             }
-//         );
-//     };
 //
 //     $scope.sendInvite = function() {
 //
