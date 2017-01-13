@@ -6,6 +6,7 @@ angular.module('RDash')
     // Use the HTML5 History API
     $locationProvider.html5Mode(true);
 
+
     // Application routes
     $stateProvider
         // ------------

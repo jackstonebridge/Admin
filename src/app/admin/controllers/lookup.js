@@ -1,9 +1,10 @@
 angular.module('proton.admin')
-.controller('LookupController', function(lookups, $rootScope, $location) {
+.controller('LookupController', function(lookups, $rootScope, $location, $state, $stateParams) {
     var vm = this;
 
     vm.Response = null;
     vm.LookupString = null;
+
 
     var initLookupString = () => {
         var path_segments = $location.absUrl().split('/');
@@ -54,16 +55,19 @@ angular.module('proton.admin')
         return true;
     };
 
-    vm.LookupUser = () => {
+    vm.LookupUser = (value = '') => {
         // if (!checkLookupString()) { return; }
-        var name = vm.LookupString.trim();
+        var name = value || vm.LookupString.trim();
         lookups.LookupUser(name)
         .then(({data}) => {
             vm.Response = data;
             vm.template = "templates/admin/lookup/user.html";
-            $location.path('lookup/user/' + encodeURIComponent(name));
+            !value && $state.go('private.lookupUser', { query: name });
         });
     };
+
+    $stateParams.query && vm.LookupUser($stateParams.query);
+
 });
 
 // /**

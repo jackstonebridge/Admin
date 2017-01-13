@@ -57,11 +57,9 @@
 
 <br>
 
-<ng-include
-    src="vm.template"
-    ng-if="vm.template"
-></ng-include>
-
+<div  ng-if="vm.Response">
+<lookup-user data-model="vm.Response"></lookup-user>
+</div>
 <div>
     <hr>
     <a

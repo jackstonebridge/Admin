@@ -1,9 +1,8 @@
-<section ng-repeat="response in vm.Response">
-
+<section>
     <div
         class="row results"
-        ng-if="response.Results.length"
-        ng-repeat="result in response.Results"
+        ng-if="model.Results.length"
+        ng-repeat="result in model.Results"
     >
 
         <div class="col-md-12">
