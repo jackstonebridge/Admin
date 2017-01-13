@@ -29,11 +29,6 @@ angular.module('RDash')
                 $rootScope.isSecure = userModel.isSecured();
             }
         })
-        .state('private.lookup', {
-            url: 'lookup/:query',
-            // controller: 'MasterController',
-            templateUrl: 'templates/lookup.html'
-        })
         .state('private.payments', {
             url: 'payments',
             // controller: 'MasterController',
@@ -60,41 +55,52 @@ angular.module('RDash')
             templateUrl: 'templates/multi.html'
         })
 
-
+        .state('private.lookup', {
+            url: 'lookup/',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
+        .state('private.lookupUser', {
+            url: 'lookup/user/:query',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
         .state('private.monitor', {
             url: 'monitor',
             controller: 'MonitorController',
             controllerAs: 'ctrl',
-            templateUrl: 'templates/monitor.html'
+            templateUrl: 'templates/admin/monitor.html'
         })
         .state('private.invites', {
             url: 'invites',
             controller: 'InviteController',
             controllerAs: 'ctrl',
-            templateUrl: 'templates/invites.html'
+            templateUrl: 'templates/admin/invites.html'
         })
         .state('private.coupons', {
             url: 'coupons',
             controller: 'CouponController',
             controllerAs: 'ctrl',
-            templateUrl: 'templates/coupons.html'
+            templateUrl: 'templates/admin/coupons.html'
         })
         .state('private.reports', {
             url: 'reports',
             controller: 'ReportController',
             controllerAs: 'ctrl',
-            templateUrl: 'templates/reports.html'
+            templateUrl: 'templates/admin/reports.html'
         })
         .state('private.referrers', {
             url: 'referrers',
             controller: 'ReferrerController',
             controllerAs: 'ctrl',
-            templateUrl: 'templates/referrers.html'
+            templateUrl: 'templates/admin/referrers.html'
         })
         .state('private.admins', {
             url: 'admins',
             controller: 'AdminController',
             controllerAs: 'ctrl',
-            templateUrl: 'templates/admins.html'
+            templateUrl: 'templates/admin/admins.html'
         });
 });

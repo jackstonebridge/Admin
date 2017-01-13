@@ -1,3 +1,71 @@
+angular.module('proton.admin')
+.controller('LookupController', function(lookups, $rootScope, $location) {
+    var vm = this;
+
+    vm.Response = null;
+    vm.LookupString = null;
+
+    var initLookupString = () => {
+        var path_segments = $location.absUrl().split('/');
+        var last_element = path_segments[path_segments.length - 1];
+        if (last_element !== undefined) {
+            vm.LookupString = last_element;
+        }
+    };
+    initLookupString();
+
+    vm.fuzzyOptions = [
+        { label: "Fuzzy match: OFF"  , value: 0 },
+        { label: "Fuzzy match: RIGHT", value: 1 },
+        { label: "Fuzzy match: LEFT" , value: 2 },
+        { label: "Fuzzy match: ALL"  , value: 3 }
+    ];
+    vm.currentFuzzyOption = vm.fuzzyOptions[0];
+
+    vm.deleteUserOptions = [
+        { label: "Soft delete"  , value: 0 },
+        { label: "Forced delete", value: 1 },
+        { label: "Never existed", value: 2 }
+    ];
+    vm.currentDeleteUserOption = vm.deleteUserOptions[0];
+
+    vm.resetUserSentRateOptions = [
+        { label: "Reset outdated", value: 0 },
+        { label: "Reset ban"     , value: 1 },
+        { label: "Reset all"     , value: 2 }
+    ];
+    vm.currentResetUserSentRateOption = vm.resetUserSentRateOptions[1];
+
+    vm.messageLocationOptions = [
+        { label: "Inbox"  , value: 0 },
+        { label: "Draft"  , value: 1 },
+        { label: "Sent"   , value: 2 },
+        { label: "Trash"  , value: 3 },
+        { label: "Spam"   , value: 4 },
+        { label: "Archive", value: 6 }
+    ];
+    vm.currentMessageLocationOption = vm.messageLocationOptions[0];
+
+    var checkLookupString = () => {
+        if (vm.LookupString !== undefined) {
+            $rootScope.$emit('addAlert', 'Lookup string is empty.');
+            return false;
+        }
+        return true;
+    };
+
+    vm.LookupUser = () => {
+        // if (!checkLookupString()) { return; }
+        var name = vm.LookupString.trim();
+        lookups.LookupUser(name)
+        .then(({data}) => {
+            vm.Response = data;
+            vm.template = "templates/admin/lookup/user.html";
+            $location.path('lookup/user/' + encodeURIComponent(name));
+        });
+    };
+});
+
 // /**
 //  * Master Controller
 //  */
@@ -24,18 +92,6 @@
 //
 // function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout, Setup)
 // {
-//     "use strict";
-//
-//     var apiUrl       = Setup.apiUrl;
-//     var appVersion   = Setup.appVersion;
-//     var clientId     = Setup.clientId;
-//     var clientSecret = Setup.clientSecret;
-//
-//     // $http.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
-//     // $http.defaults.headers.common['x-pm-appversion'] = appVersion;
-//     // $http.defaults.headers.common['x-pm-apiversion'] = '1';
-//     // $http.defaults.headers.common['Accept'] = 'application/vnd.protonmail.v1+json';
-//
 //     $scope.user = {};
 //     $scope.advanced = false;
 //     $rootScope.loading = false;
@@ -44,37 +100,6 @@
 //
 //     $scope.template = false;
 //
-//     $scope.fuzzyOptions = [
-//         { label: "Fuzzy match: OFF"  , value: 0 },
-//         { label: "Fuzzy match: RIGHT", value: 1 },
-//         { label: "Fuzzy match: LEFT" , value: 2 },
-//         { label: "Fuzzy match: ALL"  , value: 3 }
-//     ];
-//     $scope.currentFuzzyOption = $scope.fuzzyOptions[0];
-//
-//     $scope.deleteUserOptions = [
-//         { label: "Soft delete"  , value: 0 },
-//         { label: "Forced delete", value: 1 },
-//         { label: "Never existed", value: 2 }
-//     ];
-//     $scope.currentDeleteUserOption = $scope.deleteUserOptions[0];
-//
-//     $scope.resetUserSentRateOptions = [
-//         { label: "Reset outdated", value: 0 },
-//         { label: "Reset ban"     , value: 1 },
-//         { label: "Reset all"     , value: 2 }
-//     ];
-//     $scope.currentResetUserSentRateOption = $scope.resetUserSentRateOptions[1];
-//
-//     $scope.messageLocationOptions = [
-//         { label: "Inbox"  , value: 0 },
-//         { label: "Draft"  , value: 1 },
-//         { label: "Sent"   , value: 2 },
-//         { label: "Trash"  , value: 3 },
-//         { label: "Spam"   , value: 4 },
-//         { label: "Archive", value: 6 }
-//     ];
-//     $scope.currentMessageLocationOption = $scope.messageLocationOptions[0];
 //
 //     var AT = sessionStorage.getItem('AT');
 //
@@ -256,65 +281,6 @@
 //         );
 //     };
 //
-//     $scope.logout = function() {
-//
-//         $rootScope.loading = true;
-//
-//         $http.delete(apiUrl+'/auth')
-//         .then(
-//             function(response) {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 }
-//             },
-//             function(response) {
-//                 $rootScope.loading = false;
-//                 if (response) {
-//                     $rootScope.$emit('addAlert', response);
-//                 }
-//                 // called asynchronously if an error occurs
-//             }
-//         );
-//         $scope.user = {};
-//         $http.defaults.headers.common['Authorization'] = undefined;
-//         $http.defaults.headers.common['x-pm-uid'] = undefined;
-//         sessionStorage.clear();
-//         $scope.showLogin = true;
-//         $state.go('index');
-//         window.location.reload();
-//
-//     };
-//
-//     $scope.adminList = function() {
-//         $rootScope.loading = true;
-//         $http.get(apiUrl+'/admin/admins')
-//         .then(
-//             function(response) {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 }
-//                 else {
-//                     $scope.Admins = response.data.Admins;
-//                     $scope.Supers = response.data.Supers;
-//                 }
-//             },
-//             function(response) {
-//                 $rootScope.loading = false;
-//                 if (response) {
-//                     $rootScope.$emit('addAlert', response);
-//                 }
-//                 // called asynchronously if an error occurs
-//             }
-//         );
-//     };
-//
-//     $scope.initInfo = function() {
-//         $scope.lookupResponse = [];
-//     };
 //
 //     $scope.setLookupTemplate = function(template)
 //     {
@@ -327,70 +293,6 @@
 //         }
 //     };
 //
-//     $scope.lookup = function(template, query)
-//     {
-//         var lookupString, lookupTemplate;
-//
-//         if (template === undefined) { return; }
-//         else
-//         {
-//             lookupTemplate = template;
-//             this.setLookupTemplate(template);
-//         }
-//
-//         if (query === undefined) {
-//             if (this.lookupString === undefined) { return; }
-//             lookupString = this.lookupString.trim();
-//             // Set the scope lookupString to the current search
-//         } else {
-//             lookupString = query;
-//         }
-//
-//         $scope.lookupString = lookupString;
-//
-//         if (Setup.debug)
-//         {
-//             console.debug("MasterCtrl.lookup: lookupTemplate      = " + lookupTemplate);
-//             console.debug("MasterCtrl.lookup: lookupString        = " + lookupString);
-//             console.debug("MasterCtrl.lookup: this.lookupString   = " + this.lookupString);
-//             console.debug("MasterCtrl.lookup: $scope.lookupString = " + $scope.lookupString);
-//             console.debug("MasterCtrl.lookup: $scope.currentFuzzyOption.value = " + this.currentFuzzyOption.value);
-//         }
-//
-//         // window.location.hash = '#/lookup/' + lookupTemplate + '=' + lookupString + '?fuzzy=' + this.currentFuzzyOption.value;
-//
-//         $rootScope.loading = true;
-//         $scope.lookupResponse = [];
-//
-//         // Call backend route
-//         $http.get( apiUrl + '/admin/lookup/' + encodeURIComponent(lookupTemplate) + '/' + encodeURIComponent(lookupString) + '?fuzzy=' + this.currentFuzzyOption.value )
-//         .then(
-//             function(response)
-//             {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 }
-//                 else {
-//                     // if empty we say "No info found."
-//                     if (
-//                         response.data.Results &&
-//                         response.data.Results.length === 0
-//                     ) {
-//                         $rootScope.$emit('addAlert', 'No information found');
-//                     }
-//                     $scope.lookupResponse.push(response.data);
-//                 }
-//             },
-//             function(response)
-//             {
-//                 $rootScope.loading = false;
-//                 $rootScope.$emit('addAlert', response);
-//                 // called asynchronously if an error occurs
-//             }
-//         );
-//     };
 //
 //     $scope.randPass = function() {
 //         return Math.random().toString(36).slice(-8)+''+Math.random().toString(36).slice(-8);
