@@ -66,10 +66,10 @@
                     </div>
                 </div>
 
-                <div class="list-group-item">
+                <!-- <div class="list-group-item">
                     <strong>Two-factor authentication:</strong>
                     <code class="pull-right">{{ result.TwoFactor }}</code>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -109,7 +109,7 @@
                                 type="submit"
                                 class="btn btn-primary"
                                 ng-disabled="loading"
-                                ng-click="lookup('user', this.x.UserID)"
+                                ng-click="vm.LookupUser(this.x.UserID)"
                             >
                                 <span>Lookup user</span>
                             </button>
@@ -151,7 +151,7 @@
                                 type="submit"
                                 class="btn btn-primary"
                                 ng-disabled="loading"
-                                ng-click="lookup('domain', this.x.ID)"
+                                ng-click="vm.LookupDomain(this.x.ID)"
                             >
                                 <span>Lookup domain</span>
                             </button>

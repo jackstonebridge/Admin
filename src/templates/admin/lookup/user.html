@@ -152,7 +152,7 @@
                             type="submit"
                             class="btn btn-primary"
                             ng-disabled="loading"
-                            ng-click="lookup('organization', this.result.Organization.ID)"
+                            ng-click="vm.LookupOrganization(this.result.Organization.ID)"
                         >
                             <span>Lookup organization</span>
                         </button>
@@ -380,9 +380,9 @@
                             >
                             <label>
                                 <select
-                                    ng-model="currentResetUserSentRateOption"
+                                    ng-model="vm.currentResetUserSentRateOption"
                                     class="form-control"
-                                    ng-options="value.label for value in resetUserSentRateOptions"
+                                    ng-options="value.label for value in vm.resetUserSentRateOptions"
                                     style="width:14rem; margin-right:1rem;"
                                 ></select>
                             </label>
@@ -507,7 +507,7 @@
                     <code class="pull-right">{{ result.User.ID }}</code>
                     <input
                         type="hidden"
-                        ng-init="accountID = result.User.ID"
+                        ng-init="vm.UserID = result.User.ID"
                     >
                     <strong>UserID:</strong>
                 </div>
@@ -908,7 +908,7 @@
                         <input
                             type="hidden"
                             ng-init="accountID = result.User.ID"
-                            ng-model="accountID"
+                            ng-model="vm.UserID"
                         >
                         <button
                             type="submit"
@@ -918,9 +918,9 @@
                             <span class="fa fa-trash-o"></span> Delete from active users </button>
                         <label>
                             <select
-                                ng-model="currentDeleteUserOption"
+                                ng-model="vm.currentDeleteUserOption"
                                 class="form-control"
-                                ng-options="value.label for value in deleteUserOptions"
+                                ng-options="value.label for value in vm.deleteUserOptions"
                             ></select>
                         </label>
                     </form>
@@ -960,13 +960,13 @@
                             <form
                                 method="POST"
                                 class="input-group"
-                                ng-submit="creditUser(UserID, Credit)"
+                                ng-submit="vm.CreditUser(credit)"
                             >
                                 <input
                                     type="text"
                                     class="form-control"
-                                    ng-init="UserID = this.result.User.ID; Credit = 0"
-                                    ng-model="Credit"
+                                    ng-init="credit = 0"
+                                    ng-model="credit"
                                 >
                                 <span class="input-group-btn">
                                     <button

@@ -13,30 +13,6 @@ angular.module('proton.admin')
     ];
     vm.currentFuzzyOption = vm.fuzzyOptions[0];
 
-    vm.deleteUserOptions = [
-        { label: "Soft delete"  , value: 0 },
-        { label: "Forced delete", value: 1 },
-        { label: "Never existed", value: 2 }
-    ];
-    vm.currentDeleteUserOption = vm.deleteUserOptions[0];
-
-    vm.resetUserSentRateOptions = [
-        { label: "Reset outdated", value: 0 },
-        { label: "Reset ban"     , value: 1 },
-        { label: "Reset all"     , value: 2 }
-    ];
-    vm.currentResetUserSentRateOption = vm.resetUserSentRateOptions[1];
-
-    vm.messageLocationOptions = [
-        { label: "Inbox"  , value: 0 },
-        { label: "Draft"  , value: 1 },
-        { label: "Sent"   , value: 2 },
-        { label: "Trash"  , value: 3 },
-        { label: "Spam"   , value: 4 },
-        { label: "Archive", value: 6 }
-    ];
-    vm.currentMessageLocationOption = vm.messageLocationOptions[0];
-
     var lookup = (value) => {
         value = value || vm.LookupString.trim();
         if (!value || value.length === 0) {
@@ -996,36 +972,6 @@ angular.module('proton.admin')
 //         );
 //     };
 //
-//     $scope.creditUser = function(UserID, Credit)
-//     {
-//         $rootScope.loading = true;
-//
-//         var data = {
-//             "Credit": Credit * 100,
-//             "Description": "Admin panel credit adjustment"
-//         };
-//
-//         $http.put(apiUrl + '/admin/user/' + UserID + '/credit', data)
-//         .then(
-//             function successCallback(response) {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 } else {
-//                     $rootScope.$emit('addAlert', 'Changed credit ' + Credit + ' of user ' + UserID + '.');
-//                     $scope.lookupResponse.Results = 'undefined';
-//                     window.location.reload();
-//                 }
-//             },
-//             function errorCallback(response) {
-//                 $rootScope.loading = false;
-//                 if (response) {
-//                     $rootScope.$emit('addAlert', response);
-//                 }
-//             }
-//         );
-//     };
 //
 //
 //     $scope.changeStatus = function(action) {

@@ -5,6 +5,8 @@ angular.module('proton.admin')
             scope: {
                 model: '='
             },
+            controller: 'LookupController',
+            controllerAs: 'vm',
             templateUrl: 'templates/admin/lookup/domain.html'
         };
     });

@@ -124,7 +124,7 @@
                             type="submit"
                             class="btn btn-primary"
                             ng-disabled="loading"
-                            ng-click="lookup('organization', this.result.OrganizationID)"
+                            ng-click="vm.LookupOrganization(this.result.OrganizationID)"
                         >
                             <span>Lookup organization</span>
                         </button>
@@ -163,5 +163,4 @@
             </div>
         </div>
     </div>
-
 </section>
