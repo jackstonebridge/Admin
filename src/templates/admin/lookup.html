@@ -54,12 +54,27 @@
         </div>
     </form>
 </div>
-
 <br>
 
-<div  ng-if="vm.Response">
-<lookup-user data-model="vm.Response"></lookup-user>
+<div ng-if="vm.Response">
+    <lookup-user
+        ng-if="'private.lookupUser' | isState"
+        data-model="vm.Response"
+    ></lookup-user>
+    <lookup-organization
+        ng-if="'private.lookupOrganization' | isState"
+        data-model="vm.Response"
+    ></lookup-organization>
+    <lookup-domain
+        ng-if="'private.lookupDomain' | isState"
+        data-model="vm.Response"
+    ></lookup-domain>
+    <lookup-charge
+        ng-if="'private.lookupCharge' | isState"
+        data-model="vm.Response"
+    ></lookup-charge>
 </div>
+
 <div>
     <hr>
     <a
@@ -72,5 +87,4 @@
         class="form-control"
         ng-style="{'height':'100%'}"
     > {{ vm.Response | json }} </pre>
-    <hr>
-</div>
+    <hr> </div>

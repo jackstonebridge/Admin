@@ -1,140 +1,198 @@
-<!DOCTYPE HTML>
-<section ng-repeat="result in lookupResponse">
+<section>
 
-<div class="row results">
+    <div
+        class="row results"
+        ng-if="model.Results.length"
+        ng-repeat="result in model.Results"
+    >
 
-    <div class="col-md-12">
-        <h1 ng-if="result.Charge.ExternalChargeID">{{ result.Charge.ExternalChargeID }}</h1>
-    </div>
-
-    <div class="col-md-6">
-        <div ng-if="result.Charge" class="list-group">
-            <div class="list-group-item list-group-item-warning">
-                <strong>Charge record</strong>
-            </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ result.Charge.ID }}</code>
-                <strong>ChargeID:</strong>
-            </div>
-
-            <div class="list-group-item">
-                <strong>Currency:</strong>
-                <code class="pull-right">{{ result.Charge.Currency }}</code>
-            </div>
-            <div class="list-group-item">
-                <strong>Amount:</strong>
-                <code class="pull-right">{{ result.Charge.Amount / 100 }}</code>
-            </div>
-
-            <div class="list-group-item">
-                <strong>Currency charged:</strong>
-                <code class="pull-right">{{ result.Charge.CurrencyCharged }}</code>
-            </div>
-            <div class="list-group-item">
-                <strong>Amount charged:</strong>
-                <code class="pull-right">{{ result.Charge.AmountCharged / 100 }}</code>
-            </div>
-
-            <div class="list-group-item">
-                <strong>Provider:</strong>
-                <code class="pull-right">{{ result.Charge.Provider }}</code>
-            </div>
-
-            <div class="list-group-item">
-                <strong>Reversed:</strong>
-                <code class="pull-right">{{ result.Charge.Reversed }}</code>
-            </div>
-
-            <div ng-if="result.Charge.Link != null" class="list-group-item">
-                <strong>External provider link:</strong>
-                <a href="{{ result.Charge.Link }}" class="pull-right">{{ result.Charge.ExternalChargeID }}</a>
-            </div>
-
-            <div class="list-group-item">
-                <strong>Time:</strong>
-                <code class="pull-right" ng-if="result.CheckTime !== 0">
-                {{ result.Charge.Time * 1000 | date:'medium' }}
-                </code>
-            </div>
+        <div class="col-md-12">
+            <h1 ng-if="result.Charge.ExternalChargeID">{{ result.Charge.ExternalChargeID }}</h1>
         </div>
 
-        <div class="list-group-item list-group-item-info">
-            <strong>Corresponding invoices</strong>
-        </div>
-        <div ng-if="result.Invoices" class="list-group-item" ng-repeat="invoice in result.Invoices">
-            <div class="list-group-item">
-                <code class="pull-right">{{ invoice.ID }}</code>
-                <strong>InvoiceID:</strong>
+        <div class="col-md-6">
+
+            <div
+                ng-if="result.Charge"
+                class="list-group"
+            >
+
+                <div class="list-group-item list-group-item-warning">
+                    <strong>Charge record</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ result.Charge.ID }}</code>
+                    <strong>ChargeID:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Currency:</strong>
+                    <code class="pull-right">{{ result.Charge.Currency }}</code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Amount:</strong>
+                    <code class="pull-right">{{ result.Charge.Amount / 100 }}</code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Currency charged:</strong>
+                    <code class="pull-right">{{ result.Charge.CurrencyCharged }}</code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Amount charged:</strong>
+                    <code class="pull-right">{{ result.Charge.AmountCharged / 100 }}</code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Provider:</strong>
+                    <code class="pull-right">{{ result.Charge.Provider }}</code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Reversed:</strong>
+                    <code class="pull-right">{{ result.Charge.Reversed }}</code>
+                </div>
+
+                <div
+                    ng-if="result.Charge.Link != null"
+                    class="list-group-item"
+                >
+                    <strong>External provider link:</strong>
+                    <a
+                        href="{{ result.Charge.Link }}"
+                        class="pull-right"
+                    >{{ result.Charge.ExternalChargeID }}</a>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Time:</strong>
+                    <code
+                        class="pull-right"
+                        ng-if="result.CheckTime !== 0"
+                    > {{ result.Charge.Time * 1000 | date:'medium' }} </code>
+                </div>
             </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ invoice.Type }}</code>
-                <strong>Type:</strong>
+
+            <div class="list-group-item list-group-item-info">
+                <strong>Corresponding invoices</strong>
             </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ invoice.State }}</code>
-                <strong>State:</strong>
-            </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ invoice.Currency }}</code>
-                <strong>Currency:</strong>
-            </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ invoice.AmountDue / 100 }}</code>
-                <strong>AmountDue:</strong>
-            </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ invoice.AmountCharged / 100 }}</code>
-                <strong>AmountCharged:</strong>
-            </div>
-            <div class="list-group-item">
-                <strong>Time:</strong>
-                <code class="pull-right" ng-if="invoice.CreateTime !== 0">
-                {{ invoice.CreateTime * 1000 | date:'medium' }}
-                </code>
-            </div>
-            <div class="list-group-item">
-                <strong>Time:</strong>
-                <code class="pull-right" ng-if="invoice.ModifyTime !== 0">
-                {{ invoice.ModifyTime * 1000 | date:'medium' }}
-                </code>
-            </div>
-            <div class="list-group-item">
-                <strong>Time:</strong>
-                <code class="pull-right" ng-if="invoice.AttemptTime !== 0">
-                {{ invoice.AttemptTime * 1000 | date:'medium' }}
-                </code>
-            </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ invoice.Attempts }}</code>
-                <strong>Attempts:</strong>
-            </div>
-            <div class="list-group-item">
-                <strong>UserID:</strong>
-                <code class="pull-right">{{ invoice.UserID }}</code>
-            </div>
-            <div class="list-group-item">
-                <strong>OrganizationID:</strong>
-                <code class="pull-right">{{ invoice.OrganizationID }}</code>
-            </div>
-            <div class="list-group-item text-center">
-                <div class="btn-group">
-                    <button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('user', invoice.UserID)">
-                        <span>Lookup user</span>
-                    </button>
-                    <button ng-if="invoice.OrganizationID != NULL" type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('organization', invoice.OrganizationID)">
-                        <span>Lookup organization</span>
-                    </button>
+
+            <div
+                ng-if="result.Invoices"
+                class="list-group-item"
+                ng-repeat="invoice in result.Invoices"
+            >
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ invoice.ID }}</code>
+                    <strong>InvoiceID:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ invoice.Type }}</code>
+                    <strong>Type:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ invoice.State }}</code>
+                    <strong>State:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ invoice.Currency }}</code>
+                    <strong>Currency:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ invoice.AmountDue / 100 }}</code>
+                    <strong>AmountDue:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ invoice.AmountCharged / 100 }}</code>
+                    <strong>AmountCharged:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Time:</strong>
+                    <code
+                        class="pull-right"
+                        ng-if="invoice.CreateTime !== 0"
+                    > {{ invoice.CreateTime * 1000 | date:'medium' }} </code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Time:</strong>
+                    <code
+                        class="pull-right"
+                        ng-if="invoice.ModifyTime !== 0"
+                    > {{ invoice.ModifyTime * 1000 | date:'medium' }} </code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Time:</strong>
+                    <code
+                        class="pull-right"
+                        ng-if="invoice.AttemptTime !== 0"
+                    > {{ invoice.AttemptTime * 1000 | date:'medium' }} </code>
+                </div>
+
+                <div class="list-group-item">
+                    <code class="pull-right">{{ invoice.Attempts }}</code>
+                    <strong>Attempts:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>UserID:</strong>
+                    <code class="pull-right">{{ invoice.UserID }}</code>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>OrganizationID:</strong>
+                    <code class="pull-right">{{ invoice.OrganizationID }}</code>
+                </div>
+
+                <div class="list-group-item text-center">
+
+                    <div class="btn-group">
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            ng-disabled="loading"
+                            ng-click="lookup('user', invoice.UserID)"
+                        >
+                            <span>Lookup user</span>
+                        </button>
+                        <button
+                            ng-if="invoice.OrganizationID != NULL"
+                            type="submit"
+                            class="btn btn-primary"
+                            ng-disabled="loading"
+                            ng-click="lookup('organization', invoice.OrganizationID)"
+                        >
+                            <span>Lookup organization</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div ng-if="result.Charge" class="col-md-6 list-group">
-        <div class="list-group-item list-group-item-warning">
-            <strong>Charge provider details</strong>
+        <div
+            ng-if="result.Charge"
+            class="col-md-6 list-group"
+        >
+
+            <div class="list-group-item list-group-item-warning">
+                <strong>Charge provider details</strong>
+            </div>
+            <pre
+                readonly
+                ng-style="{'height':'100%'}"
+            >{{ result.Charge.Data | json }}</pre>
         </div>
-        <pre readonly ng-style="{'height':'100%'}">{{ result.Charge.Data | json }}</pre>
     </div>
-</div>
 
 </section>

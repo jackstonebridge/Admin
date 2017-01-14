@@ -5,10 +5,10 @@ angular.module('proton.admin')
             return $http.get(url.get() + '/admin/lookup/user/' + encodeURIComponent(name));
         },
         LookupOrganization(name) {
-            return $http.get(url.get() + '/admin/lookup/domain/' + encodeURIComponent(name));
+            return $http.get(url.get() + '/admin/lookup/organization/' + encodeURIComponent(name));
         },
         LookupDomain(name) {
-            return $http.get(url.get() + '/admin/lookup/organization/' + encodeURIComponent(name));
+            return $http.get(url.get() + '/admin/lookup/domain/' + encodeURIComponent(name));
         },
         LookupCharge(name) {
             return $http.get(url.get() + '/admin/lookup/charge/' + encodeURIComponent(name));

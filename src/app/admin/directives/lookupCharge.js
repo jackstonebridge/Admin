@@ -1,0 +1,10 @@
+angular.module('proton.admin')
+    .directive('lookupCharge', () => {
+        return {
+            replace: true,
+            scope: {
+                model: '='
+            },
+            templateUrl: 'templates/admin/lookup/charge.html'
+        };
+    });

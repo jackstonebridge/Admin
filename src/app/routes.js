@@ -6,7 +6,6 @@ angular.module('RDash')
     // Use the HTML5 History API
     $locationProvider.html5Mode(true);
 
-
     // Application routes
     $stateProvider
         // ------------
@@ -68,40 +67,58 @@ angular.module('RDash')
             controllerAs: 'vm',
             templateUrl: 'templates/admin/lookup.html'
         })
+        .state('private.lookupOrganization', {
+            url: 'lookup/organization/:query',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
+        .state('private.lookupDomain', {
+            url: 'lookup/domain/:query',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
+        .state('private.lookupCharge', {
+            url: 'lookup/charge/:query',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
         .state('private.monitor', {
             url: 'monitor',
             controller: 'MonitorController',
-            controllerAs: 'ctrl',
+            controllerAs: 'vm',
             templateUrl: 'templates/admin/monitor.html'
         })
         .state('private.invites', {
             url: 'invites',
             controller: 'InviteController',
-            controllerAs: 'ctrl',
+            controllerAs: 'vm',
             templateUrl: 'templates/admin/invites.html'
         })
         .state('private.coupons', {
             url: 'coupons',
             controller: 'CouponController',
-            controllerAs: 'ctrl',
+            controllerAs: 'vm',
             templateUrl: 'templates/admin/coupons.html'
         })
         .state('private.reports', {
             url: 'reports',
             controller: 'ReportController',
-            controllerAs: 'ctrl',
+            controllerAs: 'vm',
             templateUrl: 'templates/admin/reports.html'
         })
         .state('private.referrers', {
             url: 'referrers',
             controller: 'ReferrerController',
-            controllerAs: 'ctrl',
+            controllerAs: 'vm',
             templateUrl: 'templates/admin/referrers.html'
         })
         .state('private.admins', {
             url: 'admins',
             controller: 'AdminController',
-            controllerAs: 'ctrl',
+            controllerAs: 'vm',
             templateUrl: 'templates/admin/admins.html'
         });
 });

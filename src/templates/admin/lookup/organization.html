@@ -1,122 +1,165 @@
-<!DOCTYPE HTML>
-<section ng-repeat="response in lookupResponse">
+<section>
 
-<div class="row results" ng-if="response.Results.length" ng-repeat="result in response.Results">
+    <div
+        class="row results"
+        ng-if="model.Results.length"
+        ng-repeat="result in model.Results"
+    >
 
-    <div class="col-md-12">
-        <h1 ng-if="result.ID">{{ result.DisplayName }}</h1>
-    </div>
-
-    <div class="col-md-6">
-        <div ng-if="result.DisplayName" class="list-group">
-            <div class="list-group-item list-group-item-warning">
-                <strong>Organization</strong>
-            </div>
-            <div class="list-group-item">
-                <code class="pull-right">{{ result.ID }}</code>
-                <strong>OrganizationID:</strong>
-            </div>
-            <div class="list-group-item">
-                <strong>Used domains:</strong>
-                <div class="pull-right">
-                    <code>{{ result.UsedDomains }}</code>
-                    <strong>&nbsp;of&nbsp;</strong>
-                    <code>{{ result.MaxDomains }}</code>
-                </div>
-            </div>
-            <div class="list-group-item">
-                <strong>Used addresses:</strong>
-                <div class="pull-right">
-                    <code>{{ result.UsedAddresses }}</code>
-                    <strong>&nbsp;of&nbsp;</strong>
-                    <code>{{ result.MaxAddresses }}</code>
-                </div>
-            </div>
-            <div class="list-group-item">
-                <strong>Used space:</strong>
-                <div class="pull-right">
-                    <code>{{ result.UsedSpace }}</code>
-                    <strong>&nbsp;of&nbsp;</strong>
-                    <code>{{ result.MaxSpace }}</code>
-                </div>
-            </div>
-            <div class="list-group-item">
-                <strong>Assigned space:</strong>
-                <div class="pull-right">
-                    <code>{{ result.AssignedSpace }}</code>
-                    <strong>&nbsp;of&nbsp;</strong>
-                    <code>{{ result.MaxSpace }}</code>
-                </div>
-            </div>
-            <div class="list-group-item">
-                <strong>Two-factor authentication:</strong>
-                <code class="pull-right">{{ result.TwoFactor }}</code>
-            </div>
+        <div class="col-md-12">
+            <h1 ng-if="result.ID">{{ result.DisplayName }}</h1>
         </div>
-    </div>
 
-    <div class="col-md-6 right">
+        <div class="col-md-6">
 
-        <div ng-if="result.Members.length" class="list-group">
-            <div class="list-group-item list-group-item-warning">
-                <strong>Members</strong>
-            </div>
-            <div ng-repeat="x in result.Members">
+            <div
+                ng-if="result.DisplayName"
+                class="list-group"
+            >
+
+                <div class="list-group-item list-group-item-warning">
+                    <strong>Organization</strong>
+                </div>
+
                 <div class="list-group-item">
-                    <strong>MemberID (UserID):</strong>
+                    <code class="pull-right">{{ result.ID }}</code>
+                    <strong>OrganizationID:</strong>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Used domains:</strong>
+
                     <div class="pull-right">
-                        <code>{{ x.ID }}</code>
-                        (<code>{{ x.UserID }}</code>)
+                        <code>{{ result.UsedDomains }}</code>
+                        <strong>&nbsp;of&nbsp;</strong>
+                        <code>{{ result.MaxDomains }}</code>
                     </div>
                 </div>
+
                 <div class="list-group-item">
-                    <strong>Role (Private):</strong>
+                    <strong>Used addresses:</strong>
+
                     <div class="pull-right">
-                        <code>{{ x.Role }}</code>
-                        (<code>{{ x.Private }}</code>)
+                        <code>{{ result.UsedAddresses }}</code>
+                        <strong>&nbsp;of&nbsp;</strong>
+                        <code>{{ result.MaxAddresses }}</code>
                     </div>
                 </div>
-                <div class="list-group-item text-center">
-                    <div class="list-group-item text-center">
-                        <button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('user', this.x.UserID)">
-                            <span>Lookup user</span>
-                        </button>
+
+                <div class="list-group-item">
+                    <strong>Used space:</strong>
+
+                    <div class="pull-right">
+                        <code>{{ result.UsedSpace }}</code>
+                        <strong>&nbsp;of&nbsp;</strong>
+                        <code>{{ result.MaxSpace }}</code>
                     </div>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Assigned space:</strong>
+
+                    <div class="pull-right">
+                        <code>{{ result.AssignedSpace }}</code>
+                        <strong>&nbsp;of&nbsp;</strong>
+                        <code>{{ result.MaxSpace }}</code>
+                    </div>
+                </div>
+
+                <div class="list-group-item">
+                    <strong>Two-factor authentication:</strong>
+                    <code class="pull-right">{{ result.TwoFactor }}</code>
                 </div>
             </div>
         </div>
 
-        <div ng-if="result.Domains.length" class="list-group">
-            <div class="list-group-item list-group-item-warning">
-                <strong>Domains</strong>
-            </div>
+        <div class="col-md-6 right">
 
-            <div ng-repeat="x in result.Domains">
-                <div class="list-group-item">
-                    <strong>DomainID:</strong>
-                    <code class="pull-right">{{ x.ID }}</code>
+            <div
+                ng-if="result.Members.length"
+                class="list-group"
+            >
+
+                <div class="list-group-item list-group-item-warning">
+                    <strong>Members</strong>
                 </div>
-                <div class="list-group-item">
-                    <strong>Domain name:</strong>
-                    <code class="pull-right">{{ x.DomainName }}</code>
-                </div>
-                <div class="list-group-item">
-                    <strong>State:</strong>
-                    <code class="pull-right">{{ x.State }}</code>
-                </div>
-                <div class="list-group-item text-center">
+
+                <div ng-repeat="x in result.Members">
+
+                    <div class="list-group-item">
+                        <strong>MemberID (UserID):</strong>
+
+                        <div class="pull-right">
+                            <code>{{ x.ID }}</code> (
+                            <code>{{ x.UserID }}</code>) </div>
+                    </div>
+
+                    <div class="list-group-item">
+                        <strong>Role (Private):</strong>
+
+                        <div class="pull-right">
+                            <code>{{ x.Role }}</code> (
+                            <code>{{ x.Private }}</code>) </div>
+                    </div>
+
                     <div class="list-group-item text-center">
-                        <button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="lookup('domain', this.x.ID)">
-                            <span>Lookup domain</span>
-                        </button>
+
+                        <div class="list-group-item text-center">
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                ng-disabled="loading"
+                                ng-click="lookup('user', this.x.UserID)"
+                            >
+                                <span>Lookup user</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div>
+            <div
+                ng-if="result.Domains.length"
+                class="list-group"
+            >
 
+                <div class="list-group-item list-group-item-warning">
+                    <strong>Domains</strong>
+                </div>
+
+                <div ng-repeat="x in result.Domains">
+
+                    <div class="list-group-item">
+                        <strong>DomainID:</strong>
+                        <code class="pull-right">{{ x.ID }}</code>
+                    </div>
+
+                    <div class="list-group-item">
+                        <strong>Domain name:</strong>
+                        <code class="pull-right">{{ x.DomainName }}</code>
+                    </div>
+
+                    <div class="list-group-item">
+                        <strong>State:</strong>
+                        <code class="pull-right">{{ x.State }}</code>
+                    </div>
+
+                    <div class="list-group-item text-center">
+
+                        <div class="list-group-item text-center">
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                ng-disabled="loading"
+                                ng-click="lookup('domain', this.x.ID)"
+                            >
+                                <span>Lookup domain</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-</div>
 
 </section>

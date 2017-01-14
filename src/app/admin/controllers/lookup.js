@@ -3,17 +3,7 @@ angular.module('proton.admin')
     var vm = this;
 
     vm.Response = null;
-    vm.LookupString = null;
-
-
-    var initLookupString = () => {
-        var path_segments = $location.absUrl().split('/');
-        var last_element = path_segments[path_segments.length - 1];
-        if (last_element !== undefined) {
-            vm.LookupString = last_element;
-        }
-    };
-    initLookupString();
+    vm.LookupString = $stateParams.query;
 
     vm.fuzzyOptions = [
         { label: "Fuzzy match: OFF"  , value: 0 },
@@ -47,27 +37,72 @@ angular.module('proton.admin')
     ];
     vm.currentMessageLocationOption = vm.messageLocationOptions[0];
 
-    var checkLookupString = () => {
-        if (vm.LookupString !== undefined) {
+    var lookup = (value) => {
+        value = value || vm.LookupString.trim();
+        if (!value || value.length === 0) {
             $rootScope.$emit('addAlert', 'Lookup string is empty.');
-            return false;
+            // throw true;
         }
-        return true;
+        return value;
     };
 
     vm.LookupUser = (value = '') => {
-        // if (!checkLookupString()) { return; }
-        var name = value || vm.LookupString.trim();
-        lookups.LookupUser(name)
+        value = lookup(value);
+        lookups.LookupUser(value)
         .then(({data}) => {
             vm.Response = data;
-            vm.template = "templates/admin/lookup/user.html";
-            !value && $state.go('private.lookupUser', { query: name });
+            $state.go('private.lookupUser', { query: value });
         });
     };
 
-    $stateParams.query && vm.LookupUser($stateParams.query);
+    vm.LookupOrganization = (value = '') => {
+        value = lookup(value);
+        lookups.LookupOrganization(value)
+        .then(({data}) => {
+            vm.Response = data;
+            $state.go('private.lookupOrganization', { query: value });
+        });
+    };
 
+    vm.LookupDomain = (value = '') => {
+        value = lookup(value);
+        lookups.LookupDomain(value)
+        .then(({data}) => {
+            vm.Response = data;
+            $state.go('private.lookupDomain', { query: value });
+        });
+    };
+
+    vm.LookupCharge = (value = '') => {
+        value = lookup(value);
+        lookups.LookupCharge(value)
+        .then(({data}) => {
+            vm.Response = data;
+            $state.go('private.lookupCharge', { query: value });
+        });
+    };
+
+    var initialize = () => {
+        if ($stateParams.query) {
+            switch($state.current.name) {
+                case 'private.lookupUser':
+                    vm.LookupUser($stateParams.query);
+                    break;
+                case 'private.lookupOrganization':
+                    vm.LookupOrganization($stateParams.query);
+                    break;
+                case 'private.lookupDomain':
+                    vm.LookupDomain($stateParams.query);
+                    break;
+                case 'private.lookupCharge':
+                    vm.LookupCharge($stateParams.query);
+                    break;
+                default:
+                    vm.LookupUser($stateParams.query);
+            }
+        }
+    };
+    initialize();
 });
 
 // /**
