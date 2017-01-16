@@ -1,6 +1,6 @@
 <div
     class="row results"
-    ng-if="ResponseLogs.data"
+    ng-if="vm.Response"
 >
 
     <div class="col-md-12">
@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="log in ResponseLogs.data.LogAuth">
+                    <tr ng-repeat="log in vm.Response.Logs">
                         <td style="width: 140px"> {{ log.Time * 1000 | date:'yyyy/MM/dd HH:mm:ss' }} </td>
                         <td> {{ log.Event | LogAuthEvent }} </td>
                         <td> {{ log.IP }} </td>
@@ -25,7 +25,7 @@
             </table>
         </div>
 
-        <div ng-if="ResponseLogs.data">
+        <div ng-if="vm.Response">
             <hr>
             <a
                 class="btn btn-link"
@@ -34,7 +34,7 @@
             <pre
                 ng-show="advanced"
                 ng-style="{'height':'100%'}"
-            >{{ ResponseLogs | json }}</pre>
+            >{{ vm.Response | json }}</pre>
         </div>
     </div>
 </div>

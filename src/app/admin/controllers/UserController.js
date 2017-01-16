@@ -1,5 +1,5 @@
 angular.module('proton.admin')
-.controller('UserController', function($rootScope, $state, $controller, users, userFactory) {
+.controller('UserController', function($rootScope, $state, $controller, users, lookupFactory) {
     var vm = this;
     angular.extend(vm, $controller('LookupController'));
 
@@ -218,9 +218,18 @@ angular.module('proton.admin')
         });
     };
 
-    vm.ViewUserLogs = (user, value = '') => {
-        value = vm.lookup(value);
-        userFactory.set(user);
-        $state.go('private.logs', { query: value });
-    }
+    vm.ViewUserLogs = () => {
+        lookupFactory.SetUserID(vm.UserID);
+        $state.go('private.logs', { query: vm.UserID });
+    };
+    
+    vm.ViewUserMessages = () => {
+        lookupFactory.SetUserID(vm.UserID);
+        $state.go('private.messages', { query: vm.UserID });
+    };
+
+    vm.ViewUserPayments = () => {
+        lookupFactory.SetUserID(vm.UserID);
+        $state.go('private.payments', { query: vm.UserID });
+    };
 });

@@ -1,5 +1,5 @@
 angular.module('proton.admin')
-.controller('LookupController', function(lookups, $rootScope, $location, $state, $stateParams, $q, userFactory) {
+.controller('LookupController', function(lookups, $rootScope, $location, $state, $stateParams, $q) {
     var vm = this;
 
     vm.LookupString = $stateParams.query;
@@ -24,7 +24,7 @@ angular.module('proton.admin')
 
     vm.LookupUser = (value = '') => {
         value = vm.lookup(value);
-        userFactory.get(value)
+        lookups.LookupUser(value)
         .then(({data}) => {
             vm.Response = data;
             $state.go('private.lookupUser', { query: value });
