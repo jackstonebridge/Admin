@@ -1,5 +1,5 @@
 angular.module('proton.admin')
-.controller('UserController', function($rootScope, $state, $controller, users) {
+.controller('UserController', function($rootScope, $state, $controller, users, userFactory) {
     var vm = this;
     angular.extend(vm, $controller('LookupController'));
 
@@ -47,12 +47,12 @@ angular.module('proton.admin')
         });
     };
 
-    vm.Credit = (value = 0) => {
+    vm.CreditUser = (value = 0) => {
         var body = {
             "Credit": value * 100,
             "Description": "Admin panel credit adjustment"
         };
-        users.Credit(vm.UserID, body)
+        users.CreditUser(vm.UserID, body)
         .then(() => {
             $rootScope.$emit('addAlert', 'Changed credit value by ' + value + ' for user ' + vm.LookupString + '.');
             $state.reload();
@@ -218,8 +218,9 @@ angular.module('proton.admin')
         });
     };
 
-    vm.ViewUserLogs = (value = '') => {
+    vm.ViewUserLogs = (user, value = '') => {
         value = vm.lookup(value);
-        $state.go('private.lookupUserLogs', { query: value });
+        userFactory.set(user);
+        $state.go('private.logs', { query: value });
     }
 });

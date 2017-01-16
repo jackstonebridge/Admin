@@ -63,11 +63,11 @@ angular.module('RDash')
             controllerAs: 'vm',
             templateUrl: 'templates/admin/lookup.html'
         })
-        .state('private.lookupUserLogs', {
-            url: 'lookup/user/:query/logs',
-            controller: 'LookupController',
+        .state('private.logs', {
+            url: 'user/:query/logs',
+            controller: 'LogController',
             controllerAs: 'vm',
-            templateUrl: 'templates/admin/lookup.html'
+            templateUrl: 'templates/admin/logs.html'
         })
         .state('private.lookupUserMessages', {
             url: 'lookup/user/:query/messages',
