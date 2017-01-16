@@ -211,10 +211,15 @@ angular.module('proton.admin')
         var body =  {
             "Email": vm.InviteEmail
         };
-        users.UpdateInviteEmail(vm.UserID, body)
+        users.UpdateInviteEmail(vm.InviteID, body)
         .then(() => {
             $rootScope.$emit('addAlert', 'Invite email updated.');
             $state.reload();
         });
     };
+
+    vm.ViewUserLogs = (value = '') => {
+        value = vm.lookup(value);
+        $state.go('private.lookupUserLogs', { query: value });
+    }
 });

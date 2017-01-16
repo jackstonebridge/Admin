@@ -1,10 +1,7 @@
 angular.module('proton.admin')
-.controller('LookupController', function(lookups, authModel, $rootScope, $location, $state, $stateParams, $q) {
+.controller('LookupController', function(lookups, $rootScope, $location, $state, $stateParams, $q) {
     var vm = this;
 
-    console.log(authModel.get());
-
-    vm.Response = null;
     vm.LookupString = $stateParams.query;
     vm.MultilookupInput = null;
 
@@ -16,7 +13,7 @@ angular.module('proton.admin')
     ];
     vm.CurrentFuzzyOption = vm.FuzzyOptions[0];
 
-    var lookup = (value) => {
+    vm.lookup = (value) => {
         value = value || vm.LookupString.trim();
         if (!value || value.length === 0) {
             $rootScope.$emit('addAlert', 'Lookup string is empty.');
@@ -26,7 +23,7 @@ angular.module('proton.admin')
     };
 
     vm.LookupUser = (value = '') => {
-        value = lookup(value);
+        value = vm.lookup(value);
         lookups.LookupUser(value)
         .then(({data}) => {
             vm.Response = data;
@@ -35,7 +32,7 @@ angular.module('proton.admin')
     };
 
     vm.LookupOrganization = (value = '') => {
-        value = lookup(value);
+        value = vm.lookup(value);
         lookups.LookupOrganization(value)
         .then(({data}) => {
             vm.Response = data;
@@ -44,7 +41,7 @@ angular.module('proton.admin')
     };
 
     vm.LookupDomain = (value = '') => {
-        value = lookup(value);
+        value = vm.lookup(value);
         lookups.LookupDomain(value)
         .then(({data}) => {
             vm.Response = data;
@@ -53,7 +50,7 @@ angular.module('proton.admin')
     };
 
     vm.LookupCharge = (value = '') => {
-        value = lookup(value);
+        value = vm.lookup(value);
         lookups.LookupCharge(value)
         .then(({data}) => {
             vm.Response = data;
@@ -97,8 +94,8 @@ angular.module('proton.admin')
                 case 'private.lookupCharge':
                     vm.LookupCharge($stateParams.query);
                     break;
-                default:
-                    vm.LookupUser($stateParams.query);
+                // default:
+                //     vm.LookupUser($stateParams.query);
             }
         }
     };
@@ -227,40 +224,6 @@ angular.module('proton.admin')
 //             }
 //         );
 //     };
-//
-//     $scope.ViewUserLogs = function() {
-//         // window.location.hash = '#/logs';
-//         this.GetUserLogs();
-//     };
-//
-//     $scope.GetUserLogs = function()
-//     {
-//         $rootScope.loading = true;
-//         $scope.UserID = this.UserID;
-//
-//         $http.get(apiUrl + '/admin/user/' + $scope.UserID + '/logs')
-//         .then(
-//             function successCallback(response)
-//             {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 } else {
-//                     $scope.ResponseLogs = response;
-//                 }
-//             },
-//             function errorCallback(response)
-//             {
-//                 $rootScope.loading = false;
-//                 if (response) {
-//                     $rootScope.$emit('addAlert', response);
-//                 }
-//             }
-//         );
-//     };
-//
-
 //
 //     $scope.blast = function() {
 //

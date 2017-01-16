@@ -35,6 +35,9 @@ angular.module('proton.admin')
             var params = { responseType:'arraybuffer' };
             return $http.get(url.get() + '/admin/invoice/' + invoice_id + '/2fa', params);
         },
+        GetUserLogs(user_id) {
+            return $http.get(url.get() + '/admin/user' + user_id + '/logs');
+        },
         PromoteUser(user_id) {
             return $http.delete(url.get() + '/admin/user/' + user_id + '/admin');
         },

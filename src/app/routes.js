@@ -34,11 +34,6 @@ angular.module('RDash')
             // controller: 'MasterController',
             templateUrl: 'templates/payments.html'
         })
-        .state('private.logs', {
-            url: 'logs',
-            // controller: 'MasterController',
-            templateUrl: 'templates/logs.html'
-        })
         .state('private.messages', {
             url: 'messages',
             // controller: 'MasterController',
@@ -64,6 +59,24 @@ angular.module('RDash')
         })
         .state('private.lookupUser', {
             url: 'lookup/user/:query',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
+        .state('private.lookupUserLogs', {
+            url: 'lookup/user/:query/logs',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
+        .state('private.lookupUserMessages', {
+            url: 'lookup/user/:query/messages',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup.html'
+        })
+        .state('private.lookupUserPayments', {
+            url: 'lookup/user/:query/payments',
             controller: 'LookupController',
             controllerAs: 'vm',
             templateUrl: 'templates/admin/lookup.html'
