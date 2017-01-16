@@ -49,17 +49,18 @@ angular.module('RDash')
             // controller: 'MasterController',
             templateUrl: 'templates/blast.html'
         })
-        .state('private.multi-lookup', {
-            url: 'multi-lookup',
-            // controller: 'MasterController',
-            templateUrl: 'templates/multi.html'
-        })
 
         .state('private.lookup', {
             url: 'lookup/',
             controller: 'LookupController',
             controllerAs: 'vm',
             templateUrl: 'templates/admin/lookup.html'
+        })
+        .state('private.multilookup', {
+            url: 'multilookup',
+            controller: 'LookupController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/multilookup.html'
         })
         .state('private.lookupUser', {
             url: 'lookup/user/:query',

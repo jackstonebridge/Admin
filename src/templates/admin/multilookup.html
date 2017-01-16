@@ -1,60 +1,61 @@
-<div class="row">
-    <form
-        method="POST"
-        class="form-inline col-md-10 col-md-offset-2"
-        ng-submit="vm.LookupUser()"
-    >
+<form
+    method="POST"
+    ng-submit="vm.MultilookupUser()"
+>
+    <p class="alert alert-info">Enter multiple rows and click the appropriate to search for multiple entries at once.</p>
 
-        <div
-            class="form-group text-center"
-            ng-style="{'width':'100%'}"
-        >
-            <input
-                id="lookupField"
-                type="text"
-                class="input-lg"
-                ng-model="vm.LookupString"
-                placeholder="Search for ..."
-            >
-            <label>
-                <select
-                    ng-model="vm.CurrentFuzzyOption"
-                    class="form-control"
-                    ng-options="value.label for value in vm.FuzzyOptions"
-                ></select>
-            </label>
+    <div class="row">
+
+        <div class="col-md-6">
+            <textarea
+                class="form-control"
+                ng-style="{'height':'30rem'}"
+                ng-model="vm.MultilookupInput"
+            ></textarea>
         </div>
 
-        <div class="text-center">
-            <br>
+        <div class="col-md-6">
+            <label>Example for users:</label>
+            <pre>
+jason
+jason@protonmail.ch
+131</pre>
+            <label>Example for organizations:</label>
+            <pre>
+My Org
+1000</pre>
+            <label>Example for domains:</label>
+            <pre>
+protonmail.ch
+dingchaolu.com
+1000</pre>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 text-center">
             <button
                 type="submit"
                 class="btn btn-primary btn-lg"
                 ng-disabled="loading"
-                ng-click="vm.LookupUser()"
+                ng-click="vm.MultilookupUser()"
             >User/Address/Invite</button>
             <button
                 type="submit"
                 class="btn btn-primary btn-lg"
                 ng-disabled="loading"
-                ng-click="vm.LookupOrganization()"
-            >Organization</button>
-            <button
-                type="submit"
-                class="btn btn-primary btn-lg"
-                ng-disabled="loading"
-                ng-click="vm.LookupDomain()"
+                ng-click="vm.MultilookupDomain()"
             >Domain</button>
             <button
                 type="submit"
                 class="btn btn-primary btn-lg"
                 ng-disabled="loading"
-                ng-click="vm.LookupCharge()"
-            >Payment</button>
+                ng-click="vm.MultilookupOrganization()"
+            >Organization</button>
         </div>
-    </form>
-</div>
-<br>
+    </div>
+</form>
 
 <div ng-if="vm.Response">
     <lookup-user

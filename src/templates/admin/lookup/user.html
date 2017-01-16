@@ -17,6 +17,8 @@
             <div
                 ng-if="result.Invite"
                 class="list-group"
+                ng-init="vm.InviteID = result.Invite.ID"
+                ng-model="vm.InviteID"
             >
 
                 <div class="list-group-item list-group-item-warning">
@@ -38,13 +40,13 @@
                     <form
                         method="POST"
                         class="input-group pull-right"
-                        ng-submit="changeInviteEmail()"
+                        ng-submit="vm.UpdateInviteEmail()"
                     >
                         <input
                             type="text"
                             class="form-control"
-                            ng-init="Email = result.Invite.NotificationEmail"
-                            ng-model="Email"
+                            ng-init="vm.InviteEmail = result.Invite.NotificationEmail"
+                            ng-model="vm.InviteEmail"
                         >
                         <span class="input-group-btn">
                             <button
@@ -61,7 +63,7 @@
                     <code
                         class="pull-right"
                         ng-if="result.Invite.CreateTime!=0"
-                    > {{ result.Invite.CreateTime*1000 | date:'medium' }} </code>
+                    > {{ result.Invite.CreateTime * 1000 | date:'medium' }} </code>
                     <strong>Create time:</strong>
                 </div>
 
@@ -85,16 +87,16 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="sendInvite()"
+                            ng-submit="vm.SendInvite()"
                         >
                             <button
                                 type="submit"
                                 href
                                 class="btn btn-primary"
                             >
-                                <span ng-show="result.Invite.Sent==0">
+                                <span ng-show="result.Invite.Sent == 0">
                                     <span class="fa fa-send"></span> Send invite</span>
-                                <span ng-show="result.Invite.Sent==1">
+                                <span ng-show="result.Invite.Sent == 1">
                                     <span class="fa fa-send"></span> Resend invite</span>
                             </button>
                             <input
@@ -106,22 +108,17 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="deleteUserWL()"
+                            ng-submit="vm.DeleteInvite()"
                         >
                             <input
                                 type="hidden"
                                 class="btn"
                             >
                             <!-- Fake sibling -->
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.Invite.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 class="btn btn-danger"
-                                ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE."
+                                ng-confirm-click="Are you sure you want to delete this invite? This cannot be undone."
                             >
                                 <span class="fa fa-trash-o"></span> Delete from waiting list </button>
                         </form>
@@ -163,6 +160,8 @@
             <div
                 ng-if="result.SentRate !== NULL"
                 class="list-group"
+                ng-init="vm.UserID = result.User.ID"
+                ng-model="vm.UserID"
             >
 
                 <div class="list-group-item list-group-item-info">
@@ -371,13 +370,8 @@
                     <div class="list-group-item">
                         <form
                             method="POST"
-                            ng-submit="ResetUserSentRate()"
+                            ng-submit="vm.ResetUserSentRate()"
                         >
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <label>
                                 <select
                                     ng-model="vm.currentResetUserSentRateOption"
@@ -398,13 +392,8 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="ResetUserReputation()"
+                            ng-submit="vm.ResetUserReputation()"
                         >
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 href
@@ -420,18 +409,13 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="CheckSpam()"
+                            ng-submit="vm.CheckSpam()"
                         >
                             <input
                                 type="hidden"
                                 class="btn"
                             >
                             <!-- Fake sibling -->
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 href
@@ -530,13 +514,13 @@
                     <form
                         method="POST"
                         class="input-group pull-right"
-                        ng-submit="changeNotificationEmail()"
+                        ng-submit="vm.UpdateNotificationEmail()"
                     >
                         <input
                             type="text"
                             class="form-control"
-                            ng-init="accountNotfEmail =  result.User.NotificationEmail"
-                            ng-model="accountNotfEmail"
+                            ng-init="vm.NotificationEmail = result.User.NotificationEmail"
+                            ng-model="vm.NotificationEmail"
                         >
                         <span class="input-group-btn">
                             <button
@@ -555,13 +539,8 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="AddMobileBeta()"
+                            ng-submit="vm.AddMobileBeta()"
                         >
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 href
@@ -577,18 +556,13 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="logoutUser()"
+                            ng-submit="vm.LogoutUser()"
                         >
                             <input
                                 type="hidden"
                                 class="btn"
                             >
                             <!-- Fake sibling -->
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 href
@@ -604,18 +578,13 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="ResetLoginPassword()"
+                            ng-submit="vm.ResetLoginPassword()"
                         >
                             <input
                                 type="hidden"
                                 class="btn"
                             >
                             <!-- Fake sibling -->
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 class="btn btn-primary"
                                 type="submit"
@@ -639,19 +608,13 @@
 
                 <div class="list-group-item">
                     <strong>Password recovery:</strong>
-                    <code class="pull-right">{{ result.User.PasswordRecovery }}</code>
+                    <code class="pull-right">{{ result.User.PasswordReset }}</code>
                 </div>
                 <form
                     method="POST"
                     class="list-group-item"
                 >
                     <strong>Two-factor authentication:</strong>
-                    <input
-                        type="hidden"
-                        ng-init="accountID = result.User.ID"
-                        ng-model="accountID"
-                    >
-
                     <div class="btn-group pull-right">
                         <button
                             type="submit"
@@ -663,7 +626,7 @@
                             type="submit"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary disabled': result.User.TwoFactor == 0}"
-                            ng-click="DisableTwoFactor()"
+                            ng-click="vm.DisableTwoFactor()"
                         >Disabled</button>
                     </div>
                 </form>
@@ -679,13 +642,8 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="ResetUserLogs()"
+                            ng-submit="vm.ResetLogs()"
                         >
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 href
@@ -701,18 +659,13 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="ViewUserLogs()"
+                            ng-submit="vm.ViewUserLogs()"
                         >
                             <input
                                 type="hidden"
                                 class="btn"
                             >
                             <!-- Fake sibling -->
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 href
@@ -780,11 +733,6 @@
                         class="pull-right status"
                         ng-show="{{ user.Scope === 'admin' }}"
                     >
-                        <input
-                            type="hidden"
-                            ng-init="accountID = result.User.ID"
-                            ng-model="accountID"
-                        />
                         <button
                             type="button"
                             disabled
@@ -792,14 +740,14 @@
                             ng-class="{'btn-primary': result.User.Status===0}"
                         > Deleted </button>
                         <button
-                            ng-click="changeStatus(1, account)"
+                            ng-click="vm.DisableUser()"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Status===1}"
                         > Disabled </button>
                         <button
-                            ng-click="changeStatus(2, account)"
+                            ng-click="vm.EnableUser()"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
@@ -823,11 +771,6 @@
                         class="pull-right status"
                         ng-show="{{ user.Scope === 'admin super' }}"
                     >
-                        <input
-                            type="hidden"
-                            ng-init="accountID = result.User.ID"
-                            ng-model="accountID"
-                        >
                         <button
                             type="button"
                             disabled
@@ -835,21 +778,21 @@
                             ng-class="{'btn-primary': result.User.Status==0}"
                         > Deleted </button>
                         <button
-                            ng-click="changeStatus(1, account)"
+                            ng-click="vm.DisableUser()"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Status==1}"
                         > Disabled </button>
                         <button
-                            ng-click="changeStatus(2, account)"
+                            ng-click="vm.EnableUser()"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Status==2}"
                         > Enabled </button>
                         <button
-                            ng-click="changeStatus(3, account)"
+                            ng-click="vm.PromoteUser()"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
@@ -869,11 +812,6 @@
                     class="list-group-item"
                     ng-show="{{ user.Scope === 'admin' || user.Scope === 'admin super' }}"
                 >
-                    <input
-                        type="hidden"
-                        ng-init="accountID = result.User.ID"
-                        ng-model="accountID"
-                    >
 
                     <div class="btn-group pull-right">
                         <button
@@ -905,15 +843,10 @@
                         ng-show="{{ user.Scope=='admin super' }}"
                         ng-submit="deleteUserAU(force_delete)"
                     >
-                        <input
-                            type="hidden"
-                            ng-init="accountID = result.User.ID"
-                            ng-model="vm.UserID"
-                        >
                         <button
                             type="submit"
                             class="btn btn-danger"
-                            ng-confirm-click="Are you sure you want to delete the user?"
+                            ng-confirm-click="Are you sure you want to delete the user? This cannot be undone."
                         >
                             <span class="fa fa-trash-o"></span> Delete from active users </button>
                         <label>
@@ -983,43 +916,33 @@
                     <div class="clearfix"></div>
 
                     <div class="list-group-item">
-                        <form
+                        <!-- <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="deletePaymentsCustomer()"
+                            ng-submit="vm.DeletePaymentsCustomer()"
                         >
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 class="btn btn-danger"
-                                ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE."
+                                ng-confirm-click="Are you sure you want to delete the associated payment provider information? This cannot be undone."
                             >
                                 <span class="fa fa-trash-o"></span> Delete customer </button>
                             <input
                                 type="hidden"
                                 class="btn"
                             >
-                            <!-- Fake sibling -->
-                        </form>
+                        </form> -->
+                        <!-- Fake sibling -->
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="ViewUserPayments()"
+                            ng-submit="vm.ViewUserPayments()"
                         >
                             <input
                                 type="hidden"
                                 class="btn"
                             >
                             <!-- Fake sibling -->
-                            <input
-                                type="hidden"
-                                ng-init="UserID = result.User.ID"
-                                ng-model="UserID"
-                            >
                             <button
                                 type="submit"
                                 href
@@ -1094,15 +1017,10 @@
                             method="POST"
                             ng-submit="deletePaymentsMethod(payment.ID)"
                         >
-                            <input
-                                type="hidden"
-                                ng-init="accountID = result.User.ID"
-                                ng-model="accountID"
-                            >
                             <button
                                 type="submit"
                                 class="btn btn-danger"
-                                ng-confirm-click="ARE YOU SURE? THIS CANT BE UNDONE."
+                                ng-confirm-click="Are you sure you want to delete this payment method? This cannot be undone."
                             >
                                 <span class="fa fa-trash-o"></span> Delete payment method </button>
                         </form>
