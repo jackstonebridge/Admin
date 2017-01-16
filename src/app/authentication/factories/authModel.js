@@ -7,6 +7,7 @@ angular.module('proton.authentication')
 
         const save = (data = {}) => (STATE_AUTH.model = _.extend({}, STATE_AUTH.model, data));
         const read = (key = '') => STATE_AUTH.model[key];
+        const get = () => STATE_AUTH.model;
         const clear = () => {
             STATE_AUTH.model = {};
             STATE_AUTH.headersSet = false;
@@ -41,7 +42,7 @@ angular.module('proton.authentication')
                 secureSessionStorage.setItem(`${CONSTANTS.OAUTH_KEY}:AccessToken`, data.Uid);
                 secureSessionStorage.setItem(`${CONSTANTS.OAUTH_KEY}:Uid`, data.AccessToken);
                 secureSessionStorage.setItem(`${CONSTANTS.OAUTH_KEY}:RefreshToken`, data.RefreshToken);
-                save(_.pick(data, 'Uid', 'AccessToken', 'RefreshToken'));
+                save(_.omit(data, 'Code', 'ServerProof'));
             }
 
             setAuthHeaders(data);
@@ -83,7 +84,7 @@ angular.module('proton.authentication')
         const isHeadersSet = () => STATE_AUTH.headersSet;
 
         return {
-            save, read, clear, storeData,
+            get, save, read, clear, storeData,
             setAuthHeaders, isHeadersSet,
             detectAuthenticationState
         };

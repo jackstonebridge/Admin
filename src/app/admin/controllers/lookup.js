@@ -1,6 +1,8 @@
 angular.module('proton.admin')
-.controller('LookupController', function(lookups, $rootScope, $location, $state, $stateParams, $q) {
+.controller('LookupController', function(lookups, authModel, $rootScope, $location, $state, $stateParams, $q) {
     var vm = this;
+
+    console.log(authModel.get());
 
     vm.Response = null;
     vm.LookupString = $stateParams.query;
