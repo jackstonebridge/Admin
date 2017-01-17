@@ -29,16 +29,6 @@ angular.module('RDash')
                 $rootScope.isSecure = userModel.isSecured();
             }
         })
-        .state('private.payments', {
-            url: 'payments',
-            // controller: 'MasterController',
-            templateUrl: 'templates/payments.html'
-        })
-        .state('private.messages', {
-            url: 'messages',
-            // controller: 'MasterController',
-            templateUrl: 'templates/messages.html'
-        })
         .state('private.blast', {
             url: 'blast',
             // controller: 'MasterController',
@@ -67,19 +57,19 @@ angular.module('RDash')
             url: 'user/:query/logs',
             controller: 'LogController',
             controllerAs: 'vm',
-            templateUrl: 'templates/admin/logs.html'
+            templateUrl: 'templates/admin/lookup/logs.html'
         })
-        .state('private.lookupUserMessages', {
+        .state('private.payments', {
+            url: 'user/:query/payments',
+            controller: 'PaymentController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/lookup/payments.html'
+        })
+        .state('private.messages', {
             url: 'lookup/user/:query/messages',
             controller: 'LookupController',
             controllerAs: 'vm',
-            templateUrl: 'templates/admin/lookup.html'
-        })
-        .state('private.lookupUserPayments', {
-            url: 'lookup/user/:query/payments',
-            controller: 'LookupController',
-            controllerAs: 'vm',
-            templateUrl: 'templates/admin/lookup.html'
+            templateUrl: 'templates/admin/lookup/messages.html'
         })
         .state('private.lookupOrganization', {
             url: 'lookup/organization/:query',

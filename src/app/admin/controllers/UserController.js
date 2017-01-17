@@ -115,20 +115,6 @@ angular.module('proton.admin')
         });
     };
 
-    vm.GetInvoice = () => {
-        users.GetInvoice(vm.InvoiceID)
-        .then((response) => {
-            var file = new Blob([response.data], {type: "application/pdf"});
-            var fileURL = URL.createObjectURL(file);
-            var a         = document.createElement('a');
-            a.href        = fileURL;
-            a.target      = '_blank';
-            a.download    = 'Invoice_' + vm.InvoiceID + '.pdf';
-            document.body.appendChild(a);
-            a.click();
-        });
-    };
-
     vm.LogoutUser = () => {
         users.LogoutUser(vm.UserID)
         .then(() => {
@@ -222,7 +208,7 @@ angular.module('proton.admin')
         lookupFactory.SetUserID(vm.UserID);
         $state.go('private.logs', { query: vm.UserID });
     };
-    
+
     vm.ViewUserMessages = () => {
         lookupFactory.SetUserID(vm.UserID);
         $state.go('private.messages', { query: vm.UserID });

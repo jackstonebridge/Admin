@@ -1,13 +1,11 @@
-<form method="POST" class="list-group-item form-inline text-center" ng-submit="GetUserPayments()">
-    <a href class="btn btn-primary btn-lg" ng-click="GetUserPayments()" ng-disabled="loading">View payments</a>
-    &nbsp;
-    <strong>UserID:</strong>
-    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-model="UserID">
-</form>
-
-<div class="row results" ng-if="ResponsePayments.data">
+<div class="row results" ng-if="vm.Response">
 
     <div class="col-md-12">
+
+        <h1>Payments history
+        <p class="pull-right">UserID: {{ vm.UserID }}&nbsp;</p>
+        </h1>
+
         <div class="account">
             <h3>Invoices</h3>
             <table class="table table-bordered table-inline table-striped">
@@ -27,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="invoice in ResponsePayments.data.Invoices">
+                    <tr ng-repeat="invoice in vm.Response.Invoices">
                         <td>
                             {{ invoice.ID }}
                         </td>
@@ -59,14 +57,14 @@
                             {{ invoice.Attempts }}
                         </td>
                         <td>
-                            <a href ng-click="GetInvoice(invoice.ID)">PDF</a>
+                            <a href ng-click="vm.GetInvoice(invoice.ID)">PDF</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="account" ng-if="ResponsePayments.data">
+        <div class="account" ng-if="vm.Response">
             <h3>Individual charges</h3>
             <table class="table table-bordered table-inline table-striped">
                 <thead class="thead-default">
@@ -84,7 +82,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="charge in ResponsePayments.data.Charges">
+                    <tr ng-repeat="charge in vm.Response.Charges">
                         <td>
                             {{ charge.ID }}
                         </td>
@@ -107,7 +105,7 @@
                             {{ charge.Provider }}
                         </td>
                         <td>
-                            <a href ng-disabled="loading" ng-click="lookup('charge', this.charge.ExternalChargeID)">{{ charge.ExternalChargeID }}</a>
+                            <a href ng-disabled="loading" ng-click="vm.LookupCharge(charge.ExternalChargeID)">{{ charge.ExternalChargeID }}</a>
                         </td>
                         <td>
                             {{ charge.Reversed }}

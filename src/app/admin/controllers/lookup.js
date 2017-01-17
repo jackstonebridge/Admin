@@ -191,39 +191,6 @@ angular.module('proton.admin')
 //         );
 //     };
 //
-
-//
-//     $scope.ViewUserPayments = function() {
-//         // window.location.hash = '#/payments';
-//         this.GetUserPayments();
-//     };
-//
-//     $scope.GetUserPayments = function()
-//     {
-//         $rootScope.loading = true;
-//         $scope.UserID = this.UserID;
-//
-//         $http.get(apiUrl + '/admin/user/' + $scope.UserID + '/payments')
-//         .then(
-//             function successCallback(response)
-//             {
-//                 $rootScope.loading = false;
-//                 var error = (response.data.ErrorDescription) ? response.data.ErrorDescription : response.data.Error;
-//                 if (error) {
-//                     $rootScope.$emit('addAlert', error);
-//                 } else {
-//                     $scope.ResponsePayments = response;
-//                 }
-//             },
-//             function errorCallback(response)
-//             {
-//                 $rootScope.loading = false;
-//                 if (response) {
-//                     $rootScope.$emit('addAlert', response);
-//                 }
-//             }
-//         );
-//     };
 //
 //     $scope.blast = function() {
 //
