@@ -23,10 +23,10 @@ angular.module('proton.admin')
             return $http.delete(url.get() + '/admin/user/' + user_id + '/2fa');
         },
         DisableUser(user_id) {
-            return $http.delete(url.get() + '/admin/user/' + user_id + '/disable');
+            return $http.put(url.get() + '/admin/user/' + user_id + '/disable');
         },
         EnableUser(user_id) {
-            return $http.delete(url.get() + '/admin/user/' + user_id + '/enable');
+            return $http.put(url.get() + '/admin/user/' + user_id + '/enable');
         },
         LogoutUser(user_id) {
             return $http.put(url.get() + '/admin/user/' + user_id + '/logout');
@@ -35,8 +35,8 @@ angular.module('proton.admin')
             var params = { responseType:'arraybuffer' };
             return $http.get(url.get() + '/admin/invoice/' + invoice_id, params);
         },
-        GetUserMessages(user_id) {
-            return $http.get(url.get() + '/admin/user/' + user_id + '/messages');
+        GetUserMessages(user_id, location, page, page_size, unread) {
+            return $http.get(url.get() + '/admin/user/' + user_id + '/messages?Location=' + location + '&Page=' + page + '&PageSize=' + page_size + '&Unread=' + unread);
         },
         GetUserLogs(user_id) {
             return $http.get(url.get() + '/admin/user/' + user_id + '/logs');
@@ -45,7 +45,7 @@ angular.module('proton.admin')
             return $http.get(url.get() + '/admin/user/' + user_id + '/payments');
         },
         PromoteUser(user_id) {
-            return $http.delete(url.get() + '/admin/user/' + user_id + '/admin');
+            return $http.put(url.get() + '/admin/user/' + user_id + '/admin');
         },
         ResetLoginPassword(user_id) {
             return $http.put(url.get() + '/admin/user/' + user_id + '/password');
@@ -70,6 +70,9 @@ angular.module('proton.admin')
         },
         UpdateInviteEmail(invite_id, body) {
             return $http.put(url.get() + '/admin/invite/'+ invite_id + '/email', body);
+        },
+        UserInfo() {
+            return $http.get(url.get() + '/admin/users');
         }
     };
 });

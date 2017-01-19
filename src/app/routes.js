@@ -67,7 +67,7 @@ angular.module('RDash')
         })
         .state('private.messages', {
             url: 'lookup/user/:query/messages',
-            controller: 'LookupController',
+            controller: 'MessageController',
             controllerAs: 'vm',
             templateUrl: 'templates/admin/lookup/messages.html'
         })

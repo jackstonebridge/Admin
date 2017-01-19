@@ -22,9 +22,12 @@ angular.module('proton.config', [])
 
     // Local enviroment settings
     debug: true,
-    url: 'https://protonmail.host',
-    // apiUrl: 'http://localhost/api',
-    apiUrl: 'https://protonmail.host/api',
+    // url: 'https://localhost',
+    url: 'https://protonmail.dev',
+    // url: 'https://protonmail.host',
+    // apiUrl: 'https://localhost/api',
+    apiUrl: 'https://protonmail.dev/api',
+    // apiUrl: 'https://protonmail.host/api',
     app_version: '0.1.0',
     api_version: '1',
     date_version: 'Fri Dec 23 2016',

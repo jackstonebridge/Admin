@@ -1,5 +1,5 @@
 angular.module('proton.admin')
-.controller('UserController', function($rootScope, $state, $controller, users, lookupFactory) {
+.controller('UserController', function($rootScope, $state, $controller, users, lookupFactory, adminFactory) {
     var vm = this;
     angular.extend(vm, $controller('LookupController'));
 
@@ -7,6 +7,12 @@ angular.module('proton.admin')
     vm.InviteEmail = null;
 
     vm.UserID = null;
+
+    vm.Admin = false;
+    vm.Super = true;
+    // FIXME this does not work
+    // vm.Admin = adminFactory.IsAdmin;
+    // vm.Super = adminFactory.IsSuper;
     vm.NotificationEmail = null;
 
     vm.deleteUserOptions = [
@@ -22,16 +28,6 @@ angular.module('proton.admin')
         { label: "Reset all"     , value: 2 }
     ];
     vm.currentResetUserSentRateOption = vm.resetUserSentRateOptions[1];
-
-    vm.messageLocationOptions = [
-        { label: "Inbox"  , value: 0 },
-        { label: "Draft"  , value: 1 },
-        { label: "Sent"   , value: 2 },
-        { label: "Trash"  , value: 3 },
-        { label: "Spam"   , value: 4 },
-        { label: "Archive", value: 6 }
-    ];
-    vm.currentMessageLocationOption = vm.messageLocationOptions[0];
 
     vm.generateRandomPassword = () => {
         return Math.random().toString(36).slice(-8)+''+Math.random().toString(36).slice(-8);
@@ -84,9 +80,9 @@ angular.module('proton.admin')
     };
 
     vm.DeleteUser = () => {
-        users.DeleteUser(vm.UserID, vm.CurrentDeleteUserOption)
+        users.DeleteUser(vm.UserID, vm.currentDeleteUserOption.value)
         .then(() => {
-            $rootScope.$emit('addAlert', 'User ' + vm.LookupString + ' deleted with mode ' + vm.CurrentDeleteUserOption);
+            $rootScope.$emit('addAlert', 'User ' + vm.LookupString + ' deleted with mode: "' + vm.currentDeleteUserOption.label + '" (' + vm.currentDeleteUserOption.value + ')');
             $state.reload();
         });
     };
@@ -151,7 +147,7 @@ angular.module('proton.admin')
         };
         users.ResetSentRate(vm.UserID, body)
         .then(() => {
-            $rootScope.$emit('addAlert', 'Sent rate reset.');
+            $rootScope.$emit('addAlert', 'Sent rate reset with option: "' +  this.currentResetUserSentRateOption.label + '" (' + this.currentResetUserSentRateOption.value + ')');
             $state.reload();
         });
     };
@@ -171,9 +167,9 @@ angular.module('proton.admin')
         });
     };
 
-    vm.UpdateLevel = () => {
+    vm.UpdateLevel = (level = 1) => {
         var body =  {
-            "Level": vm.Level
+            "Level": level
         };
         users.UpdateLevel(vm.UserID, body)
         .then(() => {

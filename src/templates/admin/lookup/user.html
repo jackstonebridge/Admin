@@ -6,13 +6,13 @@
         ng-repeat="result in model.Results"
     >
 
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <h1 ng-if="result.User.UserName">{{ result.User.UserName }}</h1>
             <h1 ng-if="!result.User.UserName">{{ result.Invite.CleanUserName }}</h1>
             <h1 ng-if="!result.Invite.CleanUserName">{{ result.Address.Email }}</h1>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
 
             <div
                 ng-if="result.Invite"
@@ -370,7 +370,7 @@
                     <div class="list-group-item">
                         <form
                             method="POST"
-                            ng-submit="vm.ResetUserSentRate()"
+                            ng-submit="vm.ResetSentRate()"
                         >
                             <label>
                                 <select
@@ -392,7 +392,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ResetUserReputation()"
+                            ng-submit="vm.ResetReputation()"
                         >
                             <button
                                 type="submit"
@@ -409,7 +409,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.CheckSpam()"
+                            ng-submit="vm.ViewUserMessages()"
                         >
                             <input
                                 type="hidden"
@@ -476,7 +476,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 right">
+        <div class="col-lg-6 right">
 
             <div
                 ng-if="result.User"
@@ -731,45 +731,45 @@
                     <form
                         method="POST"
                         class="pull-right status"
-                        ng-show="{{ user.Scope === 'admin' }}"
+                        ng-show="{{ vm.Admin }}"
                     >
                         <button
                             type="button"
                             disabled
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Status===0}"
+                            ng-class="{'btn-primary': result.User.Status == 0}"
                         > Deleted </button>
                         <button
                             ng-click="vm.DisableUser()"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Status===1}"
+                            ng-class="{'btn-primary': result.User.Status == 1}"
                         > Disabled </button>
                         <button
                             ng-click="vm.EnableUser()"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Status===2}"
+                            ng-class="{'btn-primary': result.User.Status == 2}"
                         > Enabled </button>
                         <button
                             type="button"
                             disabled
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Status===3}"
+                            ng-class="{'btn-primary': result.User.Status == 3}"
                         > Admin </button>
                         <button
                             type="button"
                             disabled
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Status===4}"
+                            ng-class="{'btn-primary': result.User.Status == 4}"
                         > Super </button>
                     </form>
                     <form
                         method="POST"
                         class="pull-right status"
-                        ng-show="{{ user.Scope === 'admin super' }}"
+                        ng-show="{{ vm.Super }}"
                     >
                         <button
                             type="button"
@@ -810,27 +810,27 @@
                 <form
                     method="POST"
                     class="list-group-item"
-                    ng-show="{{ user.Scope === 'admin' || user.Scope === 'admin super' }}"
+                    ng-show="{{ vm.Admin || vm.Super }}"
                 >
 
                     <div class="btn-group pull-right">
                         <button
                             type="submit"
-                            ng-click="ChangeLevel(1)"
+                            ng-click="vm.UpdateLevel(1)"
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Level==1}"
+                            ng-class="{'btn-primary': result.User.Level == 1}"
                         >500 MB</button>
                         <button
                             type="submit"
-                            ng-click="ChangeLevel(2)"
+                            ng-click="vm.UpdateLevel(2)"
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Level==2}"
+                            ng-class="{'btn-primary': result.User.Level == 2}"
                         >1 GB</button>
                         <button
                             type="submit"
-                            ng-click="ChangeLevel(3)"
+                            ng-click="vm.UpdateLevel(3)"
                             class="btn btn-default btn-xs"
-                            ng-class="{'btn-primary': result.User.Level==3}"
+                            ng-class="{'btn-primary': result.User.Level == 3}"
                         >10 GB</button>
                     </div>
                     <strong>User Level:</strong>
@@ -840,8 +840,8 @@
                     <form
                         method="POST"
                         class="list-group-item text-center"
-                        ng-show="{{ user.Scope=='admin super' }}"
-                        ng-submit="deleteUserAU(force_delete)"
+                        ng-show="{{ vm.Super }}"
+                        ng-submit="vm.DeleteUser()"
                     >
                         <button
                             type="submit"

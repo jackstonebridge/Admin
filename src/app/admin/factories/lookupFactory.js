@@ -2,7 +2,7 @@ angular.module('proton.admin')
 .factory('lookupFactory', () => {
     var user_id = null;
     var organization_id = null;
-    var domain_id;
+    var domain_id = null;
 
     function SetUserID(id) {
         user_id = id;

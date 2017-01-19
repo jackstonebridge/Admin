@@ -1,21 +1,20 @@
 var port = 8888;
 var log = false;
 var fs = require('fs');
-var gulp = require('gulp'),
-    gulpif = require('gulp-if'),
-    usemin = require('gulp-usemin'),
-    connect = require('gulp-connect'),
-    watch = require('gulp-watch'),
-    minify_css = require('gulp-clean-css'),
-    minify_js = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    less = require('gulp-less'),
-    rename = require('gulp-rename'),
+var gulp        = require('gulp'),
+    gulpif      = require('gulp-if'),
+    usemin      = require('gulp-usemin'),
+    connect     = require('gulp-connect'),
+    watch       = require('gulp-watch'),
+    minify_css  = require('gulp-clean-css'),
+    minify_js   = require('gulp-uglify'),
+    concat      = require('gulp-concat'),
+    less        = require('gulp-less'),
+    rename      = require('gulp-rename'),
     minify_html = require('gulp-htmlmin'),
-    debug = require('gulp-debug'),
-    pump = require('pump'),
-    babel = require('gulp-babel'),
-    sourcemaps = require('gulp-sourcemaps'),
+    debug       = require('gulp-debug'),
+    pump        = require('pump'),
+    babel       = require('gulp-babel'),
     cached      = require('gulp-cached'),
     remember    = require('gulp-remember'),
     ngAnnotate  = require('gulp-ng-annotate'),
@@ -33,7 +32,7 @@ var paths = {
     images: 'src/assets/img/*.*',
     templates: 'src/templates/**/*.html',
     main: 'src/*.html',
-    fonts: 'bower_components/**/*.{ttf,woff,eof,svg}'
+    fonts: 'bower_components/**/*.{ttf,woff,woff2,eof,svg}'
 };
 
 /**
@@ -88,7 +87,7 @@ gulp.task('custom-images', function (cb) {
     pump([
             gulp.src(paths.images)
                 .pipe(gulpif(log, debug())),
-            gulp.dest('build/assets/img')
+            gulp.dest('build/img')
         ],
         cb
     );
