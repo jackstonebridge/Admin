@@ -1,5 +1,5 @@
 angular.module('proton.admin')
-.controller('UserController', function($rootScope, $state, $controller, users, lookupFactory, adminFactory) {
+.controller('UserController', function($rootScope, $state, $controller, users, lookupFactory, userFactory) {
     var vm = this;
     angular.extend(vm, $controller('LookupController'));
 
@@ -8,11 +8,6 @@ angular.module('proton.admin')
 
     vm.UserID = null;
 
-    vm.Admin = false;
-    vm.Super = true;
-    // FIXME this does not work
-    // vm.Admin = adminFactory.IsAdmin;
-    // vm.Super = adminFactory.IsSuper;
     vm.NotificationEmail = null;
 
     vm.deleteUserOptions = [
@@ -28,10 +23,6 @@ angular.module('proton.admin')
         { label: "Reset all"     , value: 2 }
     ];
     vm.currentResetUserSentRateOption = vm.resetUserSentRateOptions[1];
-
-    vm.generateRandomPassword = () => {
-        return Math.random().toString(36).slice(-8)+''+Math.random().toString(36).slice(-8);
-    };
 
     vm.AddMobileBeta = () => {
         var body = {
@@ -207,6 +198,7 @@ angular.module('proton.admin')
 
     vm.ViewUserMessages = () => {
         lookupFactory.SetUserID(vm.UserID);
+        userFactory.Set(vm.User);
         $state.go('private.messages', { query: vm.UserID });
     };
 

@@ -1,6 +1,7 @@
 angular.module('proton.admin')
-.controller('LookupController', function(lookups, $rootScope, $location, $state, $stateParams, $q) {
+.controller('LookupController', function($controller, $rootScope, $location, $state, $stateParams, $q, lookups) {
     var vm = this;
+    angular.extend(vm, $controller('ParentController'));
 
     vm.LookupString = $stateParams.query;
     vm.MultilookupInput = null;
@@ -111,20 +112,8 @@ angular.module('proton.admin')
 //
 // function MasterCtrl($scope, $http, $rootScope, $state, $q, $stateParams, $log, $location, $timeout, Setup)
 // {
-//     $scope.user = {};
-//     $scope.advanced = false;
-//     $rootScope.loading = false;
 //     $scope.forceMonitorFlag = false;
 //     $scope.blastMode = false;
-//
-//     $scope.template = false;
-//
-//     $scope.forceMonitor = function() {
-//         $scope.forceMonitorFlag = true;
-//         $scope.monitor();
-//     };
-//
-//
 //
 //     $scope.blast = function() {
 //

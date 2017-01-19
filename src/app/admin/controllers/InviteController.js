@@ -1,5 +1,5 @@
 angular.module('proton.admin')
-.controller('InviteController', function(invites, $rootScope) {
+.controller('InviteController', function($rootScope, invites) {
     var vm = this;
 
     vm.CreateInviteUsername = null;

@@ -1,30 +1,30 @@
 angular.module('proton.admin')
     .factory('adminFactory', (users) => {
-        var user = null;
+        var admin = null;
 
-        var UserInfo = () => {
+        var Initialize = () => {
             users.UserInfo()
                 .then(({
                     data
                 }) => {
-                    user = data.User;
+                    admin = data.User;
                 });
         };
-        UserInfo();
 
         var GetUserName = () =>  {
-            return user.UserName;
+            return admin.UserName;
         };
 
         var IsAdmin = () => {
-            return (user.Status === 3);
+            return (admin.Status === 3);
         };
 
         var IsSuper = () => {
-            return (user.Status === 4);
+            return (admin.Status === 4);
         };
 
         return {
+            Initialize,
             GetUserName,
             IsAdmin,
             IsSuper

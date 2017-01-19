@@ -23,6 +23,11 @@ angular.module('RDash')
             abstract: true,
             url: '/',
             template: '<ui-view/>',
+            resolve: {
+                Initialize(adminFactory) {
+                    return adminFactory.Initialize();
+                }
+            },
             onEnter($rootScope, userModel) {
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 $rootScope.isLocked = userModel.isLocked();
