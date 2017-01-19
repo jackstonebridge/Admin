@@ -2,17 +2,17 @@
     <a href class="btn btn-primary btn-lg" ng-click="vm.GetUserMessages()" ng-disabled="loading">View messages</a>
     &nbsp;
     <strong>Page size:</strong>
-    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="PageSize = 50"  ng-model="PageSize">
+    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="vm.PageSize = 50"  ng-model="vm.PageSize">
     &nbsp;
     <strong>Page:</strong>
-    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Page = 0"  ng-model="Page">
+    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="vm.Page = 0"  ng-model="vm.Page">
     &nbsp;
     <strong>Unread:</strong>
-    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="Unread = 0"  ng-model="Unread">
+    <input type="text" class="form-control" ng-style="{width: '100px'}" ng-init="vm.Unread = 0"  ng-model="vm.Unread">
     &nbsp;
     <strong>Location:</strong>
     <label>
-        <select ng-model="vm.currentMessageLocationOption" class="form-control" ng-options="value.label for value in vm.messageLocationOptions"></select>
+        <select ng-model="vm.CurrentMessageLocationOption" class="form-control" ng-options="value.label for value in vm.MessageLocationOptions"></select>
     </label>
 </div>
 <p class="text-center">
@@ -38,7 +38,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="message in vm.Messages">
+            <tr ng-repeat="message in vm.Response.Messages">
                 <td style="width: 140px">{{ message.Time * 1000 | date:'yyyy/MM/dd HH:mm:ss' }}
                 </td>
                 <td>
@@ -69,8 +69,8 @@
     </table>
 </div>
 
-<div ng-if="vm.Messages">
+<div ng-if="vm.Response">
     <hr>
     <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ vm.Messages | json }}</pre>
+    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ vm.Response | json }}</pre>
 </div>

@@ -1,7 +1,6 @@
 angular.module('proton.admin')
-.controller('BlastController', function($controller) {
+.controller('BlastController', function() {
     var vm = this;
-    angular.extend(vm, $controller('ParentController'));
 
 });
 

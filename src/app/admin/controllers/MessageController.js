@@ -1,12 +1,15 @@
 angular.module('proton.admin')
-.controller('MessageController', function($controller, $stateParams, $rootScope, users, userFactory) {
+.controller('MessageController', function($controller, $stateParams, $rootScope, users, adminFactory, userFactory) {
     var vm = this;
-    angular.extend(vm, $controller('UserController'));
 
     vm.UserID = $stateParams.query;
-    vm.forceMessagesFlag = null;
+    vm.IsSuper = adminFactory.IsSuper();
 
-    vm.messageLocationOptions = [
+    vm.PageSize = 50;
+    vm.Page     = 0;
+    vm.Unread   = 0;
+
+    vm.MessageLocationOptions = [
         { label: "Inbox"  , value: 0 },
         { label: "Draft"  , value: 1 },
         { label: "Sent"   , value: 2 },
@@ -14,28 +17,19 @@ angular.module('proton.admin')
         { label: "Spam"   , value: 4 },
         { label: "Archive", value: 6 }
     ];
-    vm.currentMessageLocationOption = vm.messageLocationOptions[0];
+    vm.CurrentMessageLocationOption = vm.MessageLocationOptions[0];
 
-    vm.forceMessages = function() {
-        vm.forceMessagesFlag = true;
-        vm.GetUserMessages();
-    };
-
-    vm.GetUserMessages = (location, page, page_size, unread) => {
-        users.GetUserMessages(vm.UserID, location, page, page_size, unread)
+    vm.GetUserMessages = () => {
+        users.GetUserMessages(vm.UserID, vm.CurrentMessageLocationOption.value, vm.Page, vm.PageSize, vm.Unread)
         .then(({data}) => {
-            vm.Messages = data;
-            var user = userFactory.GetUser();
-            console.debug(user);
-            if (!user.IsPotentialSpammer)
-            {
-                $rootScope.$emit('addAlert', 'User is not flagged as a potential spammer');
-            }
-            if (vm.Super)
-            {
+            var user = userFactory.GetUser(vm.UserID);
+            if (vm.IsSuper && !user.IsPotentialSpammer) {
                 $rootScope.$emit('addAlert', 'Displaying last 5 messages for super admins');
+            } else if (!user.IsPotentialSpammer) {
+                $rootScope.$emit('addAlert', 'User is not flagged as a potential spammer');
+                return;
             }
-            vm.forceMessagesFlag = false;
+            vm.Response = data;
         });
     };
     vm.GetUserMessages();
