@@ -3,7 +3,7 @@ angular.module('proton.admin')
         var admin = null;
 
         var Initialize = () => {
-            users.UserInfo()
+            return users.UserInfo()
                 .then(({
                     data
                 }) => {
