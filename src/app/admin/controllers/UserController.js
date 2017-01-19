@@ -196,9 +196,9 @@ angular.module('proton.admin')
         $state.go('private.logs', { query: vm.UserID });
     };
 
-    vm.ViewUserMessages = () => {
+    vm.ViewUserMessages = (user) => {
         lookupFactory.SetUserID(vm.UserID);
-        userFactory.Set(vm.User);
+        userFactory.SetUser(user);
         $state.go('private.messages', { query: vm.UserID });
     };
 

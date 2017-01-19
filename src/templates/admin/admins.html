@@ -17,11 +17,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="super in ctrl.Supers">
+        <tr ng-repeat="super in vm.Supers">
             <th>{{ super }}</th>
             <th>Super</th>
         </tr>
-        <tr ng-repeat="admin in ctrl.Admins">
+        <tr ng-repeat="admin in vm.Admins">
             <td>{{ admin }}</td>
             <td>Admin</td>
         </tr>
@@ -39,6 +39,6 @@
         readonly
         class="form-control"
         ng-style="{'height':'100%'}"
-    > {{ ctrl.Response | json }} </pre>
+    > {{ vm.Response | json }} </pre>
     <hr>
 </div>

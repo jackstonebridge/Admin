@@ -15,8 +15,8 @@
     </thead>
     <tbody>
         <tr
-            ng-if="ctrl.Referrers.length"
-            ng-repeat="ref in ctrl.Referrers"
+            ng-if="vm.Referrers.length"
+            ng-repeat="ref in vm.Referrers"
         >
             <td>{{ ref.ID }}</td>
             <td>{{ ref.Name }}</td>
@@ -39,16 +39,16 @@
 <div class="row">
 
     <div class="col-md-4">
-        <form ng-show="ctrl.Referrers.length">
+        <form ng-show="vm.Referrers.length">
 
             <div class="form-group">
                 <label>Partner</label>
 
                 <div class="list-group">
                     <a
-                        ng-repeat="ref in ctrl.Referrers"
+                        ng-repeat="ref in vm.Referrers"
                         class="list-group-item"
-                        ng-click="ctrl.GetReferrerDetails(ref.Identifier)"
+                        ng-click="vm.GetReferrerDetails(ref.Identifier)"
                     >
                         <small>Lookup:</small> {{ ref.Name }}</a>
                 </div>
@@ -67,7 +67,7 @@
 
     <div class="col-md-8">
 
-        <div ng-hide="ctrl.Referrer">
+        <div ng-hide="vm.Referrer">
             <p>&nbsp;</p>
             <p class="alert alert-info text-center">
                 <i class="fa fa-arrow-left fa-2x"></i>
@@ -75,29 +75,29 @@
                 <br> Choose a partner to Lookup </p>
         </div>
 
-        <div ng-show="ctrl.Referrer">
-            <h4>{{ ctrl.Referrer.Identifier }} (This Month)</h4>
+        <div ng-show="vm.Referrer">
+            <h4>{{ vm.Referrer.Identifier }} (This Month)</h4>
 
             <table class="table table-bordered">
                 <tr>
                     <th>Signups All</th>
-                    <td>{{ ctrl.Referrer.SignupsAll }}</td>
+                    <td>{{ vm.Referrer.SignupsAll }}</td>
                 </tr>
                 <tr>
                     <th>Signups Paid</th>
-                    <td>{{ ctrl.Referrer.SignupsPaid }}</td>
+                    <td>{{ vm.Referrer.SignupsPaid }}</td>
                 </tr>
                 <tr>
                     <th>Net Income</th>
-                    <td>{{ ctrl.Referrer.Income }}</td>
+                    <td>{{ vm.Referrer.Income }}</td>
                 </tr>
                 <tr>
                     <th>Chargebacks</th>
-                    <td>{{ ctrl.Referrer.Chargebacks }}</td>
+                    <td>{{ vm.Referrer.Chargebacks }}</td>
                 </tr>
                 <tr>
                     <th>Conversion Rate</th>
-                    <td>{{ ctrl.Referrer.ConversionRate }}</td>
+                    <td>{{ vm.Referrer.ConversionRate }}</td>
                 </tr>
             </table>
         </div>
@@ -137,15 +137,15 @@
         ng-click="advanced = !advanced"
     >Show / Hide raw response</a>
     <pre
-        ng-if="ctrl.Referrers"
+        ng-if="vm.Referrers"
         ng-show="advanced"
         readonly
         ng-style="{'height':'100%'}"
-    >{{ ctrl.Referrers | json }}</pre>
+    >{{ vm.Referrers | json }}</pre>
     <pre
-        ng-if="ctrl.Referrer"
+        ng-if="vm.Referrer"
         ng-show="advanced"
         readonly
         ng-style="{'height':'100%'}"
-    >{{ ctrl.Referrer | json }}</pre>
+    >{{ vm.Referrer | json }}</pre>
 </div>

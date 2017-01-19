@@ -1,24 +1,34 @@
 <p class="text-center">
-    <a href class="btn btn-primary btn-lg" ng-click="ctrl.GetSubscriptions()" ng-disabled="loading">
-        Get payments report
-    </a>
+    <a
+        href
+        class="btn btn-primary btn-lg"
+        ng-click="vm.GetSubscriptions()"
+        ng-disabled="loading"
+    > Get payments report </a>
 </p>
 
-<div ng-if="ctrl.Subscriptions">
+<div ng-if="vm.Subscriptions">
+
     <table class="table table-bordered table-striped">
         <thead>
             <tr class="info">
                 <th>Plan</th>
-                <th>Subscriptions<br>(total)</th>
-                <th>Amount<br>(total)</th>
-                <th>Subscriptions<br>(monthly)</th>
-                <th>Amount<br>(monthly)</th>
-                <th>Subscriptions<br>(yearly)</th>
-                <th>Amount<br>(yearly)</th>
+                <th>Subscriptions
+                    <br>(total)</th>
+                <th>Amount
+                    <br>(total)</th>
+                <th>Subscriptions
+                    <br>(monthly)</th>
+                <th>Amount
+                    <br>(monthly)</th>
+                <th>Subscriptions
+                    <br>(yearly)</th>
+                <th>Amount
+                    <br>(yearly)</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in ctrl.Subscriptions.SubscriptionPlans">
+            <tr ng-repeat="subscription in vm.Subscriptions.SubscriptionPlans">
                 <th>{{ subscription.Plan }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.Amount }}</th>
@@ -34,13 +44,16 @@
         <thead>
             <tr class="info">
                 <th>Extra domains (x1)</th>
-                <th>Subscriptions<br>(total)</th>
-                <th>Subscriptions<br>(monthly)</th>
-                <th>Subscriptions<br>(yearly)</th>
+                <th>Subscriptions
+                    <br>(total)</th>
+                <th>Subscriptions
+                    <br>(monthly)</th>
+                <th>Subscriptions
+                    <br>(yearly)</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in ctrl.Subscriptions.ExtraDomains">
+            <tr ng-repeat="subscription in vm.Subscriptions.ExtraDomains">
                 <th>{{ subscription.ExtraDomains }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -53,13 +66,16 @@
         <thead>
             <tr class="info">
                 <th>Extra addresses (x1)</th>
-                <th>Subscriptions<br>(total)</th>
-                <th>Subscriptions<br>(monthly)</th>
-                <th>Subscriptions<br>(yearly)</th>
+                <th>Subscriptions
+                    <br>(total)</th>
+                <th>Subscriptions
+                    <br>(monthly)</th>
+                <th>Subscriptions
+                    <br>(yearly)</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in ctrl.Subscriptions.ExtraAddresses">
+            <tr ng-repeat="subscription in vm.Subscriptions.ExtraAddresses">
                 <th>{{ subscription.ExtraAddresses }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -72,13 +88,16 @@
         <thead>
             <tr class="info">
                 <th>Extra space (x1)</th>
-                <th>Subscriptions<br>(total)</th>
-                <th>Subscriptions<br>(monthly)</th>
-                <th>Subscriptions<br>(yearly)</th>
+                <th>Subscriptions
+                    <br>(total)</th>
+                <th>Subscriptions
+                    <br>(monthly)</th>
+                <th>Subscriptions
+                    <br>(yearly)</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="subscription in ctrl.Subscriptions.ExtraSpace">
+            <tr ng-repeat="subscription in vm.Subscriptions.ExtraSpace">
                 <th>{{ subscription.ExtraSpace }}</th>
                 <th>{{ subscription.Subscriptions }}</th>
                 <th>{{ subscription.SubscriptionsMonthly }}</th>
@@ -88,9 +107,16 @@
     </table>
 </div>
 
-<div ng-show="!!ctrl.Subscriptions">
+<div ng-show="!!vm.Subscriptions">
     <hr>
-    <a class="btn btn-link" ng-click="advanced = !advanced">Show / Hide raw response</a>
-    <pre ng-show="advanced" readonly class="form-control" ng-style="{'height':'100%'}">{{ ctrl.Subscriptions | json }}</pre>
-    <hr>
-</div>
+    <a
+        class="btn btn-link"
+        ng-click="advanced = !advanced"
+    >Show / Hide raw response</a>
+    <pre
+        ng-show="advanced"
+        readonly
+        class="form-control"
+        ng-style="{'height':'100%'}"
+    >{{ vm.Subscriptions | json }}</pre>
+    <hr> </div>

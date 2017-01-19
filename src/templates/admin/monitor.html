@@ -1,11 +1,11 @@
 <p
     class="text-center"
-    ng-show="!ctrl.Accounts"
+    ng-show="!vm.Accounts"
     >
     <a
         href
         class="btn btn-primary btn-lg"
-        ng-click="ctrl.Monitor()"
+        ng-click="vm.Monitor()"
         ng-disabled="loading"
     >Get Accounts</a>
     <br>
@@ -13,20 +13,20 @@
 </p>
 <h2
     class="alert alert-info"
-    ng-show="ctrl.Accounts"
+    ng-show="vm.Accounts"
 >
     <a
-        ng-click="ctrl.Monitor()"
+        ng-click="vm.Monitor()"
         ng-disabled="loading"
         class="pull-right btn btn-primary btn-lg"
     >
         <span class="fa fa-refresh"></span> Refresh Accounts </a>
-    <code>{{ ctrl.TotalUnread }}</code> unread messages
+    <code>{{ vm.TotalUnread }}</code> unread messages
 </h2>
 
 <div
     class="account"
-    ng-repeat="acc in ctrl.Accounts"
+    ng-repeat="acc in vm.Accounts"
 >
     <a>
         <h1

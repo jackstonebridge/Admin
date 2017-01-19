@@ -6,7 +6,7 @@
     <form
         method="POST"
         class="list-group-item text-center"
-        ng-submit="ctrl.CreateInvite()"
+        ng-submit="vm.CreateInvite()"
     >
 
         <div class="list-group-item">
@@ -14,8 +14,9 @@
             <input
                 type="text"
                 class="form-control"
-                ng-model="ctrl.CreateInviteUsername"
+                ng-model="vm.CreateInviteUsername"
             >
+
             <div class="clearfix"></div>
         </div>
 
@@ -24,8 +25,9 @@
             <input
                 type="text"
                 class="form-control"
-                ng-model="ctrl.CreateInviteEmail"
+                ng-model="vm.CreateInviteEmail"
             >
+
             <div class="clearfix"></div>
         </div>
 
@@ -35,8 +37,7 @@
                 href
                 class="btn btn-primary"
             >
-            <span class="fa fa-send"></span> Create invite </button>
+                <span class="fa fa-send"></span> Create invite </button>
         </div>
     </form>
-
 </div>

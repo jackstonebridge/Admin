@@ -1,4 +1,4 @@
-<div ng-if="ctrl.Coupons">
+<div ng-if="vm.Coupons">
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="coupon in ctrl.Coupons">
+            <tr ng-repeat="coupon in vm.Coupons">
                 <th>{{ coupon.Code }}</th>
                 <th>{{ coupon.Description }}</th>
                 <th>
@@ -22,17 +22,17 @@
                             <button
                                 class="btn btn-primary"
                                 type="submit"
-                                ng-click="ctrl.GetCouponDetails(coupon.Code)"
+                                ng-click="vm.GetCouponDetails(coupon.Code)"
                             > Edit </button>
                             <button
                                 class="btn btn-primary"
                                 type="submit"
-                                ng-click="ctrl.GetCouponWhitelist(coupon.Code)"
+                                ng-click="vm.GetCouponWhitelist(coupon.Code)"
                             > Show whitelist </button>
                             <button
                                 class="btn btn-primary"
                                 type="submit"
-                                ng-click="ctrl.GetCouponHistory(coupon.Code)"
+                                ng-click="vm.GetCouponHistory(coupon.Code)"
                             > Show history </button>
                         </div>
                     </form>
@@ -44,21 +44,21 @@
 
 <div
     class="results"
-    ng-show="ctrl.CouponName"
+    ng-show="vm.CouponName"
 >
     <!-- For some reason ng-include does not work here -->
 
     <div class="row results">
 
         <div class="col-md-12">
-            <h1>{{ ctrl.CouponName }}</h1>
+            <h1>{{ vm.CouponName }}</h1>
         </div>
 
         <div class="col-md-6">
             <textarea
                 class="form-control"
                 ng-style="{'height':'22rem'}"
-                ng-model="ctrl.CouponInputData"
+                ng-model="vm.CouponInputData"
             ></textarea>
         </div>
 
@@ -73,7 +73,7 @@
                     type="submit"
                     class="btn btn-primary btn-lg"
                     ng-disabled="loading"
-                    ng-click="ctrl.UpdateCouponWhitelist(ctrl.CouponName, ctrl.CouponInputData)"
+                    ng-click="vm.UpdateCouponWhitelist(vm.CouponName, vm.CouponInputData)"
                 >Whitelist users</button>
                 <!-- <button type="submit" class="btn btn-primary btn-lg" ng-disabled="loading" ng-click="addUserCouponHistory(couponInput)">Add to history</button> -->
             </div>
@@ -84,7 +84,7 @@
 
         <div class="col-md-6">
 
-            <div ng-if="ctrl.CouponWhitelist">
+            <div ng-if="vm.CouponWhitelist">
 
                 <div class="list-group-item list-group-item-warning">
                     <strong>Coupon whitelist</strong>
@@ -98,7 +98,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in ctrl.CouponWhitelist">
+                        <tr ng-repeat="user in vm.CouponWhitelist">
                             <th>{{ user.UserID }}</th>
                             <th>{{ user.CleanUserName }}</th>
                         </tr>
@@ -109,7 +109,7 @@
 
         <div class="col-md-6">
 
-            <div ng-if="ctrl.CouponHistory">
+            <div ng-if="vm.CouponHistory">
 
                 <div class="list-group-item list-group-item-warning">
                     <strong>Coupon history</strong>
@@ -124,7 +124,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in ctrl.CouponHistory">
+                        <tr ng-repeat="user in vm.CouponHistory">
                             <th>{{ user.UserID }}</th>
                             <th>{{ user.CleanUserName }}</th>
                             <th>{{ user.Used }}</th>
@@ -146,7 +146,7 @@
         ng-show="advanced"
         readonly
         ng-style="{'height':'100%'}"
-    >{{ ctrl.Coupons | json }}</pre>
+    >{{ vm.Coupons | json }}</pre>
 </div>
 
 <div ng-show="!!CouponWhitelist">
@@ -154,7 +154,7 @@
         ng-show="advanced"
         readonly
         ng-style="{'height':'100%'}"
-    >{{ ctrl.CouponWhitelist | json }}</pre>
+    >{{ vm.CouponWhitelist | json }}</pre>
 </div>
 
 <div ng-show="!!CouponHistory">
@@ -162,5 +162,5 @@
         ng-show="advanced"
         readonly
         ng-style="{'height':'100%'}"
-    >{{ ctrl.CouponHistory | json }}</pre>
+    >{{ vm.CouponHistory | json }}</pre>
 </div>

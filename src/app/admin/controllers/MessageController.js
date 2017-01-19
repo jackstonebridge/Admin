@@ -25,7 +25,8 @@ angular.module('proton.admin')
         users.GetUserMessages(vm.UserID, location, page, page_size, unread)
         .then(({data}) => {
             vm.Messages = data;
-            var user = userFactory.Get();
+            var user = userFactory.GetUser();
+            console.debug(user);
             if (!user.IsPotentialSpammer)
             {
                 $rootScope.$emit('addAlert', 'User is not flagged as a potential spammer');
