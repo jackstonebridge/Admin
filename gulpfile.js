@@ -174,7 +174,6 @@ gulp.task('webserver', function() {
             return [
                 serveStatic(base),
                 function(req, res, next) {
-                    // no file found; send app.html
                     var file = base + 'index.html';
                     if (fs.existsSync(file)) {
                         fs.createReadStream(file).pipe(res);

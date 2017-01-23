@@ -1,7 +1,10 @@
 angular.module('proton.admin')
-.controller('UserController', function($rootScope, $state, $controller, users, lookupFactory, userFactory) {
+.controller('UserController', function($rootScope, $state, $controller, users, adminFactory, lookupFactory, userFactory) {
     var vm = this;
     angular.extend(vm, $controller('LookupController'));
+
+    vm.IsAdmin = adminFactory.IsAdmin();
+    vm.IsSuper = adminFactory.IsSuper();
 
     vm.InviteID = null;
     vm.InviteEmail = null;
@@ -139,6 +142,14 @@ angular.module('proton.admin')
         users.ResetSentRate(vm.UserID, body)
         .then(() => {
             $rootScope.$emit('addAlert', 'Sent rate reset with option: "' +  this.currentResetUserSentRateOption.label + '" (' + this.currentResetUserSentRateOption.value + ')');
+            $state.reload();
+        });
+    };
+
+    vm.ResetUserPasswordRecovery = () => {
+        users.ResetUserPasswordRecovery(vm.UserID)
+        .then(() => {
+            $rootScope.$emit('addAlert', 'User password recovery reset.');
             $state.reload();
         });
     };

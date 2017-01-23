@@ -59,6 +59,9 @@ angular.module('proton.admin')
         ResetSentRate(user_id, body) {
             return $http.put(url.get() + '/admin/user/' + user_id + '/sentrate', body);
         },
+        ResetUserPasswordRecovery(user_id) {
+            return $http.put(url.get() + '/admin/user/' + user_id + '/recovery');
+        },
         SendInvite(user_id) {
             return $http.post(url.get() + '/admin/invite/' + user_id + '/send');
         },

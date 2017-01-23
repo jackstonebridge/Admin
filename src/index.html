@@ -78,6 +78,7 @@
                     <li ng-if="user.Scope=='admin super'" class="sidebar-list">
                         <a ng-disabled="loading" ui-sref="private.blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
                     </li>
+                    <li ng-if="isLoggedIn" class="sidebar-title"><span>Version <kbd>0.2.1</kbd></span></li>
                 </div>
             </ul>
             <div class="sidebar-footer">

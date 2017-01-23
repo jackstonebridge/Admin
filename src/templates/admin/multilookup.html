@@ -45,34 +45,43 @@ dingchaolu.com
                 type="submit"
                 class="btn btn-primary btn-lg"
                 ng-disabled="loading"
+                ng-click="vm.MultilookupOrganization()"
+            >Organization</button>
+            <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                ng-disabled="loading"
                 ng-click="vm.MultilookupDomain()"
             >Domain</button>
             <button
                 type="submit"
                 class="btn btn-primary btn-lg"
                 ng-disabled="loading"
-                ng-click="vm.MultilookupOrganization()"
-            >Organization</button>
+                ng-click="vm.MultilookupCharge()"
+            >Payment</button>
         </div>
     </div>
 </form>
 
-<div ng-if="vm.Response">
+<div
+    ng-if="vm.Responses"
+    ng-repeat="response in vm.Responses"
+    >
     <lookup-user
-        ng-if="'private.lookupUser' | isState"
-        data-model="vm.Response"
+        ng-if="vm.Template == 'User'"
+        data-model="response"
     ></lookup-user>
     <lookup-organization
-        ng-if="'private.lookupOrganization' | isState"
-        data-model="vm.Response"
+        ng-if="vm.Template == 'Organization'"
+        data-model="response"
     ></lookup-organization>
     <lookup-domain
-        ng-if="'private.lookupDomain' | isState"
-        data-model="vm.Response"
+        ng-if="vm.Template == 'Domain'"
+        data-model="response"
     ></lookup-domain>
     <lookup-charge
-        ng-if="'private.lookupCharge' | isState"
-        data-model="vm.Response"
+        ng-if="vm.Template == 'Charge'"
+        data-model="response"
     ></lookup-charge>
 </div>
 

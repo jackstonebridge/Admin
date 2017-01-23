@@ -5,6 +5,8 @@ angular.module('proton.admin')
 
     vm.LookupString = $stateParams.query;
     vm.MultilookupInput = null;
+    vm.Responses = [];
+    vm.Template = null;
 
     vm.FuzzyOptions = [
         { label: "Fuzzy match: OFF"  , value: 0 },
@@ -70,14 +72,52 @@ angular.module('proton.admin')
             promises.push(callback(query));
         }
 
-        $q.all(promises)
-        .then(({data}) => {
-            vm.Response = data;
-        });
+        $q.all(promises);
     };
 
     vm.MultilookupUser = () => {
-        multilookup(lookups.LookupUser);
+        vm.Responses = [];
+        var callback = (value) => {
+            vm.Template = 'User';
+            lookups.LookupUser(value)
+            .then(({data}) => {
+                vm.Responses.push(data);
+            });
+        };
+        multilookup(callback);
+    };
+
+    vm.MultilookupOrganization = () => {
+        var callback = (value) => {
+            vm.Template = 'Organization';
+            lookups.LookupOrganization(value)
+            .then(({data}) => {
+                vm.Responses.push(data);
+            });
+        };
+        multilookup(callback);
+    };
+
+    vm.MultilookupDomain = () => {
+        var callback = (value) => {
+            vm.Template = 'Domain';
+            lookups.LookupDomain(value)
+            .then(({data}) => {
+                vm.Responses.push(data);
+            });
+        };
+        multilookup(callback);
+    };
+
+    vm.MultilookupCharge = () => {
+        var callback = (value) => {
+            vm.Template = 'Charge';
+            lookups.LookupCharge(value)
+            .then(({data}) => {
+                vm.Responses.push(data);
+            });
+        };
+        multilookup(callback);
     };
 
     var initialize = () => {

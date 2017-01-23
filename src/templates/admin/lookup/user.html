@@ -639,21 +639,47 @@
                 <div class="list-group-item text-center">
 
                     <div class="list-group-item">
+
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ResetLogs()"
+                            ng-submit="vm.ResetUserPasswordRecovery()"
+                            ng-show="{{ vm.IsSuper }}"
                         >
+                            <button
+                                type="submit"
+                                href
+                                class="btn btn-danger"
+                            >
+                                <span class="fa fa-mobile"></span>
+                                Reset pass. recovery
+                            </button>
+                            <input
+                                type="hidden"
+                                class="btn">
+                            <!-- Fake sibling -->
+                        </form>
+
+                        <form
+                            method="POST"
+                            class="btn-group"
+                            ng-submit="vm.ResetUserLogs()"
+                        >
+                            <input
+                                type="hidden"
+                                class="btn">
+                            <!-- Fake sibling -->
                             <button
                                 type="submit"
                                 href
                                 class="btn btn-warning"
                             >
-                                <span class="fa fa-mobile"></span> Reset auth. logging </button>
+                                <span class="fa fa-mobile"></span>
+                                Reset auth. logging
+                            </button>
                             <input
                                 type="hidden"
-                                class="btn"
-                            >
+                                class="btn">
                             <!-- Fake sibling -->
                         </form>
                         <form
@@ -671,11 +697,9 @@
                                 href
                                 class="btn btn-primary"
                             >
-                                <span class="fa fa-eye-slash"></span> View auth. logs </button>
-                            <input
-                                type="hidden"
-                                class="btn"
-                            >
+                                <span class="fa fa-eye-slash"></span>
+                                View auth. logs
+                            </button>
                             <!-- Fake sibling -->
                         </form>
 
@@ -731,7 +755,7 @@
                     <form
                         method="POST"
                         class="pull-right status"
-                        ng-show="{{ vm.Admin }}"
+                        ng-show="{{ vm.IsAdmin }}"
                     >
                         <button
                             type="button"
@@ -769,7 +793,7 @@
                     <form
                         method="POST"
                         class="pull-right status"
-                        ng-show="{{ vm.Super }}"
+                        ng-show="{{ vm.IsSuper }}"
                     >
                         <button
                             type="button"
@@ -810,7 +834,7 @@
                 <form
                     method="POST"
                     class="list-group-item"
-                    ng-show="{{ vm.Admin || vm.Super }}"
+                    ng-show="{{ vm.IsAdmin || vm.IsSuper }}"
                 >
 
                     <div class="btn-group pull-right">
@@ -840,7 +864,7 @@
                     <form
                         method="POST"
                         class="list-group-item text-center"
-                        ng-show="{{ vm.Super }}"
+                        ng-show="{{ vm.IsSuper }}"
                         ng-submit="vm.DeleteUser()"
                     >
                         <button
