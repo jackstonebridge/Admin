@@ -17,8 +17,6 @@
             <div
                 ng-if="result.Invite"
                 class="list-group"
-                ng-init="vm.InviteID = result.Invite.ID"
-                ng-model="vm.InviteID"
             >
 
                 <div class="list-group-item list-group-item-warning">
@@ -40,13 +38,12 @@
                     <form
                         method="POST"
                         class="input-group pull-right"
-                        ng-submit="vm.UpdateInviteEmail()"
+                        ng-submit="vm.UpdateInviteEmail(result)"
                     >
                         <input
                             type="text"
                             class="form-control"
-                            ng-init="vm.InviteEmail = result.Invite.NotificationEmail"
-                            ng-model="vm.InviteEmail"
+                            ng-model="result.Invite.NotificationEmail"
                         >
                         <span class="input-group-btn">
                             <button
@@ -87,7 +84,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.SendInvite()"
+                            ng-submit="vm.SendInvite(result)"
                         >
                             <button
                                 type="submit"
@@ -108,7 +105,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.DeleteInvite()"
+                            ng-submit="vm.DeleteInvite(result)"
                         >
                             <input
                                 type="hidden"
@@ -149,7 +146,7 @@
                             type="submit"
                             class="btn btn-primary"
                             ng-disabled="loading"
-                            ng-click="vm.LookupOrganization(this.result.Organization.ID)"
+                            ng-click="vm.LookupOrganization(result.Organization.ID)"
                         >
                             <span>Lookup organization</span>
                         </button>
@@ -160,8 +157,6 @@
             <div
                 ng-if="result.SentRate !== NULL"
                 class="list-group"
-                ng-init="vm.UserID = result.User.ID"
-                ng-model="vm.UserID"
             >
 
                 <div class="list-group-item list-group-item-info">
@@ -370,14 +365,14 @@
                     <div class="list-group-item">
                         <form
                             method="POST"
-                            ng-submit="vm.ResetSentRate()"
+                            ng-submit="vm.ResetSentRate(result)"
                         >
                             <label>
                                 <select
-                                    ng-model="vm.currentResetUserSentRateOption"
                                     class="form-control"
-                                    ng-options="value.label for value in vm.resetUserSentRateOptions"
                                     style="width:14rem; margin-right:1rem;"
+                                    ng-model="vm.CurrentResetUserSentRateOption"
+                                    ng-options="value.label for value in vm.ResetUserSentRateOptions"
                                 ></select>
                             </label>
                             <button
@@ -392,7 +387,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ResetReputation()"
+                            ng-submit="vm.ResetReputation(result)"
                         >
                             <button
                                 type="submit"
@@ -514,13 +509,12 @@
                     <form
                         method="POST"
                         class="input-group pull-right"
-                        ng-submit="vm.UpdateNotificationEmail()"
+                        ng-submit="vm.UpdateNotificationEmail(result)"
                     >
                         <input
                             type="text"
                             class="form-control"
-                            ng-init="vm.NotificationEmail = result.User.NotificationEmail"
-                            ng-model="vm.NotificationEmail"
+                            ng-model="result.User.NotificationEmail"
                         >
                         <span class="input-group-btn">
                             <button
@@ -539,7 +533,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.AddMobileBeta()"
+                            ng-submit="vm.AddMobileBeta(result)"
                         >
                             <button
                                 type="submit"
@@ -556,7 +550,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.LogoutUser()"
+                            ng-submit="vm.LogoutUser(result)"
                         >
                             <input
                                 type="hidden"
@@ -578,7 +572,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ResetLoginPassword()"
+                            ng-submit="vm.ResetLoginPassword(result)"
                         >
                             <input
                                 type="hidden"
@@ -626,7 +620,7 @@
                             type="submit"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary disabled': result.User.TwoFactor == 0}"
-                            ng-click="vm.DisableTwoFactor()"
+                            ng-click="vm.DisableTwoFactor(result)"
                         >Disabled</button>
                     </div>
                 </form>
@@ -643,7 +637,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ResetUserPasswordRecovery()"
+                            ng-submit="vm.ResetUserPasswordRecovery(result)"
                             ng-show="{{ vm.IsSuper }}"
                         >
                             <button
@@ -663,7 +657,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ResetUserLogs()"
+                            ng-submit="vm.ResetUserLogs(result)"
                         >
                             <input
                                 type="hidden"
@@ -685,7 +679,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ViewUserLogs()"
+                            ng-submit="vm.ViewUserLogs(result)"
                         >
                             <input
                                 type="hidden"
@@ -764,14 +758,14 @@
                             ng-class="{'btn-primary': result.User.Status == 0}"
                         > Deleted </button>
                         <button
-                            ng-click="vm.DisableUser()"
+                            ng-click="vm.DisableUser(result)"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Status == 1}"
                         > Disabled </button>
                         <button
-                            ng-click="vm.EnableUser()"
+                            ng-click="vm.EnableUser(result)"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 3 || result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
@@ -802,21 +796,21 @@
                             ng-class="{'btn-primary': result.User.Status==0}"
                         > Deleted </button>
                         <button
-                            ng-click="vm.DisableUser()"
+                            ng-click="vm.DisableUser(result)"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Status==1}"
                         > Disabled </button>
                         <button
-                            ng-click="vm.EnableUser()"
+                            ng-click="vm.EnableUser(result)"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Status==2}"
                         > Enabled </button>
                         <button
-                            ng-click="vm.PromoteUser()"
+                            ng-click="vm.PromoteUser(result)"
                             type="submit"
                             ng-disabled="{{ result.User.Status == 4 }}"
                             class="btn btn-default btn-xs"
@@ -840,19 +834,19 @@
                     <div class="btn-group pull-right">
                         <button
                             type="submit"
-                            ng-click="vm.UpdateLevel(1)"
+                            ng-click="vm.UpdateUserLevel(result, 1)"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Level == 1}"
                         >500 MB</button>
                         <button
                             type="submit"
-                            ng-click="vm.UpdateLevel(2)"
+                            ng-click="vm.UpdateUserLevel(result, 2)"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Level == 2}"
                         >1 GB</button>
                         <button
                             type="submit"
-                            ng-click="vm.UpdateLevel(3)"
+                            ng-click="vm.UpdateUserLevel(result, 3)"
                             class="btn btn-default btn-xs"
                             ng-class="{'btn-primary': result.User.Level == 3}"
                         >10 GB</button>
@@ -865,7 +859,7 @@
                         method="POST"
                         class="list-group-item text-center"
                         ng-show="{{ vm.IsSuper }}"
-                        ng-submit="vm.DeleteUser()"
+                        ng-submit="vm.DeleteUser(result)"
                     >
                         <button
                             type="submit"
@@ -875,9 +869,9 @@
                             <span class="fa fa-trash-o"></span> Delete from active users </button>
                         <label>
                             <select
-                                ng-model="vm.currentDeleteUserOption"
+                                ng-model="vm.CurrentDeleteUserOption"
                                 class="form-control"
-                                ng-options="value.label for value in vm.deleteUserOptions"
+                                ng-options="value.label for value in vm.DeleteUserOptions"
                             ></select>
                         </label>
                     </form>
@@ -917,7 +911,7 @@
                             <form
                                 method="POST"
                                 class="input-group"
-                                ng-submit="vm.CreditUser(credit)"
+                                ng-submit="vm.CreditUser(result, credit)"
                             >
                                 <input
                                     type="text"
@@ -943,7 +937,7 @@
                         <!-- <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.DeletePaymentsCustomer()"
+                            ng-submit="vm.DeletePaymentsCustomer(result)"
                         >
                             <button
                                 type="submit"
@@ -960,7 +954,7 @@
                         <form
                             method="POST"
                             class="btn-group"
-                            ng-submit="vm.ViewUserPayments()"
+                            ng-submit="vm.ViewUserPayments(result)"
                         >
                             <input
                                 type="hidden"
@@ -1039,7 +1033,7 @@
                         <form
                             class="list-group-item text-center"
                             method="POST"
-                            ng-submit="vm.DeletePaymentsMethod(payment.ID)"
+                            ng-submit="vm.DeletePaymentsMethod(result, payment)"
                         >
                             <button
                                 type="submit"

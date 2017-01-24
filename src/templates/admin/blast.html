@@ -1,43 +1,86 @@
-  <form method="POST" id="blastForm" name="blastForm" ng-submit="blast()">
+<div class="row">
+    <form
+        method="POST"
+        id="blastForm"
+        name="blastForm"
+        ng-submit="vm.Blast()"
+    >
 
-
-    <div class="alert" ng-class="{ 'alert-info': !blastMode, 'alert-warning': blastMode }">
-      <p>Blast Mode:</p>
-      <p>
-        <label><input type="radio" name="blastMode" ng-value="false" ng-model="blastMode"> Normal Mode</label>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <label><input type="radio" name="blastMode" ng-value="true" ng-model="blastMode"> Except Mode</label>
-      </p>
-    </div>
-    <div class="form-group">
-      <label>Subject</label>
-      <input type="text" class="form-control" placeholder="Subject" ng-model="blastSubject">
-    </div>
-    <div class="form-group">
-      <label>Body:</label>
-      <textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="blastMessage"></textarea>
-    </div>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-md-6">
-          <label>Username List:</label>
-          <textarea class="form-control" ng-style="{'height':'20rem'}" ng-model="blastList"></textarea>
+        <div
+            class="alert"
+            ng-class="{ 'alert-info': !blastMode, 'alert-warning': blastMode }"
+        >
+            <p>Blast Mode:</p>
+            <p>
+                <label>
+                    <input
+                        type="radio"
+                        ng-value="false"
+                        ng-model="vm.BlastMode"
+                    > Normal Mode</label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <label>
+                    <input
+                        type="radio"
+                        ng-value="true"
+                        ng-model="vm.BlastMode"
+                    > Except Mode</label>
+            </p>
         </div>
-        <div class="col-md-6">
-          <label>Example:</label>
 
-<pre>jason
-andy
-dcl
-</pre>
+        <div class="form-group">
+            <label>Subject</label>
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Subject"
+                ng-model="vm.BlastSubject"
+            > </div>
 
+        <div class="form-group">
+            <label>Body:</label>
+            <textarea
+                class="form-control"
+                ng-style="{'height':'20rem'}"
+                ng-model="vm.BlastMessage"
+            ></textarea>
         </div>
-      </div>
-    </div>
-    <p>
-      <button type="submit" class="btn btn-primary">Blast to List</button>
-      <button type="button" disabled class="btn btn-danger pull-right" ng-click="open('lg')">Blast to All EXCEPT List</button>
-    </p>
 
-    <pre>{{ blastData }}</pre>
-  </form>
+        <div class="form-group">
+            <div class="col-md-6">
+                <label>Username List:</label>
+                <textarea
+                    class="form-control"
+                    ng-style="{'height':'20rem'}"
+                    ng-model="vm.BlastList"
+                ></textarea>
+            </div>
+
+            <div class="col-md-6">
+                <label>Example:</label>
+                <pre>jason andy dcl </pre>
+            </div>
+        </div>
+
+        <p>
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >Blast to List</button>
+        </p>
+    </form>
+
+    <div>
+        <hr>
+        <a
+            class="btn btn-link"
+            ng-click="advanced = !advanced"
+        > Show / Hide raw response </a>
+        <pre
+            ng-show="advanced"
+            readonly
+            class="form-control"
+            ng-style="{'height':'100%'}"
+        > {{ vm.Response | json }} </pre>
+        <hr>
+    </div>
+</div>

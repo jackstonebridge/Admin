@@ -4,6 +4,9 @@ angular.module('proton.admin')
         AddMobileBeta(body) {
             return $http.post(url.get() + '/admin/mobile', body);
         },
+        Blast(body) {
+            return $http.post(url.get() + '/admin/blast', body);
+        },
         CreditUser(user_id, body) {
             return $http.put(url.get() + '/admin/user/' + user_id + '/credit', body);
         },

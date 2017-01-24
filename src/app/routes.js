@@ -36,10 +36,10 @@ angular.module('RDash')
         })
         .state('private.blast', {
             url: 'blast',
-            // controller: 'MasterController',
-            templateUrl: 'templates/blast.html'
+            controller: 'BlastController',
+            controllerAs: 'vm',
+            templateUrl: 'templates/admin/blast.html'
         })
-
         .state('private.lookup', {
             url: 'lookup/',
             controller: 'LookupController',

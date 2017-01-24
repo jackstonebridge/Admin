@@ -1,0 +1,47 @@
+<div>
+    <ul class="sidebar">
+        <li class="sidebar-main">
+            <a ng-click="toggleSidebar()">
+            Dashboard
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+            </a>
+        </li>
+        <div ng-if="isLoggedIn">
+            <li class="sidebar-title"><span>NAVIGATION</span></li>
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.lookup">Lookup <span class="menu-icon fa fa-tachometer"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.multilookup">Multi-lookup <span class="menu-icon fa fa-list"></span></a>
+            </li>
+
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.monitor">Monitor <span class="menu-icon fa fa-eye"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.invites">Invites <span class="menu-icon fa fa-gift"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.coupons">Coupons <span class="menu-icon fa fa-money"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.reports">Reports <span class="menu-icon fa fa-credit-card"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.referrers">Referrers <span class="menu-icon fa fa-star"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.admins">Admins <span class="menu-icon fa fa-star"></span></a>
+            </li>
+            <li ng-if="vm.IsSuper" class="sidebar-list">
+                <a ng-disabled="loading" ui-sref="private.blast">Blast <span class="menu-icon fa fa-bullhorn"></span></a>
+            </li>
+            <li ng-if="isLoggedIn" class="sidebar-title"><span>Version <kbd>0.2.1</kbd></span></li>
+        </div>
+    </ul>
+    <div class="sidebar-footer">
+        <div ng-if="isLoggedIn">
+            <a ui-sref="index">Log out <kbd>{{ vm.Username }}</kbd></a>
+        </div>
+    </div>
+</div>
