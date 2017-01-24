@@ -7,8 +7,8 @@
     >
 
         <div
-            class="alert"
-            ng-class="{ 'alert-info': !blastMode, 'alert-warning': blastMode }"
+            class="col-md-12 form-group alert"
+            ng-class="{ 'alert-info': !vm.BlastMode, 'alert-warning': vm.BlastMode }"
         >
             <p>Blast Mode:</p>
             <p>
@@ -27,7 +27,7 @@
             </p>
         </div>
 
-        <div class="form-group">
+        <div class="col-md-12 form-group">
             <label>Subject</label>
             <input
                 type="text"
@@ -36,7 +36,7 @@
                 ng-model="vm.BlastSubject"
             > </div>
 
-        <div class="form-group">
+        <div class="col-md-12 form-group">
             <label>Body:</label>
             <textarea
                 class="form-control"
@@ -58,18 +58,17 @@
             <div class="col-md-6">
                 <label>Example:</label>
                 <pre>jason andy dcl </pre>
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                Blast to List
+                </button>
             </div>
         </div>
-
-        <p>
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >Blast to List</button>
-        </p>
     </form>
 
-    <div>
+    <div class="col-md-12">
         <hr>
         <a
             class="btn btn-link"
