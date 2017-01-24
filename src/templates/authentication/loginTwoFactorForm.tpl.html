@@ -1,26 +1,55 @@
 <form
     method="post"
     id="pm_loginTwoFactor"
-    class="pm_panel alt pm_form"
-    novalidate role="form"
+    class="form-group"
+    novalidate
+    role="form"
     autocomplete="off"
     ng-submit="enterTwoFactor()"
     onsubmit="return false"
-    action="loginTwoFactor">
+    action="loginTwoFactor"
+>
 
-    <img src="assets/img/logo.png" height="20" alt="ProtonMail" class="logo" />
+    <div class="form-group">
+        <h4 class="text-center margin-bottom">
+            <i class="fa fa-user title-icon"></i>
+            <span
+                translate-context="Title"
+                translate
+            >Two-factor authentication</span>
+        </h4>
 
-    <h4 class="text-center margin-bottom">
-        <i class="fa fa-user title-icon"></i> <span translate-context="Title" translate>Two-Factor Authentication</span>
-    </h4>
-
-    <div class="alert alert-danger" id="error521" ng-if="error">{{ error.message }}</div>
-
-    <input autofocus maxlength="{{ ::maxPW }}" autocapitalize="off" autocorrect="off" type="text" ng-model="twoFactorCode" tabindex="2" id="twoFactorCode" autocomplete="off" name="twoFactorCode" class="margin TwoFA-input" required="" placeholder-translate="Two-factor passcode" />
-
-    <div class="clearfix">
-        <a class="pm_button link pull-left" ng-click="displayHelpModal()" translate-context="Action" translate-comment="link for login help" translate>Need help?</a>
-        <button id="login_btn" type="submit" tabindex="3" class="pm_button primary pull-right" ng-class="{disabled: networkActivity.loading()}" translate-context="Action" translate>Login</button>
+        <div
+            class="alert alert-danger"
+            id="error521"
+            ng-if="error"
+        >{{ error.message }}</div>
+        <input
+            autofocus
+            maxlength="{{ ::maxPW }}"
+            autocapitalize="off"
+            autocorrect="off"
+            type="text"
+            ng-model="twoFactorCode"
+            tabindex="2"
+            id="twoFactorCode"
+            autocomplete="off"
+            name="twoFactorCode"
+            class="form-control TwoFA-input"
+            required=""
+            placeholder-translate="Two-factor passcode"
+        />
     </div>
 
+    <div class="form-group text-center">
+        <button
+            id="login_btn"
+            type="submit"
+            tabindex="3"
+            class="btn btn-primary btn-lg text-center"
+            ng-class="{disabled: networkActivity.loading()}"
+            translate-context="Action"
+            translate
+        >Login</button>
+    </div>
 </form>
