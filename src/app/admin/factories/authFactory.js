@@ -1,5 +1,5 @@
 angular.module('proton.admin')
-    .factory('adminFactory', (users) => {
+    .factory('authFactory', (users) => {
         var admin = null;
 
         var Initialize = () => {

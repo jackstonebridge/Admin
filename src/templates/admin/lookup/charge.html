@@ -162,7 +162,7 @@
                             type="submit"
                             class="btn btn-primary"
                             ng-disabled="loading"
-                            ng-click="lookup('user', invoice.UserID)"
+                            ng-click="vm.LookupUser(invoice.UserID)"
                         >
                             <span>Lookup user</span>
                         </button>
@@ -171,7 +171,7 @@
                             type="submit"
                             class="btn btn-primary"
                             ng-disabled="loading"
-                            ng-click="lookup('organization', invoice.OrganizationID)"
+                            ng-click="vm.LookupOrganization(invoice.OrganizationID)"
                         >
                             <span>Lookup organization</span>
                         </button>

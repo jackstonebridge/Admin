@@ -1,10 +1,11 @@
 angular.module('proton.admin')
-    .controller('UserController', function($rootScope, $state, $controller, users, adminFactory, lookupFactory, userFactory) {
+.controller(
+    'UserController',
+    function($rootScope, $state, $controller, users, authFactory, lookupFactory, userFactory) {
         var vm = this;
-        angular.extend(vm, $controller('LookupController'));
 
-        vm.IsAdmin = adminFactory.IsAdmin();
-        vm.IsSuper = adminFactory.IsSuper();
+        vm.IsAdmin = authFactory.IsAdmin();
+        vm.IsSuper = authFactory.IsSuper();
 
         vm.InviteID = null;
         vm.InviteEmail = null;
@@ -26,6 +27,14 @@ angular.module('proton.admin')
             { label: "Reset all"     , value: 2 }
         ];
         vm.CurrentResetUserSentRateOption = vm.ResetUserSentRateOptions[1];
+
+        vm.LookupOrganization = (value) => {
+            $state.go(
+                'private.lookupOrganization',
+                { query: value },
+                { reload: true }
+            );
+        };
 
         vm.AddMobileBeta = (instance) => {
             var body = {
@@ -217,4 +226,5 @@ angular.module('proton.admin')
             lookupFactory.SetUserID(instance.User.ID);
             $state.go('private.payments', { query: instance.User.ID });
         };
-    });
+    }
+);

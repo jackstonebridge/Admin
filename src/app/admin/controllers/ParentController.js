@@ -1,9 +1,12 @@
 angular.module('proton.admin')
-    .controller('ParentController', function(adminFactory) {
+.controller(
+    'ParentController',
+    function(authFactory) {
         var vm = this;
-        adminFactory.Initialize().then(function () {
-            vm.IsAdmin = adminFactory.IsAdmin();
-            vm.IsSuper = adminFactory.IsSuper();
-            vm.Username = adminFactory.GetUserName();
+        authFactory.Initialize().then(function () {
+            vm.IsAdmin = authFactory.IsAdmin();
+            vm.IsSuper = authFactory.IsSuper();
+            vm.Username = authFactory.GetUserName();
         });
-    });
+    }
+);

@@ -1,15 +1,18 @@
 angular.module('proton.admin')
-.controller('LogController', function($controller, $stateParams, users) {
-    var vm = this;
-    angular.extend(vm, $controller('LookupController'));
+.controller(
+    'LogController',
+    function($controller, $stateParams, users) {
+        var vm = this;
 
-    vm.UserID = $stateParams.query;
+        vm.UserID = $stateParams.query;
+        vm.Response = null;
 
-    vm.GetUserLogs = () => {
-        users.GetUserLogs(vm.UserID)
-        .then(({data}) => {
-            vm.Response = data;
-        });
-    };
-    vm.GetUserLogs();
-});
+        vm.GetUserLogs = () => {
+            users.GetUserLogs(vm.UserID)
+            .then(({data}) => {
+                vm.Response = data;
+            });
+        };
+        vm.GetUserLogs();
+    }
+);

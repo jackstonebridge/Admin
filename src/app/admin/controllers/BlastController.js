@@ -1,13 +1,14 @@
+/* global Papa */
 angular.module('proton.admin')
 .controller(
     'BlastController',
-    function($rootScope, users, adminFactory) {
+    function($rootScope, users, authFactory) {
         var vm = this;
 
         vm.Response = null;
 
-        vm.IsAdmin = adminFactory.IsAdmin();
-        vm.IsSuper = adminFactory.IsSuper();
+        vm.IsAdmin = authFactory.IsAdmin();
+        vm.IsSuper = authFactory.IsSuper();
 
         vm.BlastSubject = null;
         vm.BlastMessage = null;

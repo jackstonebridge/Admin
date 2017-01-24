@@ -24,8 +24,8 @@ angular.module('RDash')
             url: '/',
             template: '<ui-view/>',
             resolve: {
-                Initialize(adminFactory) {
-                    return adminFactory.Initialize();
+                Initialize(authFactory) {
+                    return authFactory.Initialize();
                 }
             },
             onEnter($rootScope, userModel) {

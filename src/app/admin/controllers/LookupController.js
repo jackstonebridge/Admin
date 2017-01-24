@@ -1,12 +1,13 @@
+/* global Papa */
 angular.module('proton.admin')
 .controller(
     'LookupController',
-    function($rootScope, $state, $stateParams, $q, lookups, adminFactory) {
+    function($rootScope, $state, $stateParams, $q, lookups, authFactory) {
         var vm = this;
 
-        vm.IsAdmin = adminFactory.IsAdmin();
-        vm.IsSuper = adminFactory.IsSuper();
-        vm.Username = adminFactory.GetUserName();
+        vm.IsAdmin = authFactory.IsAdmin();
+        vm.IsSuper = authFactory.IsSuper();
+        vm.Username = authFactory.GetUserName();
 
         vm.LookupString = $stateParams.query;
         vm.MultilookupInput = null;
@@ -94,7 +95,8 @@ angular.module('proton.admin')
             value = vm.lookup(value);
             lookups.LookupCharge(value)
             .then(({data}) => {
-                vm.Response = data;
+                vm.Response = {};
+                vm.Response.Results = [data];
             });
         };
 

@@ -1,5 +1,7 @@
 angular.module('proton.admin')
-    .controller('ReferrerController', function (referrers) {
+.controller(
+    'ReferrerController',
+    function (referrers) {
         var vm = this;
 
         vm.GetReferrers = () => {
@@ -21,4 +23,5 @@ angular.module('proton.admin')
         };
 
         vm.GetReferrers();
-    });
+    }
+);

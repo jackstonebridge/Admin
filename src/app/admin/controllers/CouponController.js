@@ -1,5 +1,7 @@
 angular.module('proton.admin')
-    .controller('CouponController', function($rootScope, payments) {
+.controller(
+    'CouponController',
+    function($rootScope, payments) {
         var vm = this;
 
         vm.CouponName = null;
@@ -58,4 +60,5 @@ angular.module('proton.admin')
         };
 
         vm.GetCoupons();
-    });
+    }
+);
