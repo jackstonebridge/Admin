@@ -1,10 +1,13 @@
 angular.module('proton.admin')
 .controller(
     'BlastController',
-    function($rootScope, users) {
+    function($rootScope, users, adminFactory) {
         var vm = this;
 
         vm.Response = null;
+
+        vm.IsAdmin = adminFactory.IsAdmin();
+        vm.IsSuper = adminFactory.IsSuper();
 
         vm.BlastSubject = null;
         vm.BlastMessage = null;
