@@ -30,7 +30,7 @@
             <li class="sidebar-list">
                 <a ng-disabled="loading" ui-sref="private.referrers">Referrers <span class="menu-icon fa fa-star"></span></a>
             </li>
-            <li class="sidebar-list">
+            <li ng-if="vm.IsSuper" class="sidebar-list">
                 <a ng-disabled="loading" ui-sref="private.admins">Admins <span class="menu-icon fa fa-star"></span></a>
             </li>
             <li ng-if="vm.IsSuper" class="sidebar-list">

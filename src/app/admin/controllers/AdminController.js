@@ -1,6 +1,9 @@
 angular.module('proton.admin')
-    .controller('AdminController', function (admins) {
+    .controller('AdminController', function (admins, adminFactory) {
         var vm = this;
+
+        vm.IsAdmin = adminFactory.IsAdmin();
+        vm.IsSuper = adminFactory.IsSuper();
 
         var GetAdmins = () => {
             admins.GetAdmins()

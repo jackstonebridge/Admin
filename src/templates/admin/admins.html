@@ -1,44 +1,48 @@
-<div
-    class="row results"
-    ng-if="response.Results.length"
-    ng-repeat="result in response.Results"
->
+<p ng-show="!vm.IsSuper">
+    <em>Higher privileges required</em>
+</p>
 
-    <div class="col-md-12">
-        <h1 ng-if="result.User.UserName"> {{ result.User.UserName }} </h1>
+<div ng-show="vm.IsSuper">
+    <div
+        class="row results"
+        ng-if="response.Results.length"
+        ng-repeat="result in response.Results"
+    >
+
+        <div class="col-md-12">
+            <h1 ng-if="result.User.UserName"> {{ result.User.UserName }} </h1>
+        </div>
     </div>
-</div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr class="info">
-            <th>Username</th>
-            <th>Level</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="super in vm.Supers">
-            <th>{{ super }}</th>
-            <th>Super</th>
-        </tr>
-        <tr ng-repeat="admin in vm.Admins">
-            <td>{{ admin }}</td>
-            <td>Admin</td>
-        </tr>
-    </tbody>
-</table>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="info">
+                <th>Username</th>
+                <th>Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="super in vm.Supers">
+                <th>{{ super }}</th>
+                <th>Super</th>
+            </tr>
+            <tr ng-repeat="admin in vm.Admins">
+                <td>{{ admin }}</td>
+                <td>Admin</td>
+            </tr>
+        </tbody>
+    </table>
 
-<div>
-    <hr>
-    <a
-        class="btn btn-link"
-        ng-click="advanced = !advanced"
-    > Show / Hide raw response </a>
-    <pre
-        ng-show="advanced"
-        readonly
-        class="form-control"
-        ng-style="{'height':'100%'}"
-    > {{ vm.Response | json }} </pre>
-    <hr>
+    <div>
+        <hr>
+        <a
+            class="btn btn-link"
+            ng-click="advanced = !advanced"
+        > Show / Hide raw response </a>
+        <pre
+            ng-show="advanced"
+            readonly
+            ng-style="{'height':'100%'}"
+        > {{ vm.Response | json }} </pre>
+        <hr> </div>
 </div>
