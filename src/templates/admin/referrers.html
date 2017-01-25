@@ -56,11 +56,11 @@
 
             <div class="form-group">
                 <label>Time</label>
-                <select class="form-control">
-                    <option>This Month</option>
-                    <option>Last Month</option>
-                    <option>Custom</option>
-                </select>
+                <select
+                    ng-model="vm.CurrentTimeOption"
+                    class="form-control"
+                    ng-options="value.label for value in vm.TimeOptions"
+                ></select>
             </div>
         </form>
     </div>
@@ -76,7 +76,7 @@
         </div>
 
         <div ng-show="vm.Referrer">
-            <h4>{{ vm.Referrer.Identifier }} (This Month)</h4>
+            <h4>{{ vm.Referrer.Identifier }} ({{ vm.CurrentTimeOption.label }})</h4>
 
             <table class="table table-bordered">
                 <tr>
@@ -106,7 +106,7 @@
 
 <br>
 
-<h1>Partner Reports</h1>
+<!-- <h1>Partner Reports</h1>
 <br>
 
 <div
@@ -128,7 +128,7 @@
         class="list-group-item"
     >
         <i class="fa fa-download"></i> ed_14780326642840-1478036216 </a>
-</div>
+</div> -->
 
 <div>
     <hr>

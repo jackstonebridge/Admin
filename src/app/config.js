@@ -1,5 +1,7 @@
 angular.module('proton.config', [])
 .constant('CONFIG', {
+    version: '0.2.2',
+
     // Production settings
     // debug: false,
     // url: 'https://protonmail.com',

@@ -1,9 +1,10 @@
 angular.module('proton.admin')
 .controller(
     'SidebarController',
-    function($rootScope, authFactory) {
+    function($rootScope, authFactory, CONFIG) {
         var vm = this;
 
+        vm.Version = CONFIG.version;
         vm.IsAdmin = null;
         vm.IsSuper = null;
         vm.Username = null;
