@@ -1,13 +1,15 @@
 angular.module('proton.admin')
-    .factory('authFactory', (users) => {
+    .factory('authFactory', ($rootScope, users) => {
         var admin = null;
 
         var Initialize = () => {
+            if (admin) { return admin; }
             return users.UserInfo()
                 .then(({
                     data
                 }) => {
                     admin = data.User;
+                    $rootScope.$emit('authFactory');
                 });
         };
 
